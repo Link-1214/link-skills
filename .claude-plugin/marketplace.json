@@ -1,0 +1,11 @@
+{
+  "name": "link-skills",
+  "owner": { "name": "Link-1214" },
+  "plugins": [
+    {
+      "name": "link-design-pitch",
+      "source": "./plugins/link-design-pitch",
+      "description": "Pitch ten visual design directions rendered with your real content, compare their trade-offs and technical feasibility, then produce the detailed spec for the one the owner picks."
+    }
+  ]
+}
