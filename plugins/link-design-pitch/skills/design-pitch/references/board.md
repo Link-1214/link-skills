@@ -87,9 +87,21 @@ Two traps that have already produced wrong findings:
 
 After verifying, screenshot the board to `<output>/01-directions.png`.
 
-This costs nothing extra — you rendered it already — and it is the only way an agent other than you
-can *see* the styles rather than read markup. Agents without vision fall back to `DECISION.md`,
-which carries every value in text.
+This is the only way an agent other than you can *see* the styles rather than read markup — and it
+is worth doing for yourself too. Looking at the rendered board catches things no measurement asks
+about. Agents without vision fall back to `DECISION.md`, which carries every value in text.
+
+If the harness has a working screenshot tool, use it. When it does not — a preview pane that is not
+displayed cannot composite frames, and will time out — **headless Chrome or Edge is on almost every
+machine** and takes one command:
+
+```bash
+chrome --headless=new --disable-gpu --hide-scrollbars   --window-size=1200,7200 --screenshot=out.png --user-data-dir=/tmp/shot   file:///absolute/path/to/01-directions.html
+```
+
+Set the height tall enough for the whole page — ten stacked panels plus tables runs to several
+thousand pixels, and a short window silently crops the bottom half. `--user-data-dir` pointed
+somewhere disposable avoids colliding with a running browser profile.
 
 ## Detail spec
 
