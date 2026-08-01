@@ -68,6 +68,11 @@ contrast *measured* rather than asserted — dominance is a claim about area and
 when a chart spans two rows. Then the part everyone forgets: what actually has to change in the
 code, with file paths and line numbers.
 
+**Phase 4b — behavior and states.** Skipped when the deliverable does not move. Otherwise: what the
+screen looks like empty, loading, failing, overflowing, and with a label three times longer than the
+one you drew. A mockup showing only the resting state is half a design, and what sinks builds is
+almost never the color.
+
 ## What you get
 
 Three files, placed where your project already keeps documentation (`docs/design/` if `docs/`
@@ -99,6 +104,7 @@ Loaded on demand rather than all at once.
 | `skills/design-pitch/references/directions.md` | The catalog — 24 directions with concrete palettes, type stances, and failure modes |
 | `skills/design-pitch/references/feasibility.md` | What Qt/QSS, web, SwiftUI, Compose, React Native, terminal, email, print, and slides can each actually render |
 | `skills/design-pitch/references/board.md` | How the boards are built, and why identical framing is non-negotiable |
+| `skills/design-pitch/references/behavior.md` | States and interaction — what an interface does when it is empty, loading, failing, or overflowing |
 
 ## Worked example
 

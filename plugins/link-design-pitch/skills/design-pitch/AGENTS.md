@@ -13,6 +13,7 @@ Load the reference files when the phase calls for them:
 | `references/feasibility.md` | Phase 0 — before pitching anything, to learn what the target platform can actually render |
 | `references/directions.md` | Phase 2 — the catalog of twenty-four directions to choose ten from |
 | `references/board.md` | Phases 2 and 4 — how to build the HTML boards |
+| `references/behavior.md` | Phase 4b — states and interaction. Skip when the deliverable does not move (print, deck, spreadsheet) |
 
 ## When to use it
 
@@ -33,7 +34,7 @@ live anywhere on disk — the skill is just Markdown and needs no installation.
 
 ## Output contract
 
-Three files under `design-pitch/` in the target project:
+Three files, placed where the project already keeps documentation — `docs/design/` when a `docs/` directory exists, otherwise `design/`:
 
 | File | Audience |
 |---|---|

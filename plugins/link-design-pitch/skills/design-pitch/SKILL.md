@@ -27,6 +27,16 @@ Before asking anything, find out what you are designing *into*. Two things decid
 
 State which entry point you are at in one line. It changes what you should recommend, and the owner should see that you noticed.
 
+### Where the output goes
+
+Put the files where this project already keeps documentation: `docs/design/` when a `docs/`
+directory exists, otherwise `design/` at the root. That path is `<output>` for the rest of this
+document.
+
+**Never name the folder after this skill.** A folder called `design-pitch/` at the root of someone
+else's repository says who made it rather than what is inside it, and it reads as a tool colonizing
+their project. This is not hypothetical — it happened, and the folder had to be moved.
+
 ## Phase 1 — The five questions
 
 Ask all five in one pass. Dripping them one at a time makes the owner do five rounds of context-switching for information you could have gathered at once.
@@ -66,7 +76,7 @@ The losers are not filler. Watching a direction get eliminated for a concrete re
 
 **Render each one with the project's real content.** Real labels, real numbers, the real navigation. Lorem ipsum and fake KPIs hide the only thing that matters — whether the style survives contact with actual data. A five-cell bento looks great until the real screen has nineteen fields.
 
-Write the board to `design-pitch/01-directions.html` — one self-contained HTML file, no external requests, each direction as a working mini-mockup with a heading and its number. Consistent framing across all ten (same content, same size) is what makes them comparable; if each is a different scene the owner is comparing scenes, not styles.
+Write the board to `<output>/01-directions.html` — one self-contained HTML file, no external requests, each direction as a working mini-mockup with a heading and its number. Consistent framing across all ten (same content, same size) is what makes them comparable; if each is a different scene the owner is comparing scenes, not styles.
 
 Read `references/board.md` for the board's structure.
 
@@ -100,11 +110,35 @@ Measure contrast while you are there. Body and muted text against their actual g
 
 Then the part everyone forgets: **what actually has to change in the code.** Grep the target for hardcoded color literals and count them. A theme that looks like a stylesheet swap is usually not — chart libraries, canvas backgrounds, conditional table formatting, and inline styles live outside the stylesheet and stay stubbornly light while everything around them goes dark. List the specific places with file and line. If the count is large, say that a token layer should land first as a no-visual-change step, because that is the only way to make the swap reversible.
 
-Write to `design-pitch/02-detail-<direction>.html`.
+Write to `<output>/02-detail-<direction>.html`.
+
+## Phase 4b — Behavior and states
+
+**Skip this entirely when the deliverable does not move**: a printed report, a slide deck, a
+spreadsheet, a PDF. There is nothing to specify and a states table would be noise.
+
+For anything a person operates, a mockup that shows only the resting state is half a design. What
+sinks projects is rarely the color — it is the states nobody drew. The empty board on day one. The
+list at four hundred rows. The label that turned out to be a long compound noun. The save that
+failed while the card already moved.
+
+So for each screen, specify the states that actually occur in it, and say what the screen looks like
+in each. `references/behavior.md` has the checklist and the interaction patterns worth considering.
+
+Two things anchor this and neither is optional:
+
+**The Phase 1 action gets the interaction budget.** Whatever single thing the screen exists to
+drive, that path gets the responsiveness, the feedback, and whatever motion you spend. Everything
+else can be plain. Polish spread evenly across every control reads as no priority at all, which is
+the same failure as four same-sized numbers on a dashboard.
+
+**Motion is constrained by Phase 0, not by taste.** If the platform has no transitions, say so here
+and specify the state change as an instant swap that still reads. A spec describing eased motion on
+a toolkit that cannot ease is a spec that silently does not happen.
 
 ## Output: leave a plain-text record
 
-Alongside the HTML, always write `design-pitch/DECISION.md`. HTML boards are for humans; other agents — and you, in a later session with none of this context — need something readable without a browser. Hosted preview links are worse still, since a different tool often cannot fetch them at all.
+Alongside the HTML, always write `<output>/DECISION.md`. HTML boards are for humans; other agents — and you, in a later session with none of this context — need something readable without a browser. Hosted preview links are worse still, since a different tool often cannot fetch them at all.
 
 ```markdown
 # Design Pitch — <project>
@@ -126,7 +160,41 @@ Every value as hex.
 Ordered checklist with file paths and line numbers. Note what must not change.
 ```
 
-Keep it current if the direction shifts later. A stale decision record is worse than none, because the next agent will believe it.
+### Keeping the record true
+
+A stale decision record is worse than none, because the next agent will believe it. Two habits keep
+it honest.
+
+**Record divergence, not just the outcome.** If the owner picked something other than what you
+recommended, write down what they picked *and why it differed*. That gap is the highest-information
+thing in the whole document — it says what you misread about the audience, the constraints, or the
+work. Agreement teaches nobody anything.
+
+**Mark implementation when it lands.** An implementation checklist written as future work stays
+written that way forever unless someone changes it. Before treating a record as a plan, check
+whether the code already reflects it — grep for the tokens, look for the files the checklist names.
+When a step is done, mark it done with the commit. This has already cost one round of duplicated
+work in practice: a checklist said *pending* while every item on it had shipped.
+
+## On memory and personalization
+
+If the project or harness carries memory of past sessions — a memory store, a `CLAUDE.md`, an
+earlier `DECISION.md` — read it. Two things in it are genuinely reusable:
+
+- **Vocabulary.** When an owner says "washed out" and it turned out to mean contrast rather than
+  saturation, that translation holds next time. It is not a preference, it is a decoding.
+- **Resolved constraints.** "Orange cannot mark the previous month here because it collides with the
+  semantic palette" is a principle that was worked out once and stays true.
+
+**Never use memory to narrow the ten.** A pitch that learns which directions the owner rejects and
+stops showing them has destroyed the reason it exists. The value of this exercise is in the option
+they would not have picked — the elimination that teaches them a constraint, the stretch that turns
+out to fit. Personalization optimizes for agreement; this tool exists to produce informed
+disagreement. Converge on the owner's taste and after three runs it is an expensive way to say
+"dark and minimal again".
+
+The catalog stays open every time. What memory may change is how you *read* the answers, never which
+directions are allowed on the board.
 
 ## Working notes
 
