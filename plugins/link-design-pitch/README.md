@@ -57,30 +57,33 @@ direction get eliminated for a concrete reason teaches you more about your own c
 safe options do.
 
 **Phase 3 — trade-offs and a recommendation.** What each is good at, what it costs, whether it can
-be built here. Then one recommendation, plus the strongest objection to it, answered. Often the
-answer is a *combination* of two of the ten — that gets drawn as an eleventh panel, never as one of
-the ten, because a combination in a slot silently costs you a whole direction of coverage.
+be built here. Then one recommendation, plus the strongest objection to it, answered. When the
+answer is a *combination* of two of the ten it gets drawn as an eleventh panel, never as one of the
+ten, because a combination in a slot silently costs a whole direction of coverage.
 
-Then it stops and waits. The choice is yours; the pause is the point.
+**Then it stops and waits.** The choice is yours; the pause is the point. The recommendation is
+whatever fits — sometimes one of the ten unchanged, sometimes two composed. Neither is the default.
 
 **Phase 4 — the detailed spec.** Every screen, not one. Full token set as hex values. Hierarchy and
 contrast *measured* rather than asserted — dominance is a claim about area and it inverts silently
 when a chart spans two rows. Then the part everyone forgets: what actually has to change in the
 code, with file paths and line numbers.
 
-**Phase 4b — behavior and states.** Skipped when the deliverable does not move. Otherwise: what the
+**Phase 5 — behavior and states.** Skipped when the artifact does not move. Otherwise it *asks* the
+interaction questions — optimistic or confirmed, undo or confirm, panel or modal — before speccing: what the
 screen looks like empty, loading, failing, overflowing, and with a label three times longer than the
 one you drew. A mockup showing only the resting state is half a design, and what sinks builds is
 almost never the color.
 
 ## What you get
 
-Three files, placed where your project already keeps documentation (`docs/design/` if `docs/`
+Four files, placed where your project already keeps documentation (`docs/design/` if `docs/`
 exists, otherwise `design/`):
 
 | File | Audience |
 |---|---|
 | `01-directions.html` | People — the ten-direction board, self-contained, opens from disk |
+| `01-directions.png` | Agents with vision — the styles as a picture, not markup |
 | `02-detail-<direction>.html` | People — every screen in the chosen direction |
 | `DECISION.md` | **Agents** — answers, verdicts, measurements, token values, implementation checklist |
 
@@ -101,10 +104,10 @@ Loaded on demand rather than all at once.
 
 | File | Holds |
 |---|---|
-| `skills/design-pitch/references/directions.md` | The catalog — 24 directions with concrete palettes, type stances, and failure modes |
+| `skills/design-pitch/references/directions.md` | The catalog — 24 directions with concrete palettes, type stances, failure modes, and a ready-made token line each |
 | `skills/design-pitch/references/feasibility.md` | What Qt/QSS, web, SwiftUI, Compose, React Native, terminal, email, print, and slides can each actually render |
 | `skills/design-pitch/references/board.md` | How the boards are built, and why identical framing is non-negotiable |
-| `skills/design-pitch/references/behavior.md` | States and interaction — what an interface does when it is empty, loading, failing, or overflowing |
+| `skills/design-pitch/references/behavior.md` | States, plus the interaction forks worth putting to the owner rather than assuming |
 
 ## Worked example
 

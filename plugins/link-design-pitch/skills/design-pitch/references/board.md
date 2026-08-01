@@ -1,51 +1,121 @@
 # Building the boards
 
-Two HTML files: the ten-direction board (Phase 2) and the detail spec (Phase 4). Both are self-contained — inline every style, embed any asset as a data URI, make no external request. They must open from disk, be readable by another agent, and survive being emailed to someone.
+Two HTML files: the ten-direction board (Phase 2) and the detail spec (Phase 4). Both self-contained
+— inline every style, embed assets as data URIs, no external requests. They must open from disk and
+survive being emailed to someone.
+
+## Assemble, do not author
+
+The single largest cost in a run is hand-writing ten palettes. Do not. `directions.md` ends with a
+ready-made token line for each of the twenty-four, plus the few extra rules the shadow- and
+blur-based ones need.
+
+The structure that makes this cheap: **write the mockup markup once, and give each direction a
+wrapper class that only redefines variables.**
+
+```html
+<div class="mock d-swiss">…markup…</div>
+<div class="mock d-dark">…same markup…</div>
+```
+
+```css
+.mock { --g:#fff; --s:#fff; --l:#E3E6E8; --t:#1B1F23; --t2:#6B7480; --ac:#2F6FED; --r:6px;
+        background:var(--g); color:var(--t); }
+.mock .card { background:var(--s); border:1px solid var(--l); border-radius:var(--r); }
+
+.d-swiss { --g:#fff;--s:#fff;--l:#111;--t:#111;--t2:#6A6A6A;--ac:#D32F2F;--r:0 }
+.d-dark  { --g:#0C1211;--s:#141D1B;--l:#25322F;--t:#E6EFEC;--t2:#8FA29D;--ac:#3FBF9C;--r:8px }
+```
+
+Emit the markup once and clone it — a small loop over a template string beats ten pasted copies,
+because it makes "same content in every panel" structurally true instead of something you keep
+having to check.
 
 ## The comparison rule
 
-The board's only job is to make ten things comparable. Comparison dies the moment the variables multiply, so hold everything constant except style: **same content, same size, same crop, same order of elements in every panel.**
+The board's only job is to make ten things comparable, and comparison dies the moment the variables
+multiply. **Same content, same size, same crop, same element order in every panel.**
 
-If panel 3 shows a settings screen and panel 7 shows a landing hero, the owner is choosing between scenes, not styles, and will pick based on which content they happen to like. Pick one representative screen — usually the one carrying the Phase 1 action — and render that same screen ten times.
+If panel 3 shows a settings view and panel 7 shows a landing hero, the owner is choosing between
+scenes, not styles, and will pick based on which content they happen to like. Pick one
+representative surface — usually the one carrying the Phase 1 action — and render that same surface
+ten times.
 
-Same applies to effort. Ten at equal fidelity beats three polished and seven sketched; uneven detail reads as a thumb on the scale, and the owner will sense they are being steered.
-
-The ten are ten **distinct** directions. If the recommendation turns out to be a combination of two of them, that composite is an eleventh panel placed after the ten and labelled as such — never one of the ten. A combination in a slot costs a whole direction of coverage, and the one it displaces is usually the stretch option that would have been most informative.
+Same applies to effort. Ten at equal fidelity beats three polished and seven sketched; uneven detail
+reads as a thumb on the scale.
 
 ## Ten-direction board
 
 Per panel:
 
-1. **Number and name** — `01 / 10`, the direction name in the owner's language with the English term beneath. The count tells them where they are; the pairing keeps the term searchable.
-2. **The mockup** — the project's real screen at a fixed frame size, styled in this direction. Real labels, real numbers, real navigation.
-3. **One line of signature** — ground, accent, type stance. Enough to recognize what makes it this and not that.
-4. **A feasibility badge** — `가능` / `부분` / `불가` (or the equivalent), with the blocking property named when it is not fully possible. Putting this on the panel itself, rather than only in the table below, stops someone falling for an impossible option while scrolling.
+1. **Number and name** — `01 / 10`, the direction in the owner's language with the English term
+   beneath. The count tells them where they are; the pairing keeps the term searchable.
+2. **The mockup** — the project's real surface at a fixed frame size, styled in this direction.
+3. **One line of signature** — ground, accent, type stance.
+4. **A feasibility badge** — possible / partial / impossible, naming the blocking property when it
+   is not fully possible. On the panel itself, not only in the table below, so nobody falls for an
+   impossible option while scrolling.
 
-Then, if the recommendation composes two of them, the composite panel — same frame, same content, headed with the two source numbers (`05 + 06`) so its origin is visible.
+Then the comparison table: direction · good at · costs · feasible · verdict.
 
-Then the comparison table beneath: direction · good at · costs · feasible · verdict. One scannable row each, with the composite as a final marked row.
+Then the recommendation as prose, then the strongest objection to it, answered. If the
+recommendation composes two of the ten, that composite is an eleventh panel *after* the ten, headed
+with its source numbers (`05 + 06`) — never one of the ten.
 
-Then the recommendation as prose. Then the strongest objection to it, answered.
+Full-width stacked panels beat a grid here. Side-by-side thumbnails are too small to judge type, and
+type is most of what separates these.
 
-A layout that works: full-width stacked panels, each a titled block. Vertical stacking beats a grid here — side-by-side thumbnails are too small to judge type, and type is most of what separates these.
+## Verify in one pass
+
+Render the board once and run a single script that returns everything. Six separate round-trips cost
+real time and tokens for the same answer.
+
+One call should return, per panel: frame height, element counts (so you can prove content is
+identical), text-vs-ground contrast, the feasibility badge — plus panel count and whether the page
+scrolls horizontally.
+
+Two traps that have already produced wrong findings:
+
+- **Compare the same element across directions.** Measuring a highlighted card in one direction and
+  a plain card in another gives a number that means nothing. Select explicitly —
+  `.card:not(.highlighted)` — rather than taking whatever is first in the DOM.
+- **A viewport of `0` means the harness handed you a static snapshot, not a live layout.** Any
+  overflow or width measurement from that state is an artifact. Check `clientWidth` before trusting
+  anything derived from it.
+
+## Capture a PNG
+
+After verifying, screenshot the board to `<output>/01-directions.png`.
+
+This costs nothing extra — you rendered it already — and it is the only way an agent other than you
+can *see* the styles rather than read markup. Agents without vision fall back to `DECISION.md`,
+which carries every value in text.
 
 ## Detail spec
 
 Once a direction is chosen:
 
-- **Every screen.** One panel per screen or tab, full size, real content.
-- **Per screen: what dominates and why.** Name the element carrying the Phase 1 action in one line. If you cannot name it, the hierarchy is not working yet.
-- **The token table.** Ground, surface, border, text (primary/secondary/muted), accent, semantic up/down, and any ordinal scale. Hex values, with a swatch beside each.
-- **The implementation checklist.** File paths, line numbers, ordered. What must not change.
+- **Every distinct surface.** One panel each, full size, real content.
+- **Per surface: what dominates and why**, in one line. If you cannot name it, the hierarchy is not
+  working yet.
+- **The token table**, with a swatch beside each literal value.
+- **The implementation checklist**, ordered, with paths and lines.
 
 ## Content
 
-Use the project's actual content throughout. Lorem ipsum and placeholder numbers hide exactly the thing the board exists to test: whether the style survives real data. A five-cell bento is beautiful until the real screen has nineteen fields and three of the labels are long compound nouns.
+Use the project's actual content. Lorem ipsum hides exactly what the board exists to test. If real
+data is sensitive, use synthetic values with the same *shape* — same magnitudes, same label lengths,
+same field count. Never real personal data in a file that may be shared.
 
-If real data is sensitive, use synthetic values with the same *shape* — same magnitudes, same label lengths, same field count. Never real personal data on a file that may be shared.
+## Artifacts that are not screens
+
+The same board works for things that are not software. A deck's ten directions are ten title
+layouts; a spreadsheet's are ten header-and-conditional-format schemes; a report's are ten type and
+rule treatments. The board stays HTML because it renders styles natively and cheaply — what changes
+is what the panel depicts, not the medium you depict it in.
 
 ## Theme
 
-The board itself is a document about design, so it should not fight the designs it holds. Neutral chrome — near-white or near-black ground, restrained type, panels clearly framed. Let the panels carry the color.
-
-If the harness has a preview or publish tool, publishing the board is a convenience. The local file is still the deliverable: hosted links often cannot be fetched by other tools, and the decision has to outlive the session.
+The board is a document about design, so it should not fight the designs it holds. Neutral chrome —
+near-white or near-black ground, restrained type, clearly framed panels. Let the panels carry the
+color.

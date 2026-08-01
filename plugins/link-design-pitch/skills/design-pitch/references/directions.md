@@ -286,3 +286,68 @@ a panel, and comparing them against Swiss or brutalism is a category error. This
 only things you can draw.
 
 And keep the ten distinct. Composition is a Phase 3 move — spending a slot on "dark + bento" quietly reduces the board to nine ideas, and what gets dropped is almost always the stretch option that would have shown the owner where the edges are.
+
+---
+
+## Ready-made token lines
+
+Copy these instead of deriving palettes each run. Re-inventing values every time is the largest
+avoidable cost in this exercise, and hand-derived palettes drift between runs so two boards stop
+being comparable.
+
+The mockup markup reads seven variables. Set them on a wrapper class per direction and the same
+markup renders as any style:
+
+| Variable | Meaning |
+|---|---|
+| `--g` | ground — the page or app background |
+| `--s` | surface — panels, bars, chrome that sits on the ground |
+| `--l` | line — borders and dividers |
+| `--t` / `--t2` | text, primary and muted |
+| `--ac` | accent — the interactive/emphasis color |
+| `--r` | radius |
+
+| # | Direction | Token line |
+|---|---|---|
+| 1 | Minimalism | `--g:#FAFAF9;--s:#fff;--l:#E8E8E5;--t:#1A1A1A;--t2:#7C817E;--ac:#4A5B52;--r:6px` |
+| 2 | Swiss | `--g:#fff;--s:#fff;--l:#111;--t:#111;--t2:#6A6A6A;--ac:#D32F2F;--r:0` |
+| 3 | Monochrome + one accent | `--g:#FAFAFA;--s:#fff;--l:#E3E3E3;--t:#141414;--t2:#8A8A8A;--ac:#2F6FED;--r:4px` |
+| 4 | Document / newsprint | `--g:#FBFAF7;--s:#FDFCF9;--l:#D6D2C8;--t:#1C1B18;--t2:#7A736A;--ac:#7B2D26;--r:0` |
+| 5 | Bento grid | `--g:#EEF0F2;--s:#fff;--l:#E2E5E8;--t:#1B1F23;--t2:#767D85;--ac:#2F6FED;--r:12px` |
+| 6 | Material / elevation | `--g:#F5F5F5;--s:#fff;--l:#E0E0E0;--t:#212121;--t2:#757575;--ac:#1976D2;--r:4px` |
+| 7 | Dense operational | `--g:#fff;--s:#fff;--l:#D0D7DE;--t:#1F2328;--t2:#656D76;--ac:#0969DA;--r:3px` |
+| 8 | Dark mode | `--g:#0C1211;--s:#141D1B;--l:#25322F;--t:#E6EFEC;--t2:#8FA29D;--ac:#3FBF9C;--r:8px` |
+| 9 | Glassmorphism | `--g:transparent;--s:rgba(255,255,255,.20);--l:rgba(255,255,255,.42);--t:#12203A;--t2:#4A5D80;--ac:#3B4FE0;--r:12px` |
+| 10 | Gradient mesh | `--g:transparent;--s:#fff;--l:#EAEAF2;--t:#1A1A2E;--t2:#6E6E8A;--ac:#6B5BFF;--r:12px` |
+| 11 | Neon / cyber | `--g:#05070D;--s:#0D1420;--l:#1B2838;--t:#DCE7F5;--t2:#7A8CA3;--ac:#22D3EE;--r:4px` |
+| 12 | Neumorphism | `--g:#E9EDF2;--s:#E9EDF2;--l:#E9EDF2;--t:#3A4450;--t2:#93A0AE;--ac:#5B7CFA;--r:12px` |
+| 13 | Claymorphism | `--g:#EEF2FF;--s:#fff;--l:#E3E8FF;--t:#2B2F4A;--t2:#7C82A8;--ac:#7C6CF5;--r:24px` |
+| 14 | 3D / immersive | `--g:#F0EBE3;--s:#FAF7F2;--l:#DED5C8;--t:#2A241E;--t2:#8A7D6E;--ac:#C1683F;--r:14px` |
+| 15 | Brutalism | `--g:#FDF6E3;--s:#fff;--l:#000;--t:#000;--t2:#000;--ac:#1B4DFF;--r:0` |
+| 16 | Editorial | `--g:#F7F5F0;--s:#FDFCF9;--l:#D8D2C6;--t:#16181D;--t2:#7A736A;--ac:#6B1F2A;--r:0` |
+| 17 | Retro / Y2K | `--g:#DCE9FB;--s:#EFF6FF;--l:#A9C7E8;--t:#1B2A50;--t2:#6076A8;--ac:#FF5FA2;--r:8px` |
+| 18 | Terminal / monospace | `--g:#0B0E14;--s:#0B0E14;--l:#1E2430;--t:#C8D3E0;--t2:#6B7A8D;--ac:#4AF626;--r:0` |
+| 19 | Liquid Glass | `--g:transparent;--s:rgba(255,255,255,.34);--l:rgba(255,255,255,.55);--t:#16233D;--t2:#5A6A85;--ac:#3B62E0;--r:14px` |
+| 20 | Maximalism | `--g:#1B0F2E;--s:#2A1348;--l:#4A2B72;--t:#FFF3E6;--t2:#C9A6E8;--ac:#FF3D8B;--r:8px` |
+| 21 | Skeuomorphism | `--g:#D7CDBE;--s:#F2EBE0;--l:#B9AC98;--t:#2E271D;--t2:#7C7060;--ac:#9C5B2E;--r:8px` |
+| 22 | Kinetic typography | `--g:#0E0E10;--s:#0E0E10;--l:#26262B;--t:#F4F4F6;--t2:#8A8A94;--ac:#E8FF3D;--r:0` |
+| 23 | Memphis / postmodern | `--g:#FBF7EE;--s:#fff;--l:#111;--t:#111;--t2:#5A5A5A;--ac:#FF5F7E;--r:10px` |
+| 24 | Broken grid / overlap | `--g:#F4F2ED;--s:#fff;--l:#DCD8CF;--t:#191714;--t2:#7A756B;--ac:#B5462F;--r:0` |
+
+### The ones that need more than a token line
+
+Most directions are the token line and nothing else. These seven also need structural CSS, and it is
+the same few rules every time:
+
+| Direction | Add |
+|---|---|
+| Glassmorphism · Liquid Glass | gradient or photo on `--g`'s element, `backdrop-filter:blur(16px)` on surfaces, `inset 0 1px 0 rgba(255,255,255,.6)` for the edge |
+| Gradient mesh · Maximalism | `background:` with two or three `radial-gradient` stops over a base `linear-gradient` |
+| Neumorphism | `box-shadow:4px 4px 9px #C9D0D9,-4px -4px 9px #fff` on surfaces; inset the same for pressed |
+| Claymorphism | `box-shadow:0 8px 20px rgba(60,50,140,.18), inset 0 -3px 0 rgba(0,0,0,.06)` |
+| Brutalism | `border:2px solid #000; box-shadow:3px 3px 0 #000` — a solid offset, no blur |
+| Neon / cyber | `box-shadow:0 0 12px currentColor` on accented borders |
+| Terminal | `font-family:ui-monospace,Consolas,monospace` throughout |
+
+Adjust values toward the project's brand when it has one. What you should not do is start from a
+blank palette — that is where the run time goes.

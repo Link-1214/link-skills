@@ -1,6 +1,7 @@
 # Behavior and states
 
-Loaded in Phase 4b, and only when the deliverable moves. A printed report has no states.
+Loaded in Phase 5, and only when the artifact moves. A printed report, a deck, a spreadsheet handed
+over as a file — none of these have states, and a states table for them is noise.
 
 A mockup shows one moment: full data, nothing loading, nothing wrong, labels the length you happened
 to type. Everything that sinks a build lives outside that moment. This file is the list of moments
@@ -41,34 +42,47 @@ Two are skipped constantly and both matter more than hover:
 Hit targets stay comfortable — roughly 44px on touch. A drag handle that is hard to grab makes a
 drag-first product feel broken no matter how it looks.
 
-## Interaction decisions worth making explicitly
+## Decisions to put to the owner
 
-Each of these is a fork with real consequences, and defaulting silently is how a product ends up
-inconsistent with itself.
+**These are choices, not deductions. Ask them.** Each is a fork with real consequences, and
+defaulting silently is how a product ends up inconsistent with itself — one screen optimistic and
+another confirmed, one autosaving and another not, and nobody remembers deciding either.
 
-**Optimistic or confirmed.** Optimistic (show the result immediately, reconcile later) makes the app
-feel instant and is right for high-frequency, low-stakes actions like moving a card. It obliges you
-to design the rollback: what the user sees when it fails, and how they learn it failed after they
-already moved on. Confirmed (wait for the server) is right where being wrong is expensive.
+Do not ask all of them. Pick the **two or three that actually bite for this artifact**, give each a
+recommendation with the reason, and let the owner answer before you write the spec. A read-mostly
+dashboard does not need the autosave question; a form-heavy tool does not need the drag question.
 
-**Undo or confirm.** A confirm dialog on every destructive action trains people to click through it,
-which means it stops protecting anything. Undo after the fact is usually better and always faster.
-Reserve confirmation for the genuinely irreversible.
+The Phase 1 action tells you which ones matter: whichever forks sit on that path are the ones to
+ask about.
 
-**Inline, panel, or modal.** Modals block everything and lose the context the user was comparing
-against. A side panel keeps the surrounding state visible. Inline editing is fastest and hardest to
-make discoverable. Pick per task, then hold to it.
+**Optimistic or confirmed?** Optimistic — show the result immediately, reconcile later — makes the
+product feel instant and suits high-frequency, low-stakes actions. It obliges you to design the
+rollback: what the user sees when it fails, and how they learn it failed after they already moved
+on. Confirmed suits anything where being wrong is expensive. *Recommend optimistic when the Phase 1
+action is repeated many times a day; confirmed when it moves money, sends something, or is hard to
+undo.*
 
-**Autosave or explicit save.** Autosave needs a visible "saved" signal or users do not trust it.
-Explicit save needs unsaved-change protection on navigate away. Mixing both in one product is how
-people lose work.
+**Undo or confirm?** A confirm dialog on every destructive action trains people to click through it,
+at which point it protects nothing. *Recommend undo by default, with confirmation reserved for the
+genuinely irreversible* — and say which actions those are, so the answer is concrete.
 
-**The keyboard path.** For anything used daily, name the keyboard route through the primary action.
-Daily users build muscle memory and a mouse-only tool caps how fast they can ever get.
+**Inline, panel, or modal?** Modals block everything and remove the context the user was comparing
+against. A side panel keeps the surroundings visible. Inline editing is fastest and hardest to make
+discoverable. *Recommend by whether the user needs to see the rest while acting* — if they do, a
+modal is the wrong answer no matter how standard it looks.
+
+**Autosave or explicit save?** Autosave needs a visible "saved" signal or users do not trust it.
+Explicit save needs unsaved-change protection on navigate away. *Recommend one and hold to it
+everywhere* — mixing both in one product is how people lose work.
+
+**The keyboard path.** Not really a fork — for anything used daily this is required, so state it
+rather than asking. Name the keyboard route through the Phase 1 action. Daily users build muscle
+memory, and a mouse-only tool caps how fast they can ever get. Where the primary action is drag,
+a keyboard equivalent is not optional: drag is unavailable to keyboard users entirely.
 
 **Drag affordance.** If something is draggable, the resting state has to say so — a handle, a cursor
-change, a lift on hover. And drag needs a non-drag equivalent, because drag is unavailable to
-keyboard users and awkward on touch.
+change, a lift on hover. Ask only whether drag is the primary path or a convenience; the answer
+changes how much of the interaction budget it earns.
 
 ## Motion
 
@@ -103,11 +117,13 @@ to "what tells them it worked" is only a toast, look again at whether the screen
 
 In the spec, per screen:
 
-1. Which states from the table apply, and what the screen looks like in each
+1. Which states from the table apply, and what the surface looks like in each
 2. The Phase 1 action's full path: resting → in-flight → success, and → failure
 3. The keyboard route to that action
 4. Motion, with durations, or an explicit "instant, platform has no transitions"
-5. Anything deliberately not handled, and why
+5. **The answers the owner gave**, so the next agent knows these were decided rather than assumed
+6. Anything deliberately not handled, and why
 
-Point 5 matters as much as the rest. "Offline is out of scope for v1" is a decision. Leaving it
-undrawn is an omission someone discovers in production.
+The last two matter as much as the rest. "Offline is out of scope for v1" is a decision; leaving it
+undrawn is an omission someone discovers in production. And an interaction choice with no recorded
+owner is one the next person will quietly reverse.
