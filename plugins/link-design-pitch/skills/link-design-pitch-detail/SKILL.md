@@ -87,12 +87,10 @@ another confirmed, one autosaving and another not, and nobody remembers deciding
 
 **Present the options. Do not build them.**
 
-This is a hard limit and it is about cost. Writing a full state and behavior specification — every
-empty view, every failure path, every motion duration — costs more than everything else in both
-skills combined, and it is thrown away the moment the owner picks a model you did not anticipate.
-That has already happened once: a full behavior spec was written around "optimistic vs confirmed",
-and the answer turned out to be a third model (stage the changes, apply them together) that
-invalidated the failure screens, the empty states, and the undo affordance in one sentence.
+This is a hard limit and it is about cost. A full state and behavior specification costs more than
+everything else in both skills combined, and it is discarded the moment the owner names a model you
+did not anticipate — which has happened: a spec written around "optimistic vs confirmed" was
+invalidated by a third answer (stage the changes, apply them together) in one sentence.
 
 So the deliverable of this phase is **a comparison, not a specification**:
 
@@ -127,22 +125,12 @@ Appended to what the first skill produced:
 
 Add to the record:
 
-```markdown
-## Detail — measurements
-Hierarchy channel and its numbers. Contrast, including de-emphasized elements.
-Anything that had to change to pass, with before and after.
-
-## Interaction
-The forks that were put to the owner, and what they chose.
-If they answered outside the options, their model in their words, and what it leaves undecided.
-States that apply here, as a list. Not drawn.
-
-## Implementation
-Ordered, with paths and lines. Note what must not change.
-
-## Status
-`Detail applied` · `Interaction chosen` · or what remains open.
-```
+Sections to append: **Detail — measurements** (hierarchy channel with its numbers, contrast
+including de-emphasized elements, anything that had to change to pass with before and after) ·
+**Interaction** (the forks put to the owner and what they chose; if they answered outside the
+options, their model in their words and what it leaves undecided; the states that apply, as a list,
+not drawn) · **Implementation** (ordered, with paths and lines, noting what must not change) ·
+**Status**.
 
 **Keep the record true.** A checklist written as future work stays that way forever unless someone
 changes it. Before treating this record as a plan, check whether the code already reflects it — grep

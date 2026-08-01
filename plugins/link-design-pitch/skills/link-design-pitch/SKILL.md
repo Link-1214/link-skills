@@ -42,8 +42,12 @@ effort on a direction they may not pick.
 **What renders here.** A browser can do anything. Qt's stylesheets silently ignore `box-shadow` and
 `backdrop-filter`. Email clients drop flexbox. Print has no dark mode. Pitching glassmorphism at a
 PySide6 app wastes everyone's time, and the failure is silent — the property parses, nothing
-happens, and you find out from a screenshot. Read `references/feasibility.md`. Where you can, verify
-rather than trust: render one throwaway element with the risky property and look at it.
+happens, and you find out from a screenshot.
+
+`references/feasibility.md` opens with a platform index and two cross-platform tables. **Read those,
+then read only the section for this target** — the other six are detail for deliverables you are not
+building. Where you can, verify rather than trust: render one throwaway element with the risky
+property and look at it.
 
 **What already exists.** Three entry points, different constraints:
 
@@ -105,9 +109,14 @@ problem, and papering over it produces something that is neither.
 
 ## Phase 2 — Ten directions
 
-Pick ten from `references/directions.md`, which catalogs twenty-four with their signatures and a
-ready-made token line for each. **Assemble from the catalog rather than inventing values** — the
-palettes are already worked out, and re-deriving them each run is the largest avoidable cost here.
+`references/directions.md` opens with an index of twenty-four — what each is good at, where it
+breaks, and which die without a property this target may lack. **Read the index, pick ten, then read
+only those ten entries.** The entries carry the token line and the type and shape signature, which
+you need to render but not to choose; reading all twenty-four to pick ten costs three times what it
+should, and the fourteen you drop never appear in the output.
+
+**Assemble from the catalog rather than inventing values** — the palettes are already worked out,
+and re-deriving them drifts between runs, which makes two boards stop being comparable.
 
 Choose so the set spans the space:
 
@@ -169,28 +178,10 @@ for the same reach.
 **`DECISION.md` is the contract with `link-design-pitch-detail`, which refuses to run without it.**
 Write it even if the session ends before a choice is made — with `Status: Awaiting choice`.
 
-```markdown
-# 시각 방향 결정 기록 — <project>
-Date · Entry point · Deliverable format
-
-## Answers
-1. Audience · 2. Deliverable format · 3. Core color · 4. Layout · 5. The one action
-
-## Directions considered
-| # | Direction | Good at | Cost | Feasible | Verdict |
-
-## Measurements
-Whatever you measured, with the numbers.
-
-## Recommended → Chosen
-What was recommended, what they chose, and why if it differed.
-
-## Tokens
-Every value, literal.
-
-## Status
-`Direction chosen: <name>` — or `Awaiting choice`.
-```
+Sections, in this order: **Answers** (the five, verbatim) · **Directions considered** (a table with
+good-at, cost, feasibility, verdict) · **Measurements** (numbers, not adjectives) · **Recommended →
+Chosen** · **Tokens** (every value literal) · **Status** (`Direction chosen: <name>` or
+`Awaiting choice`).
 
 **Record divergence.** If they picked something other than your recommendation — or gave an answer
 outside the options you offered — write what and why. That gap is the highest-information thing in

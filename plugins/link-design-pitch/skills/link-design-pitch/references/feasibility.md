@@ -1,8 +1,29 @@
 # Feasibility by platform
 
-The failure this file prevents: an owner falls in love with a direction that the target cannot render, and nobody finds out until implementation. The failure is usually *silent* — the property parses, no error appears, and the effect simply is not there.
+The failure this file prevents: an owner falls in love with a direction the target cannot render,
+and nobody finds out until implementation. The failure is usually *silent* — the property parses, no
+error appears, and the effect simply is not there.
 
-Check the target before the board goes up. Where you are unsure, verify rather than trust this file — render one throwaway element with the risky property and look at it. Platforms change; a measurement beats a table.
+## How to read this file
+
+**Read the two tables below, then read only the section for your target.** The tables are
+cross-platform and always apply; the per-platform sections are detail you need for one target and
+not the other six.
+
+Where you are unsure, verify rather than trust this file — render one throwaway element with the
+risky property and look at it. Platforms change; a measurement beats a table.
+
+## Platform index
+
+| Target | Used for | What it blocks |
+|---|---|---|
+| **Qt / PySide6 / PyQt** | Desktop apps in Python or C++ | `box-shadow` · `backdrop-filter` · `opacity` · `transition` · `transform` · flex/grid — **all parse silently and do nothing**. Charts never take the stylesheet |
+| **Web (browser)** | Anything in a browser | Nothing structural. Watch CSP blocking font CDNs, and design both themes |
+| **Native mobile** | SwiftUI · Compose · React Native | Blur is native on iOS, API 31+ on Android, a package on React Native. Shadows differ between iOS and Android |
+| **Terminal / TUI** | Shell tools | No images, shadows, gradients or custom type. Pitch three directions honestly, not ten |
+| **Email (HTML)** | Newsletters, transactional mail | No flexbox, grid, web fonts or JavaScript. Dark mode is inverted by clients unpredictably |
+| **Print / PDF** | Reports, anything on paper | No motion, no interaction, no dark mode. Hairlines under 0.25pt vanish; saturated RGB shifts in CMYK |
+| **Slides (PowerPoint / Keynote)** | Decks | Fonts must exist on the presenting machine or slides reflow. Projectors crush contrast — push it further than feels right |
 
 ## What each direction actually depends on
 
@@ -23,6 +44,19 @@ Most styles survive anywhere. A few have a single point of failure — remove on
 | Everything else | nothing exotic | Yes. |
 
 Brutalism, terminal, editorial, Swiss, minimalism, dark, bento, monochrome, document, and dense-operational need only solid fills, borders, and type. They are the safe pitches on constrained platforms — and brutalism in particular is often the *only* expressive option, because its hard offset shadow is a plain filled rectangle rather than a blur.
+
+## A note on charts, on every platform
+
+Chart libraries own their own rendering and almost never inherit the app's theme. Whatever the platform, treat chart background, axes, gridlines, tick labels, legends, and series colors as a separate work item with its own line in the implementation checklist.
+
+And regardless of direction: avoid 3D bars, 3D pie, and drop shadows on data marks. Perspective and shadow distort perceived magnitude, which turns a styling choice into a reporting error.
+
+---
+
+# Per-platform detail
+
+Read the one that matches your target. If the deliverable spans two — a web app that also gets
+printed — read both.
 
 ## Qt / PySide6 / PyQt (QSS)
 
@@ -83,9 +117,3 @@ Document, editorial, and Swiss are the natural fits. Dark, neon, glass, and neum
 ## Slides (PowerPoint / Keynote)
 
 Gradients, shadows, and images all fine. Fonts must exist on the presenting machine or be embedded — otherwise substitution silently reflows every slide. Assume the room's projector crushes contrast: mid-greys on white disappear, and thin light type on dark disappears faster. Push contrast further than feels right on a laptop.
-
-## A note on charts, on every platform
-
-Chart libraries own their own rendering and almost never inherit the app's theme. Whatever the platform, treat chart background, axes, gridlines, tick labels, legends, and series colors as a separate work item with its own line in the implementation checklist.
-
-And regardless of direction: avoid 3D bars, 3D pie, and drop shadows on data marks. Perspective and shadow distort perceived magnitude, which turns a styling choice into a reporting error.
