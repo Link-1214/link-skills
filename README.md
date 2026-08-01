@@ -1,18 +1,18 @@
 # link-skills
 
-**Decide it before you build it.**
+**만들기 전에 정한다.**
 
-Agent skills for the part of the work that happens before the code: surveying the options, arguing
-the trade-offs out loud, checking what your platform can actually do, and writing the decision down
-somewhere the next session can read it.
+코드를 쓰기 전 단계를 위한 에이전트 스킬 모음입니다. 선택지를 펼쳐 보고, 장단점을 소리 내어
+따져 보고, 지금 쓰는 플랫폼이 실제로 뭘 그릴 수 있는지 확인하고, 그 결정을 다음 세션이 읽을 수
+있는 곳에 적어 두는 일.
 
-Every skill here leaves a plain-Markdown record of what was decided and why. Boards and mockups are
-for people; the record is for the next agent — including you, three weeks later with none of the
-context.
+여기 있는 스킬은 전부 **무엇을 왜 정했는지를 평문 마크다운으로** 남깁니다. 보드와 목업은 사람이
+보는 것이고, 그 기록은 다음 에이전트가 읽는 것입니다 — 3주 뒤 맥락이 하나도 없는 당신 자신을
+포함해서.
 
 ---
 
-## Skills
+## 스킬
 
 ### link-design-pitch
 
@@ -20,159 +20,165 @@ context.
 claude plugin install link-design-pitch@link-skills
 ```
 
-**Two skills, one install.** Choosing a visual direction and applying it are separate runs, because
-building the actual thing sits between them.
+**스킬 두 개가 한 번에 설치됩니다.** 시각 방향을 고르는 일과 그것을 적용하는 일은 별개의 실행인데,
+**그 사이에 실제로 만드는 단계가 끼어 있기 때문**입니다.
 
-| | Invoked as | Does |
+| | 호출 | 하는 일 |
 |---|---|---|
-| **1** | `link-design-pitch:link-design-pitch` | Five questions — including what you are actually producing, since a spreadsheet and a web app deserve different options — then ten directions rendered with **your** real content, trade-offs argued in a table, feasibility checked against your platform, one recommendation with the strongest objection to it answered. **Stops for your choice.** |
-| | *you build the features and content* | by hand or with another agent |
-| **2** | `link-design-pitch:link-design-pitch-detail` | Applies the chosen direction to every surface with hierarchy and contrast *measured* rather than asserted, lists what has to change in the code, then lays out the interaction options and asks. Refuses to run without a direction on record. |
+| **1** | `link-design-pitch:link-design-pitch` | 질문 다섯 개 — 무엇을 만드는지(엑셀·PPT·웹앱…)를 포함합니다. 스프레드시트와 웹앱은 후보가 달라야 하니까요. 그다음 **당신의 실제 내용으로** 렌더한 시안 10개, 장단점 비교표, 플랫폼이 실제로 그릴 수 있는지 판정, 추천 하나와 그 추천에 대한 가장 강한 반론까지. **거기서 멈추고 선택을 묻습니다.** |
+| | *직접 만드는 단계* | 기능과 내용을 직접 또는 다른 AI로 |
+| **2** | `link-design-pitch:link-design-pitch-detail` | 정해진 방향을 모든 화면에 적용합니다. 위계와 대비를 주장하는 대신 **재고**, 코드에서 뭘 바꿔야 하는지 목록으로 냅니다. 그다음 인터랙션 선택지를 펼쳐 놓고 묻습니다. **기록에 정해진 방향이 없으면 실행을 거부합니다.** |
 
-Works for any deliverable: web and desktop apps, mobile, slide decks, spreadsheets, documents,
-printed reports.
+산출물 종류를 가리지 않습니다 — 웹·데스크톱 앱, 모바일, 발표 자료, 스프레드시트, 문서, 인쇄물.
 
-**[Usage and worked example →](plugins/link-design-pitch/README.md)**
+**[사용법과 예시 →](plugins/link-design-pitch/README.md)**
 
 ---
 
-## Install
+## 설치
 
 ### Claude Code
 
-Add the marketplace once:
+마켓플레이스를 한 번 추가합니다.
 
 ```bash
 claude plugin marketplace add Link-1214/link-skills
 ```
 
-Then install. `link` is a bundle that ships nothing itself — it lists the others as dependencies, so
-one install gets everything and new skills arrive on update without another install step:
+`link`은 아무 스킬도 담지 않은 **묶음**입니다. 나머지를 의존성으로 가리키고 있어서, 한 번 설치하면
+전부 딸려오고 **새 스킬이 추가돼도 다시 설치할 필요 없이 업데이트만 하면 들어옵니다.**
 
 ```bash
 claude plugin install link@link-skills
 ```
 
-Or install a single plugin instead:
+원하는 것 하나만 설치할 수도 있습니다.
 
 ```bash
 claude plugin install link-design-pitch@link-skills
 ```
 
-Then reload so the skills register in the current session:
+현재 세션에 반영하려면 다시 불러옵니다.
 
 ```bash
 /reload-plugins
 ```
 
-**A plugin is the install unit, not a skill.** `link-design-pitch` carries two skills and they always
-arrive together. That is deliberate — the second is meaningless without the first.
+> **설치 단위는 플러그인이지 스킬이 아닙니다.** `link-design-pitch`는 스킬 두 개를 담고 있고
+> 항상 함께 옵니다. 의도한 것입니다 — 두 번째는 첫 번째 없이는 의미가 없습니다.
 
-The same steps work from inside a session as `/plugin marketplace add …` and `/plugin install …`.
+세션 안에서는 `/plugin marketplace add …`, `/plugin install …` 로 같은 일을 합니다.
 
-### Check it worked
+### 설치 확인
 
 ```bash
 claude plugin list
 ```
 
-You should see the plugin and its skills. Problems appear in the `/plugin` **Errors** tab, and
-`claude plugin list --json` adds an `errors` field to anything that failed to load.
+플러그인과 그 스킬이 보여야 합니다. 문제가 있으면 `/plugin`의 **Errors** 탭에 뜨고,
+`claude plugin list --json` 은 실패한 항목에 `errors` 필드를 붙여 줍니다.
 
-### Update and remove
+### 갱신과 제거
 
 ```bash
 claude plugin update link@link-skills
 ```
 
-Auto-update is off by default for marketplaces that are not Anthropic's. Turn it on for this one in
-`/plugin`, or run the command above.
+Anthropic이 아닌 마켓플레이스는 자동 갱신이 기본 꺼짐입니다. `/plugin`에서 켜거나 위 명령을 쓰세요.
 
 ```bash
 claude plugin uninstall link-design-pitch
 ```
 
-### Scope
+### 설치 범위
 
-Installs are user-scoped by default — available in every project. Add `--scope project` to commit the
-choice to a repository your team shares, or `--scope local` to keep it to your own checkout.
+기본은 사용자 범위라 모든 프로젝트에서 쓸 수 있습니다. 팀이 공유하는 저장소에 선택을 커밋하려면
+`--scope project`, 내 체크아웃에만 두려면 `--scope local` 을 붙입니다.
 
-### Codex and other agents
+### Codex와 다른 에이전트
 
-The skills are plain Markdown with no Claude-specific tooling, so any coding agent can follow them.
-Nothing needs installing — clone and point at the file:
+스킬은 Claude 전용 도구를 하나도 쓰지 않는 평범한 마크다운입니다. 어떤 코딩 에이전트든 그대로
+따라갈 수 있고, 설치할 것도 없습니다. 받아서 경로만 가리키면 됩니다.
 
 ```bash
 git clone https://github.com/Link-1214/link-skills.git
 ```
 
-Then add to your project's `AGENTS.md`:
+프로젝트의 `AGENTS.md` 에 이렇게 적어 둡니다.
 
 ```markdown
-Design direction undecided?
-Follow <path-to>/link-skills/plugins/link-design-pitch/skills/link-design-pitch/SKILL.md
+시각 방향이 안 정해졌다면
+<받은경로>/link-skills/plugins/link-design-pitch/skills/link-design-pitch/SKILL.md 를 따른다
 
-Direction chosen and the thing is built? Apply it with
-<path-to>/link-skills/plugins/link-design-pitch/skills/link-design-pitch-detail/SKILL.md
+방향이 정해졌고 실제로 만들어졌다면
+<받은경로>/link-skills/plugins/link-design-pitch/skills/link-design-pitch-detail/SKILL.md 를 따른다
 ```
 
-[`AGENTS.md`](AGENTS.md) at the repo root is written for exactly this — which skill handles what,
-and which reference files to load at which point.
+저장소 최상위의 [`AGENTS.md`](AGENTS.md)가 바로 이 용도로 쓰였습니다 — 어느 스킬이 무엇을 맡고,
+어떤 참조 파일을 언제 읽어야 하는지.
 
 ---
 
-## How these are built
+## 어떻게 만들어졌는가
 
-Not a style guide for its own sake — knowing this tells you what you are installing.
+취향을 적어 둔 규칙집이 아닙니다. **무엇을 설치하는지 알려면 어떻게 만들어졌는지가 필요하기 때문에**
+적습니다.
 
-**A skill is a procedure written as prose, with its reasoning intact.** Not a checklist. Where a step
-matters the file says *why*, because a model that understands the reason handles the case the
-checklist did not anticipate. Every rule in here that reads oddly specific is there because
-something went wrong without it.
+**스킬은 이유가 살아 있는 산문으로 쓴 절차입니다.** 체크리스트가 아닙니다. 어떤 단계가 중요하면
+그 파일은 *왜* 중요한지를 말합니다. 이유를 아는 모델은 체크리스트가 예상하지 못한 상황을 처리하기
+때문입니다. 여기서 유난히 구체적으로 읽히는 규칙은 전부, 그게 없어서 뭔가 잘못됐던 적이 있는
+것들입니다.
 
-**Reference files load on demand, and the long ones are indexed.** `SKILL.md` is what always gets
-read; anything lengthy sits in `references/` and is pulled in only for the phase that needs it. The
-two catalogs open with an index so a run reads the ten entries it uses rather than all twenty-four —
-that alone is 29% of a run's input.
+**참조 파일은 필요할 때만 읽히고, 긴 것은 색인이 붙어 있습니다.** 항상 읽히는 건 `SKILL.md`뿐이고,
+분량이 있는 것은 `references/` 에 두고 그 단계에서만 불러옵니다. 카탈로그 두 개는 앞에 색인이 있어서
+스물넷 전부가 아니라 **실제로 쓰는 열 개만** 읽습니다. 그것만으로 한 번 실행의 입력이 29% 줄었습니다.
 
-**Skills stop at decisions rather than guessing past them.** Both of these end a run by asking. It is
-the most important property here: work produced past a decision point is work the owner may throw
-away, and it is also a decision quietly taken away from them.
+**스킬은 결정 지점에서 멈추지, 지나쳐 추측하지 않습니다.** 두 스킬 모두 질문으로 실행을 끝냅니다.
+여기서 가장 중요한 성질입니다 — 결정 지점을 지나 만든 결과물은 버려질 수 있는 작업이고, 동시에
+주인에게서 조용히 빼앗은 결정이기 때문입니다.
 
-**Nothing depends on a feature only one agent has.** Where a harness offers something better — a
-structured question prompt, a hosted preview — the skill uses it when present and works without it
-when absent. That is what keeps the clone path above viable.
+**특정 에이전트에만 있는 기능에 기대지 않습니다.** 더 나은 수단이 있으면 있을 때 쓰고, 없으면 없는
+대로 동작합니다. 위의 clone 경로가 성립하는 이유입니다.
 
-**Changes come from use, not from planning.** Every revision so far came from a skill failing on a
-real task: a pause that got skipped, a measurement taken against the wrong element, a bias baked into
-the instructions. Nothing here was added because it seemed like a good idea.
+**변경은 계획이 아니라 실사용 실패에서 나옵니다.** 지금까지의 모든 개정은 실제 작업에서 스킬이
+깨져서 나왔습니다 — 건너뛴 정지, 엉뚱한 요소를 잰 측정, 지시문에 박혀 있던 편향. 좋아 보여서 넣은
+것은 하나도 없습니다.
 
-Adding a skill to this repo: see [`AUTHORING.md`](AUTHORING.md).
-
----
-
-## How this repo is run
-
-Written down so you know what to expect before you depend on it.
-
-**These are my tools, published.** They are built for work I actually do and shaped by what breaks in
-it. That is why they are opinionated enough to be useful, and also why they may not fit your
-situation. Read a skill before you run it — it is a few hundred lines of Markdown and it tells you
-exactly what it will do.
-
-**Versions are explicit and bumped by hand.** Each plugin pins a `version`, so you only move when I
-publish. Patch for corrections, minor for new behavior, major if an invocation name or an output
-contract changes. What ships is what passed a real run, not a draft. See [`CHANGELOG.md`](CHANGELOG.md).
-
-**Issues and PRs are welcome; a reply is not promised.** Bug reports naming what you ran and what
-happened are genuinely useful and I will read them. Feature requests I will read too, but will
-probably not build unless I hit the need myself. Fork freely; that is what the MIT license is for.
-
-**Nothing here phones home.** Skills are instructions. They call no external service, collect
-nothing, and send nothing anywhere.
+새 스킬을 추가하는 방법은 [`AUTHORING.md`](AUTHORING.md)에 있습니다.
 
 ---
 
-## License
+## 이 저장소를 운영하는 방식
 
-MIT — see [LICENSE](LICENSE).
+의존하기 전에 무엇을 기대할 수 있는지 알 수 있도록 적어 둡니다.
+
+**제 도구를 공개한 것입니다.** 제가 실제로 하는 일에 맞춰 만들었고, 그 일에서 깨진 것들이 모양을
+잡았습니다. 그래서 쓸모 있을 만큼 의견이 뚜렷하고, 같은 이유로 당신 상황에는 안 맞을 수 있습니다.
+돌리기 전에 읽어 보세요 — 수백 줄짜리 마크다운이고, 무엇을 할지 그대로 적혀 있습니다.
+
+**버전은 명시적이고 손으로 올립니다.** 각 플러그인이 `version`을 고정하므로 제가 릴리스할 때만
+움직입니다. 고침은 patch, 새 동작은 minor, 호출 이름이나 산출물 계약이 바뀌면 major.
+초안이 아니라 실제 실행을 통과한 것만 나갑니다. [`CHANGELOG.md`](CHANGELOG.md)를 보세요.
+
+**이슈와 PR은 환영하지만 답장을 약속하지는 않습니다.** 무엇을 돌렸고 무엇이 일어났는지 적은 버그
+제보는 정말로 도움이 되고 읽습니다. 기능 요청도 읽지만, 제가 직접 그 필요를 겪지 않으면 아마 만들지
+않을 것입니다. 마음껏 포크하세요. MIT 라이선스가 그러라고 있는 것입니다.
+
+**아무것도 밖으로 보내지 않습니다.** 스킬은 지시문입니다. 외부 서비스를 부르지 않고, 아무것도
+수집하지 않고, 어디로도 전송하지 않습니다.
+
+---
+
+## 언어에 대해
+
+사람이 읽는 문서(README·AUTHORING·CHANGELOG·AGENTS)는 한국어입니다.
+
+`SKILL.md` 와 `references/` 는 영어입니다. 그 파일들의 독자는 사람이 아니라 모델이고, 같은 내용이
+영어일 때 토큰을 덜 먹기 때문입니다. **출력은 영어로 나오지 않습니다** — 스킬 안에 "사용자가 쓰는
+언어로 답하라"가 명시돼 있어서, 한국어로 물으면 한국어로 답합니다.
+
+---
+
+## 라이선스
+
+MIT — [LICENSE](LICENSE) 참고.

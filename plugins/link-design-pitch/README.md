@@ -4,105 +4,108 @@
 claude plugin install link-design-pitch@link-skills
 ```
 
-One install, **two skills**. They are separate runs because building the actual thing sits between
-them.
+한 번 설치에 **스킬 둘**. 별개의 실행인 이유는 **그 사이에 실제로 만드는 단계가 끼어 있기**
+때문입니다.
 
-| | Invoked as | Does |
+| | 호출 | 하는 일 |
 |---|---|---|
-| **1** | `link-design-pitch:link-design-pitch` | Five questions → ten directions with your real content → recommend → **stops for your choice** |
-| | *you build the features and content* | by hand or with another agent |
-| **2** | `link-design-pitch:link-design-pitch-detail` | Applies the chosen direction to every surface, then presents interaction options |
+| **1** | `link-design-pitch:link-design-pitch` | 질문 다섯 → 실제 내용으로 렌더한 시안 열 개 → 추천 → **선택을 묻고 멈춤** |
+| | *직접 만드는 단계* | 기능과 내용을 직접 또는 다른 AI로 |
+| **2** | `link-design-pitch:link-design-pitch-detail` | 정해진 방향을 모든 화면에 적용하고, 인터랙션 선택지를 제시 |
 
-The second refuses to run without a chosen direction on record. Run the first one.
+두 번째는 정해진 방향이 기록에 없으면 실행을 거부합니다. 첫 번째를 먼저 돌리세요.
 
 ---
 
-## Why the split
+## 왜 둘로 나눴나
 
-One long run spanning the build would either stall waiting for content or guess at it — and the
-guess is wrong in exactly the way that matters: field counts, label lengths, how many rows there
-really are. So the first skill stops at the choice and writes `DECISION.md`; the second picks up
-from that file when the thing exists.
+한 번의 실행이 만드는 단계를 가로지르면, 내용이 나올 때까지 멈춰 있거나 없는 내용을 지어내게
+됩니다. 그리고 지어낸 추측은 하필 중요한 부분에서 틀립니다 — 필드가 몇 개인지, 라벨이 얼마나 긴지,
+행이 실제로 몇 줄인지.
 
-It also keeps each run cheap. You can re-apply a direction, or go back and choose a different one,
-without redoing the other half.
+그래서 첫 스킬은 선택에서 멈추고 `DECISION.md` 를 남기고, 두 번째가 실제 물건이 생겼을 때 그 파일에서
+이어받습니다.
 
-## Skill 1 — choosing a direction
+한 번의 실행도 가벼워집니다. 방향을 다시 적용하거나 다른 방향으로 되돌아가는 일을, 반대쪽을 다시
+하지 않고 할 수 있습니다.
 
-**Phase 0 — read the ground.** What the target can actually render, and what already exists.
-Directions that cannot be built are eliminated here, not after you fall for one.
+## 스킬 1 — 방향 고르기
 
-**Phase 1 — five questions, in one pass.**
+**0단계 — 바닥 확인.** 대상이 실제로 무엇을 그릴 수 있는지, 그리고 이미 무엇이 있는지. 만들 수 없는
+방향은 여기서 걸러집니다. 마음에 든 뒤가 아니라.
+
+**1단계 — 질문 다섯 개, 한 번에.**
 
 | | |
 |---|---|
-| 1 | Who is this for? |
-| 2 | **What are you actually producing?** — web app, desktop app, deck, spreadsheet, report |
-| 3 | Core color — answered with reasoned palettes, never an open prompt |
-| 4 | Layout — offered as choices |
-| 5 | **The one action this must drive** |
+| 1 | 누구를 위한 것인가 |
+| 2 | **무엇을 만드는가** — 웹앱·데스크톱앱·발표자료·스프레드시트·보고서 |
+| 3 | 핵심 색 — 근거 있는 팔레트로 제시. 열린 질문으로 묻지 않음 |
+| 4 | 레이아웃 — 선택지로 제시 |
+| 5 | **유도해야 할 단 하나의 행동** |
 
-Question 2 decides what can be rendered, how dense a surface can be, and whether the interaction
-step applies at all. Question 5 decides the hierarchy for everything downstream.
+2번이 세 가지를 한꺼번에 정합니다 — 무엇을 렌더할 수 있는지, 화면이 얼마나 빽빽할 수 있는지,
+그리고 **인터랙션 단계가 아예 해당되는지**. 5번은 그 아래 모든 것의 위계를 정합니다.
 
-**Phase 2 — ten directions** from a catalog of twenty-four, rendered with your content at identical
-size and framing so only the style varies. Some fit, some stretch, at least one is expected to lose
-— watching a direction get eliminated for a concrete reason teaches you more about your constraints
-than five safe options do.
+**2단계 — 시안 열 개**, 스물넷짜리 카탈로그에서 골라 당신의 내용으로, 같은 크기와 틀로 렌더합니다.
+스타일만 다르게 보이도록. 잘 맞는 것, 볼 만한 것, 그리고 **떨어질 걸 알면서 넣는 것**이 최소 둘.
+방향 하나가 구체적인 이유로 탈락하는 걸 보는 게, 안전한 선택지 다섯 개보다 제약을 더 잘 알려주기
+때문입니다.
 
-**Phase 3 — trade-offs, a recommendation, the strongest objection to it answered — then it stops.**
-The recommendation is whatever fits: sometimes one of the ten unchanged, sometimes two composed.
-Neither is the default.
+**3단계 — 장단점, 추천, 그 추천에 대한 가장 강한 반론까지. 그리고 멈춥니다.** 추천은 상황에 맞는
+것입니다 — 열 개 중 하나 그대로일 때도, 둘을 합친 것일 때도 있습니다. **어느 쪽도 기본값이
+아닙니다.**
 
-## Skill 2 — applying it
+## 스킬 2 — 적용하기
 
-**Phase 4 — every distinct surface**, full token set, and hierarchy and contrast *measured* rather
-than asserted. Dominance is a claim about area and it inverts silently; and de-emphasis is the most
-common way an interface quietly fails accessibility, since dimming to 50% opacity reads as tasteful
-and lands below the readable threshold. Then the part everyone forgets: what actually has to change
-in the code, with paths and lines.
+**4단계 — 구별되는 모든 화면.** 전체 토큰 값, 그리고 위계와 대비를 주장하는 대신 **잽니다**.
+지배는 면적에 대한 주장이라 조용히 뒤집히고, 물러나게 하는 처리는 인터페이스가 접근성에서 조용히
+실패하는 가장 흔한 경로입니다 — 50%로 흐리는 건 세련돼 보이지만 읽을 수 있는 경계 아래로 떨어집니다.
+그리고 다들 잊는 부분: **코드에서 실제로 뭘 바꿔야 하는지**를 경로와 줄 번호로.
 
-**Phase 5 — interaction options, presented not built.** Skipped entirely for decks, spreadsheets and
-print. Otherwise: the two or three forks that actually bite here, what each buys and costs, a
-recommendation — then it asks. **No state mockups, no behavior spec.** That work is discarded the
-moment you name a model that was not on the list, which has already happened once.
+**5단계 — 인터랙션 선택지. 제시만 하고 만들지 않습니다.** 발표 자료·스프레드시트·인쇄물이면 통째로
+건너뜁니다. 그 외에는 여기서 실제로 걸리는 갈래 둘셋, 각각 무엇을 얻고 무엇을 잃는지, 권장안 —
+그리고 묻습니다. **상태 목업도 거동 명세도 없습니다.** 그 작업은 목록에 없던 모델을 주인이 말하는
+순간 버려지는데, 이미 한 번 그랬습니다.
 
-## What you get
+## 무엇이 나오나
 
-Placed where your project already keeps documentation (`docs/design/` if `docs/` exists, otherwise
-`design/`):
+프로젝트가 이미 문서를 두는 곳에 놓입니다 (`docs/` 가 있으면 `docs/design/`, 없으면 `design/`).
 
-| File | From | Audience |
+| 파일 | 누가 | 누구 것 |
 |---|---|---|
-| `01-directions.html` | skill 1 | People — the ten-direction board |
-| `01-directions.png` | skill 1 | Agents with vision — the styles as a picture |
-| `02-detail-<direction>.html` · `.png` | skill 2 | People, and agents with vision |
-| `DECISION.md` | both | **Everyone else** — answers, verdicts, measurements, tokens, checklist |
+| `01-directions.html` | 스킬 1 | 사람 — 시안 열 개 보드 |
+| `01-directions.png` | 스킬 1 | 비전 되는 에이전트 — 마크업이 아니라 그림 |
+| `02-detail-<방향>.html` · `.png` | 스킬 2 | 사람, 그리고 비전 되는 에이전트 |
+| `DECISION.md` | 둘 다 | **그 외 전부** — 답변, 판정, 측정값, 토큰, 체크리스트 |
 
-`DECISION.md` is plain Markdown on purpose. Hosted preview links often cannot be fetched by other
-tools, and a decision has to outlive the session that made it. It is also the contract between the
-two skills.
+`DECISION.md` 를 평문 마크다운으로 두는 건 의도한 것입니다. 호스팅된 미리보기 링크는 다른 도구가
+못 가져오는 경우가 많고, 결정은 그것을 만든 세션보다 오래 남아야 합니다. 두 스킬 사이의 계약이기도
+합니다.
 
-## What it will not do
+## 하지 않는 것
 
-- Pitch something your platform cannot render. Feasibility is checked before the board goes up.
-- Narrow its options to match your past picks. A pitch that learns what you always choose stops
-  showing you the option you would not have chosen, which is the whole value.
-- Decide for you. It recommends, states the best argument against its own recommendation, and waits.
-- Build the interaction model. It lays out the options and asks.
+- 플랫폼이 그릴 수 없는 것을 제시하지 않습니다. 가능 여부는 보드가 올라가기 전에 확인합니다.
+- 과거 선택에 맞춰 선택지를 좁히지 않습니다. 늘 고르는 것을 학습해서 안 보여주기 시작하면,
+  **당신이 고르지 않았을 그 선택지**가 사라지는데 그게 이 도구의 값어치 전부입니다.
+- 대신 결정하지 않습니다. 추천하고, 자기 추천에 대한 가장 강한 반론을 말하고, 기다립니다.
+- 인터랙션 모델을 만들지 않습니다. 선택지를 펼쳐 놓고 묻습니다.
 
-## Reference files
+## 참조 파일
 
-Loaded on demand rather than all at once.
+한꺼번에가 아니라 필요할 때 읽힙니다.
 
-| File | Holds |
+| 파일 | 내용 |
 |---|---|
-| `skills/link-design-pitch/references/directions.md` | The catalog — 24 directions with palettes, type stances, failure modes, and a ready-made token line each |
-| `skills/link-design-pitch/references/feasibility.md` | What Qt/QSS, web, SwiftUI, Compose, React Native, terminal, email, print and slides can each actually render |
-| `skills/link-design-pitch/references/board.md` | Building and verifying the board |
-| `skills/link-design-pitch-detail/references/spec.md` | Building the per-surface file, plus five measurement traps that have each produced a wrong finding |
-| `skills/link-design-pitch-detail/references/behavior.md` | The interaction forks worth asking about, and the states checklist |
+| `skills/link-design-pitch/references/directions.md` | 카탈로그 — 24개 방향. 색인(잘하는 것·무너지는 지점) + 항목마다 토큰 줄과 타입·형태 |
+| `skills/link-design-pitch/references/feasibility.md` | Qt/QSS, 웹, SwiftUI, Compose, React Native, 터미널, 이메일, 인쇄, 슬라이드가 각각 실제로 뭘 그릴 수 있는지 |
+| `skills/link-design-pitch/references/board.md` | 보드를 만들고 검증하는 법 |
+| `skills/link-design-pitch-detail/references/spec.md` | 화면별 파일을 만드는 법, 그리고 각각 잘못된 결론을 낳았던 측정 함정 다섯 |
+| `skills/link-design-pitch-detail/references/behavior.md` | 주인에게 물을 만한 인터랙션 갈래와 상태 체크리스트 |
 
-## Worked example
+이 파일들은 영어입니다. 독자가 모델이고 영어가 토큰을 덜 먹기 때문입니다. **출력은 당신이 쓰는
+언어로 나옵니다.**
 
-The first public example lands here after the next run on a fresh project.
+## 예시
+
+첫 공개 예시는 다음 실행 뒤에 여기 올라갑니다.

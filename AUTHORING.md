@@ -1,123 +1,133 @@
-# Adding a skill to this repo
+# 새 스킬 추가하기
 
-Written for me on a different machine, and for anyone forking this. Everything here came from
-something breaking, not from a style preference.
+다른 컴퓨터에 있는 나와, 이걸 포크하는 사람을 위해 씁니다. 여기 적힌 것은 전부 뭔가 깨져서 알게 된
+것이고, 취향으로 정한 규칙은 없습니다.
 
-## Where files go
+## 파일이 놓이는 곳
 
 ```
-plugins/<plugin>/
+plugins/<플러그인>/
 ├── .claude-plugin/plugin.json      name · description · version · author · license
-├── README.md                       usage, for humans browsing GitHub
-└── skills/<skill>/
-    ├── SKILL.md                    the procedure — always loaded when the skill triggers
-    ├── AGENTS.md                   entry point for Codex and other agents
-    └── references/*.md             loaded on demand, per phase
+├── README.md                       사용법. GitHub에서 보는 사람용
+└── skills/<스킬>/
+    ├── SKILL.md                    절차 — 스킬이 발동하면 항상 읽힘
+    ├── AGENTS.md                   Codex 등 다른 에이전트의 진입점
+    └── references/*.md             단계별로 필요할 때만 읽힘
 ```
 
-A plugin can hold several skills. **Put skills in the same plugin when one is meaningless without the
-other** — installing a plugin installs all of its skills, so that is how you guarantee they travel
-together. Separate plugins when someone might genuinely want one and not the other.
+플러그인 하나가 스킬 여러 개를 담을 수 있습니다. **한 스킬이 다른 스킬 없이는 의미가 없다면 같은
+플러그인에 넣으세요.** 플러그인을 설치하면 그 안의 스킬이 전부 들어오므로, 그게 둘을 함께 다니게
+만드는 유일한 방법입니다. 누군가 하나만 원할 법하면 플러그인을 나누세요.
 
-Register the plugin in `.claude-plugin/marketplace.json`, and add it to `plugins/link/`'s
-`dependencies` array so the bundle install picks it up.
+만든 플러그인은 `.claude-plugin/marketplace.json` 에 등록하고, `plugins/link/` 의 `dependencies`
+배열에 이름을 넣어야 묶음 설치에 딸려옵니다.
 
-## Naming
+## 이름
 
-The invocation is `<plugin>:<skill>`. Two constraints pull against each other:
+호출은 `<플러그인>:<스킬>` 입니다. 서로 당기는 제약이 둘 있습니다.
 
-- The plugin prefix already namespaces the skill, so short skill names read better.
-- Anyone cloning the repo instead of installing gets the **folder name** with no prefix. A skill
-  folder called `detail/` becomes `/detail` on their machine, which is a name nobody should own.
+- 플러그인 접두사가 이미 네임스페이스라, 스킬 이름은 짧을수록 읽기 좋습니다.
+- 그런데 설치 대신 clone 하는 사람은 **폴더 이름**을 접두사 없이 그대로 받습니다. 스킬 폴더를
+  `detail/` 로 지으면 그 사람 기계에서 `/detail` 이 되는데, 그건 누구도 차지하면 안 되는 이름입니다.
 
-So: name skill folders for what they are in full, even when it repeats the plugin. `link-design-pitch`
-and `link-design-pitch-detail` are verbose as `link-design-pitch:link-design-pitch-detail`, and they
-are unambiguous on both install paths. Verbosity costs less than a collision.
+그래서 **플러그인 이름과 겹치더라도 스킬 폴더는 온전한 이름으로** 짓습니다.
+`link-design-pitch:link-design-pitch-detail` 은 장황하지만 두 설치 경로 어디서도 모호하지 않습니다.
+장황함이 충돌보다 쌉니다.
 
-## Writing the SKILL.md
+## SKILL.md 쓰기
 
-**Frontmatter.** `name` must equal the folder name. `description` is the only thing the model sees
-when deciding whether to invoke — write what it does *and* when to reach for it, and be a little
-pushy, because skills under-trigger more often than they over-trigger.
+**frontmatter.** `name` 은 폴더 이름과 같아야 합니다. `description` 은 모델이 이 스킬을 부를지
+정할 때 보는 유일한 정보입니다 — 무엇을 하는지 *그리고* 언제 부를지를 쓰고, 약간 밀어붙이듯 쓰세요.
+스킬은 과하게 발동하는 것보다 발동을 안 하는 쪽이 훨씬 잦습니다.
 
-**No `: ` inside the description.** An unquoted YAML scalar containing a colon-space parses as a
-mapping and the frontmatter is silently dropped — the skill then loads with no metadata and never
-triggers. Use an em dash. This has happened here, and `claude plugin validate` is what caught it.
+**description 안에 `콜론+공백`을 넣지 마세요.** 따옴표 없는 YAML 스칼라에 그게 들어가면 매핑으로
+파싱되고 frontmatter 전체가 조용히 버려집니다 — 그러면 스킬은 메타데이터 없이 로드되고 **영원히
+발동하지 않습니다.** 대신 줄표(—)를 쓰세요. 여기서 실제로 일어난 일이고, `claude plugin validate`
+가 잡아냈습니다.
 
-**Explain why, not just what.** A model that knows the reason handles the case the instruction did
-not anticipate. `"Compute rendered areas, confirm the hero is largest"` is a checklist item;
-`"dominance is a claim about area and it inverts silently when an element spans two rows"` is
-something the model can reason from.
+**무엇이 아니라 왜를 쓰세요.** 이유를 아는 모델은 지시문이 예상 못 한 상황을 처리합니다.
+「렌더된 면적을 계산하고 히어로가 가장 큰지 확인하라」는 체크리스트 항목이고, 「지배는 면적에 대한
+주장이고 요소가 두 행을 걸치면 조용히 뒤집힌다」는 모델이 거기서 추론할 수 있는 것입니다.
 
-**Every mandatory pause needs a reason attached.** Steps that stop and ask are the highest-value and
-most-skipped instruction type. Say what running past it costs — the decision taken away from the
-owner, and the work thrown out — or it will get run past.
+**멈추는 단계에는 반드시 이유를 붙이세요.** 멈추고 묻는 지시는 가장 값어치 있고 가장 자주
+건너뛰어집니다. 지나쳤을 때 무엇을 잃는지 — 주인에게서 빼앗은 결정과 버려지는 작업 — 을 적지
+않으면 지나칩니다.
 
-**Keep an eye on what you are biasing.** A phrase like *"the answer is often a combination"* produced
-a combination in two consecutive runs, from two different projects. If every run of a skill ends the
-same way, look for the sentence that caused it.
+**무엇을 편향시키고 있는지 보세요.** 「답은 흔히 둘의 조합이다」 같은 한 문장이 서로 다른 두
+프로젝트에서 연속으로 조합을 만들어 냈습니다. 어떤 스킬이 매번 같은 결론으로 끝난다면, 그렇게 만든
+문장을 찾아보세요.
 
-## Reference files
+## 참조 파일
 
-Anything long goes in `references/` and gets loaded only for its phase. `SKILL.md` should name the
-file and the phase that needs it.
+분량이 있는 것은 `references/` 에 두고 해당 단계에서만 읽히게 합니다. `SKILL.md` 는 그 파일 이름과
+어느 단계에서 필요한지를 말해야 합니다.
 
-**Index anything read partially.** A catalog of twenty-four that gets read whole so ten can be
-chosen is paying three times over. Put an index at the top with exactly what selection needs, keep
-the rest below, and **tell the skill to read the index first** — otherwise the file changes shape and
-the read stays the same size.
+**일부만 읽히는 파일에는 색인을 붙이세요.** 스물넷짜리 카탈로그를 통째로 읽고 열 개를 고르면 세 배를
+내는 셈입니다. 선택에 필요한 것만 앞에 색인으로 두고 나머지는 아래로 내리세요. 그리고 **스킬에
+색인을 먼저 읽으라고 명시하세요** — 안 그러면 파일 모양만 바뀌고 읽는 양은 그대로입니다.
 
-**Split by what the information is for.** Selection needs "good at / where it breaks". Rendering
-needs the palette and the type stance. Those are different readers at different moments, so they
-belong in different places, and neither should repeat the other.
+**정보가 무엇에 쓰이는지로 나누세요.** 선택에는 「잘하는 것 / 무너지는 지점」이 필요하고, 렌더에는
+팔레트와 타입 스탠스가 필요합니다. 서로 다른 순간의 서로 다른 독자이므로 다른 자리에 있어야 하고,
+어느 쪽도 다른 쪽을 반복하면 안 됩니다.
 
-**Write indexes by hand.** Auto-summarising cuts mid-sentence, and what gets cut is the decisive
-clause — *"contrast to ground is near zero by construction"*, *"perspective distorts perceived
-magnitude"*. Those phrases are the whole reason an entry is in the index at all.
+**색인은 손으로 쓰세요.** 자동 요약은 문장 중간을 자르는데, 잘리는 게 하필 판단을 가르는 구절입니다
+— *「대비가 구조적으로 0이다」*, *「원근이 값의 크기를 왜곡한다」*. 그 구절이야말로 그 항목이 색인에
+있는 이유 전부입니다.
 
-## Before committing
+## 커밋 전에
 
 ```bash
-claude plugin validate ./plugins/<plugin> --strict
+claude plugin validate ./plugins/<플러그인> --strict
+```
+
+```bash
 claude plugin validate .
 ```
 
-The first checks the plugin manifest and every skill's frontmatter. The second checks the
-marketplace catalog and that each `source` path resolves. Both must pass; `--strict` treats warnings
-as errors.
+앞의 것은 플러그인 매니페스트와 모든 스킬의 frontmatter를, 뒤의 것은 마켓플레이스 카탈로그와 각
+`source` 경로가 실제로 존재하는지를 봅니다. 둘 다 통과해야 하고 `--strict` 는 경고도 오류로 칩니다.
 
-Then check by hand:
+그다음 손으로 확인할 것:
 
-- Does every `references/*.md` the SKILL.md names actually exist?
-- Does `name` in frontmatter match the folder?
-- If the skill writes files into a user's project, is the path named for **what is in it** rather
-  than for the skill? A folder called `design-pitch/` at the root of someone else's repo says who
-  made it, not what it holds. That one had to be moved after the fact.
+- `SKILL.md` 가 언급한 `references/*.md` 가 전부 실제로 있는가
+- frontmatter의 `name` 이 폴더 이름과 같은가
+- 스킬이 사용자 프로젝트에 파일을 쓴다면, 그 경로가 **스킬 이름이 아니라 안에 든 것**으로 지어져
+  있는가. 남의 저장소 최상위에 `design-pitch/` 폴더가 생기면 누가 만들었는지를 말하지 뭐가 들었는지를
+  말하지 않습니다. 그건 나중에 옮겨야 했습니다.
 
-## Versioning
+## 버전
 
-`version` in `plugin.json` is explicit and bumped by hand, so users only move when you publish.
+`plugin.json` 의 `version` 은 명시적이고 손으로 올립니다. 그래야 사용자가 릴리스할 때만 움직입니다.
 
-| Bump | For |
+| 올림 | 언제 |
 |---|---|
-| patch | corrections, clearer wording, token reductions with no behavior change |
-| minor | new phases, new reference files, new behavior |
-| major | an invocation name changes, or the output contract changes |
+| patch | 고침, 표현 정리, 동작이 안 바뀌는 토큰 절감 |
+| minor | 새 단계, 새 참조 파일, 새 동작 |
+| major | 호출 이름이 바뀌거나 산출물 계약이 바뀔 때 |
 
-Record it in `CHANGELOG.md`. If you want version constraints to resolve between plugins, tag the
-release as `<plugin>--v<version>` — `claude plugin tag --push` derives the tag from the manifest.
+`CHANGELOG.md` 에 적으세요. 플러그인 간 버전 제약을 걸 거라면 `<플러그인>--v<버전>` 으로 태그합니다 —
+`claude plugin tag --push` 가 매니페스트에서 태그 이름을 만들어 줍니다. 저장소에 git identity가 없으면
+이 명령이 실패하니 `git config user.name` · `user.email` 을 먼저 맞춰 두세요.
 
-## Testing a skill
+## 스킬 시험하기
 
-There is no substitute for running it on something real. Three things that only show up that way:
+실제 대상에 돌려 보는 것 말고는 방법이 없습니다. 그렇게만 드러나는 것이 셋 있습니다.
 
-1. **Whether it stops where it should.** Reading the instruction is not evidence; the first run of
-   `link-design-pitch` blew past its own pause and produced detail nobody had asked for.
-2. **Whether its measurements measure the right thing.** Two separate wrong findings came from
-   comparing a highlighted element in one case against a plain element in another, and from a
-   contrast helper that read `#FFFFFF` as black because it only parsed `rgb()`.
-3. **Whether the output is the shape you expected.** Look at the rendered result, not only the
-   numbers. A card with no visible boundary reads as broken long before anyone computes its contrast.
+1. **멈춰야 할 곳에서 멈추는가.** 지시문을 읽는 것은 증거가 아닙니다. `link-design-pitch` 의 첫
+   실행은 자기 정지 지점을 지나쳐 아무도 요청하지 않은 상세를 만들어 냈습니다.
+2. **측정이 맞는 것을 재는가.** 서로 다른 두 개의 잘못된 결론이 여기서 나왔습니다 — 한쪽에서는
+   강조된 요소를 재고 다른 쪽에서는 평범한 요소를 재서 비교한 것, 그리고 대비 계산이 `rgb()` 만
+   파싱해서 `#FFFFFF` 를 검정으로 읽은 것.
+3. **결과물의 모양이 예상한 대로인가.** 숫자만 보지 말고 렌더된 것을 보세요. 경계가 보이지 않는
+   카드는 누가 대비를 계산하기 한참 전에 고장으로 읽힙니다.
 
-Run it on a project you do not already know the answer for. A skill you exercise on the project you
-just designed by hand will appear to work because you are supplying the judgment, not the skill.
+**이미 답을 아는 프로젝트에 돌리지 마세요.** 방금 손으로 설계한 것에 스킬을 돌리면 잘 되는 것처럼
+보이는데, 그건 판단을 당신이 공급하고 있기 때문이지 스킬이 하고 있는 게 아닙니다.
+
+## 문서 언어
+
+사람이 읽는 문서(README · AUTHORING · CHANGELOG · AGENTS)는 한국어로 씁니다.
+
+`SKILL.md` 와 `references/` 는 영어로 씁니다. 독자가 모델이고, 같은 내용이 영어일 때 토큰을 덜 먹기
+때문입니다. 대신 스킬 안에 **「사용자가 쓰는 언어로 답하라」** 를 반드시 넣으세요. 그게 없으면 영어로
+답하기 시작합니다.

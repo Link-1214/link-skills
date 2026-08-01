@@ -1,50 +1,48 @@
-# Changelog
+# 변경 이력
 
-Versions are pinned in each plugin's manifest and bumped by hand, so you only move when a release is
-published. Patch for corrections, minor for new behavior, major if an invocation name or an output
-contract changes.
+버전은 각 플러그인의 매니페스트에 고정돼 있고 손으로 올립니다. 릴리스가 나올 때만 움직입니다.
+고침은 patch, 새 동작은 minor, 호출 이름이나 산출물 계약이 바뀌면 major.
 
 ## link-design-pitch
 
 ### 1.0.0
 
-First release. Two skills in one plugin, because the second is meaningless without the first.
+첫 릴리스. 플러그인 하나에 스킬 둘 — 두 번째는 첫 번째 없이는 의미가 없기 때문입니다.
 
-**`link-design-pitch`** — five questions, ten directions rendered with the project's real content,
-trade-offs and feasibility argued in a table, one recommendation with the strongest objection to it
-answered, then it stops for the owner's choice.
+**`link-design-pitch`** — 질문 다섯 개, 프로젝트의 실제 내용으로 렌더한 시안 열 개, 장단점과 렌더
+가능 여부를 표로 정리, 추천 하나와 그 추천에 대한 가장 강한 반론까지. 그리고 **거기서 멈추고 주인의
+선택을 묻습니다.**
 
-**`link-design-pitch-detail`** — applies the chosen direction to every surface, measures hierarchy
-and contrast rather than asserting them, lists what has to change in the code, then presents the
-interaction options and asks. Refuses to run without a chosen direction on record.
+**`link-design-pitch-detail`** — 정해진 방향을 모든 화면에 적용하고, 위계와 대비를 주장하는 대신
+**재고**, 코드에서 뭘 바꿔야 하는지를 목록으로 냅니다. 그다음 인터랙션 선택지를 펼쳐 놓고 묻습니다.
+**기록에 정해진 방향이 없으면 실행을 거부합니다.**
 
-Shaped by two real runs — a PySide6 dashboard and a web kanban board — which between them produced
-every rule that reads oddly specific:
+두 번의 실제 실행 — 데스크톱 대시보드 하나와 웹 칸반보드 하나 — 이 모양을 잡았습니다. 유난히
+구체적으로 읽히는 규칙은 전부 거기서 나왔습니다.
 
-- **The pauses are mandatory and stated twice.** The first run wrote a full detail spec before anyone
-  had chosen a direction. Work past a decision point is work the owner may discard, and a decision
-  taken from them.
-- **A combination is never one of the ten.** Both early runs ended in a combination because the
-  instructions said *"the answer is often a combination"*. Spending a slot on one covers nine ideas
-  with ten panels, and what drops out is the stretch option that teaches the most.
-- **Hierarchy is measured, and so is the channel it uses.** Three of four tabs in the first run had
-  their hierarchy silently inverted by an element spanning two rows. In the second run the same rule
-  nearly flagged a working design, because that one carried hierarchy in contrast rather than area.
-- **Contrast is measured after opacity compositing.** Dimming other people's content to 50% reads as
-  tasteful and lands at 3.5:1. Two accessibility failures were caught this way, one of them in a
-  design already shipping.
-- **Phase 5 presents options; it does not build them.** A full behavior spec written around
-  "optimistic or confirmed" was invalidated in one sentence by a third answer nobody had offered.
-- **Output goes where the project keeps its docs**, never in a folder named after the skill.
+- **정지는 필수이고 두 번 적혀 있습니다.** 첫 실행은 아무도 방향을 고르기 전에 상세 명세를 다
+  만들어 버렸습니다. 결정 지점을 지나 만든 것은 주인이 버릴 수 있는 작업이고, 동시에 주인에게서
+  빼앗은 결정입니다.
+- **조합은 절대 열 개 중 하나가 아닙니다.** 초기 두 실행이 모두 조합으로 끝났는데, 지시문에
+  「답은 흔히 둘의 조합이다」가 있었기 때문입니다. 조합에 슬롯을 주면 열 칸으로 아홉 개만 덮게 되고,
+  빠지는 것은 가장 많이 가르쳐 주는 스트레치 안입니다.
+- **위계는 재고, 어느 채널을 쓰는지도 함께 봅니다.** 첫 실행에서는 두 행을 걸친 요소 때문에 네 탭 중
+  세 탭의 위계가 조용히 뒤집혀 있었습니다. 두 번째 실행에서는 같은 규칙이 멀쩡한 설계를 결함으로
+  신고할 뻔했는데, 그 설계는 위계를 면적이 아니라 대비로 나르고 있었기 때문입니다.
+- **대비는 불투명도 합성 뒤에 잽니다.** 남의 카드를 50%로 흐리는 건 세련돼 보이지만 3.5:1 로
+  떨어집니다. 이 방식으로 접근성 결함 둘을 잡았고, 그중 하나는 이미 출시된 화면에 있었습니다.
+- **5단계는 선택지를 제시하고 만들지 않습니다.** 「낙관적 갱신이냐 확인 후 반영이냐」를 축으로 쓴
+  전체 거동 명세가, 아무도 제시하지 않았던 세 번째 답 하나에 한 문장으로 무효가 됐습니다.
+- **산출물은 프로젝트가 문서를 두는 곳에 놓고**, 스킬 이름을 딴 폴더는 절대 만들지 않습니다.
 
-Also in this release: both catalogs open with a hand-written index so a run reads the ten entries it
-uses rather than all twenty-four, cutting 29% of the input; the board is captured as a PNG so agents
-with vision can see the styles rather than read markup; and `DECISION.md` is plain Markdown so the
-decision survives the session that made it.
+이번 릴리스에 함께 들어간 것: 카탈로그 둘 다 앞에 손으로 쓴 색인이 있어 스물넷이 아니라 실제로
+쓰는 열 개만 읽습니다(입력의 29% 절감). 보드는 PNG로도 캡처해 비전이 되는 에이전트가 마크업이
+아니라 디자인을 실제로 보게 했습니다. `DECISION.md` 는 평문 마크다운이라 결정이 그것을 만든 세션보다
+오래 남습니다.
 
 ## link
 
 ### 1.0.0
 
-Bundle plugin. Ships no skills — lists the others as dependencies so one install gets everything and
-new skills arrive on update.
+묶음 플러그인. 스킬을 담지 않고 나머지를 의존성으로 가리켜, 한 번 설치로 전부 들어오고 새 스킬이
+추가되면 업데이트에 딸려옵니다.
