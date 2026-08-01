@@ -1,8 +1,10 @@
 # Building the boards
 
-Two HTML files: the ten-direction board (Phase 2) and the detail spec (Phase 4). Both self-contained
-— inline every style, embed assets as data URIs, no external requests. They must open from disk and
-survive being emailed to someone.
+One self-contained HTML file: the ten-direction board. Inline every style, embed assets as data
+URIs, no external requests. It must open from disk and survive being emailed to someone.
+
+The per-surface detail spec is a different file built by a different skill — see
+`link-design-pitch-detail`. This file covers the board only.
 
 ## Assemble, do not author
 
@@ -82,6 +84,17 @@ Two traps that have already produced wrong findings:
 - **A viewport of `0` means the harness handed you a static snapshot, not a live layout.** Any
   overflow or width measurement from that state is an artifact. Check `clientWidth` before trusting
   anything derived from it.
+- **Parse both hex and `rgb()` in your contrast helper.** `getComputedStyle` returns `rgb(...)` but
+  the values you compare against are usually hex literals from the token table. A helper that only
+  scans for digits reads `#FFFFFF` as `[0,0,0]` and every ratio it produces is wrong while looking
+  perfectly plausible. This has happened.
+- **Composite opacity before measuring contrast.** An element at `opacity:.5` does not have its
+  nominal color on screen. Blend it against what is behind it first, or you will report a passing
+  ratio for text that fails.
+
+When the harness cannot run scripts in the page at all, the same measurements work headlessly:
+append a probe script that writes its JSON result into a `<div>`, then read it back out of
+`chrome --headless --dump-dom`. One command, no browser pane required.
 
 ## Capture a PNG
 
@@ -102,16 +115,6 @@ chrome --headless=new --disable-gpu --hide-scrollbars   --window-size=1200,7200 
 Set the height tall enough for the whole page — ten stacked panels plus tables runs to several
 thousand pixels, and a short window silently crops the bottom half. `--user-data-dir` pointed
 somewhere disposable avoids colliding with a running browser profile.
-
-## Detail spec
-
-Once a direction is chosen:
-
-- **Every distinct surface.** One panel each, full size, real content.
-- **Per surface: what dominates and why**, in one line. If you cannot name it, the hierarchy is not
-  working yet.
-- **The token table**, with a swatch beside each literal value.
-- **The implementation checklist**, ordered, with paths and lines.
 
 ## Content
 

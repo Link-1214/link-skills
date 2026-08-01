@@ -43,9 +43,11 @@ Then reload so the skills register:
 /reload-plugins
 ```
 
-### Claude Code — one skill only
+### Claude Code — one plugin only
 
-Add the marketplace once with the command above, then install just what you want:
+Add the marketplace once with the command above, then install just what you want. Note that a
+plugin is the install unit —  carries both of its skills and they arrive
+together:
 
 ```bash
 claude plugin install link-design-pitch@link-skills
@@ -64,7 +66,10 @@ Then point at the skill from your project's `AGENTS.md`:
 
 ```markdown
 Design direction undecided or under review?
-Follow <path-to>/link-skills/plugins/link-design-pitch/skills/design-pitch/SKILL.md
+Follow <path-to>/link-skills/plugins/link-design-pitch/skills/link-design-pitch/SKILL.md
+
+Direction already chosen and the thing is built? Apply it with
+<path-to>/link-skills/plugins/link-design-pitch/skills/link-design-pitch-detail/SKILL.md
 ```
 
 Each skill folder carries its own `AGENTS.md` describing when to reach for it and which reference
@@ -89,17 +94,18 @@ or run the command above.
 claude plugin install link-design-pitch@link-skills
 ```
 
-Pitches visual design directions the way a studio does, instead of guessing at a single comp. Ten
-directions on the wall rendered with **your** real content and data, trade-offs argued in a table,
-technical feasibility checked *before* anyone falls for something the platform cannot render, one
-recommendation with the strongest objection to it answered — then you pick, and only then the
-detailed screen-by-screen spec.
+**Two skills, one install.** Settling a visual direction and applying it are separate runs, because
+building the actual thing sits between them.
 
-It opens with five questions: who this is for, what kind of screen it is, the core color, the
-layout, and the single action the screen has to drive. That last answer sets the visual hierarchy
-for everything downstream.
+`link-design-pitch` asks five questions — including what you are actually producing, since a
+spreadsheet and a web app deserve different options — then puts ten directions on the wall rendered
+with **your** real content, argues the trade-offs in a table, checks what the target can actually
+render, recommends one, and **stops for your choice**.
 
-Runs before the code exists, midway through, or on software that already ships.
+`link-design-pitch-detail` picks up once the thing exists. It applies the chosen direction to every
+surface with hierarchy and contrast measured rather than asserted, lists what has to change in the
+code, then lays out the interaction options and asks. It refuses to run without a direction on
+record.
 
 **[Usage and worked example →](plugins/link-design-pitch/README.md)**
 

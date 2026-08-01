@@ -1,16 +1,27 @@
 # Behavior and states
 
-Loaded in Phase 5, and only when the artifact moves. A printed report, a deck, a spreadsheet handed
-over as a file — none of these have states, and a states table for them is noise.
+Loaded in Phase 5, and only when the deliverable moves. A printed report, a deck, a spreadsheet
+handed over as a file — none of these have states, and a table of them is noise.
 
-A mockup shows one moment: full data, nothing loading, nothing wrong, labels the length you happened
-to type. Everything that sinks a build lives outside that moment. This file is the list of moments
-you have to draw too.
+**This file is a menu, not a specification to write out.** Phase 5 presents options and their
+trade-offs and asks; it does not draw states or write behavior specs. Use the tables below to pick
+the two or three forks worth putting to the owner, and to produce the states *checklist* — a line
+each saying which apply and which do not.
 
-## The states that actually occur
+The reason for the limit is cost. A full behavior specification runs longer than everything else in
+both skills combined, and it is thrown away the moment the owner names a model you did not offer.
+That has already happened: a complete spec was written around "optimistic vs confirmed", and the
+answer was a third model — stage the moves, apply them together — which invalidated the failure
+screens, the empty states, and the undo affordance in one sentence.
 
-Not every screen has every one. Go through the list, mark which apply, and say what the screen looks
-like in each. Marking one "does not occur here" is a real answer — the point is that you checked.
+## The states that actually occur — as a checklist
+
+Go through the list and mark which apply here, one line each. Marking one "does not occur" is a real
+answer; the point is that someone checked. **Do not draw them.** Whoever builds this needs to know
+the list exists and which entries are live — they do not need mockups of each.
+
+The third column is why the entry is on the list at all: it names the failure it prevents, which is
+what makes the checklist worth reading rather than skipping.
 
 | State | The question it answers | Where it usually goes wrong |
 |---|---|---|
@@ -49,11 +60,17 @@ defaulting silently is how a product ends up inconsistent with itself — one sc
 another confirmed, one autosaving and another not, and nobody remembers deciding either.
 
 Do not ask all of them. Pick the **two or three that actually bite for this artifact**, give each a
-recommendation with the reason, and let the owner answer before you write the spec. A read-mostly
-dashboard does not need the autosave question; a form-heavy tool does not need the drag question.
+recommendation with the reason, and let the owner answer. A read-mostly dashboard does not need the
+autosave question; a form-heavy tool does not need the drag question.
 
-The Phase 1 action tells you which ones matter: whichever forks sit on that path are the ones to
-ask about.
+The record's **one action** tells you which matter: whichever forks sit on that path are the ones to
+ask about. The rest are noise, and asking about all of them makes the owner do work you were
+supposed to do.
+
+**Expect answers off your axis.** The forks below are the common shapes, not the space of possible
+answers. When an owner describes a model you did not offer, that is the fork being framed too
+narrowly — record their model in their words and list what it newly leaves undecided, rather than
+pushing it back onto your two options.
 
 **Optimistic or confirmed?** Optimistic — show the result immediately, reconcile later — makes the
 product feel instant and suits high-frequency, low-stakes actions. It obliges you to design the
@@ -113,17 +130,17 @@ The strongest feedback is the interface simply showing the new truth — the car
 column, the count went up. A toast is the fallback for when nothing visible changed. If your answer
 to "what tells them it worked" is only a toast, look again at whether the screen could just show it.
 
-## What to write down
+## What to record
 
-In the spec, per screen:
+Into `DECISION.md`, not into a spec document:
 
-1. Which states from the table apply, and what the surface looks like in each
-2. The Phase 1 action's full path: resting → in-flight → success, and → failure
-3. The keyboard route to that action
-4. Motion, with durations, or an explicit "instant, platform has no transitions"
-5. **The answers the owner gave**, so the next agent knows these were decided rather than assumed
-6. Anything deliberately not handled, and why
+1. **The forks you put to the owner and what they chose** — so the next person knows these were
+   decided, not assumed. An interaction choice with no recorded owner is one that gets quietly
+   reversed.
+2. **If they answered outside the options**, their model in their words, and what it newly leaves
+   undecided.
+3. **Which states apply**, one line each. A checklist, not drawings.
+4. **What is deliberately out of scope**, and why. "Offline is not handled in v1" is a decision;
+   leaving it unmentioned is an omission someone finds in production.
 
-The last two matter as much as the rest. "Offline is out of scope for v1" is a decision; leaving it
-undrawn is an omission someone discovers in production. And an interaction choice with no recorded
-owner is one the next person will quietly reverse.
+Motion, durations, and per-state screens are for whoever builds it, working from these answers.

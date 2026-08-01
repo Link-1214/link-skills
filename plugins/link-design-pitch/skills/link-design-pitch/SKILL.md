@@ -1,13 +1,13 @@
 ---
-name: design-pitch
-description: Pitch visual design directions the way a design studio does — interview the owner with five questions, present ten directions rendered with their real content, compare trade-offs and what the target can actually render, recommend one, then stop and let them choose before speccing it in detail. Use this whenever the user wants design options, mockups, a visual direction, a theme, a restyle, a "make it look better", a color scheme, or says the current thing feels bland/dated/generic — and equally when they are starting from scratch, midway through building, or redesigning something that already ships. Works for any designed artifact, not just screens — web pages, app UIs, dashboards, slide decks, spreadsheets, printed reports. Reach for it before writing any styling code on a project whose look has not been decided.
+name: link-design-pitch
+description: Pitch visual design directions the way a design studio does — interview the owner with five questions including what they are actually producing, present ten directions rendered with their real content, compare trade-offs and what the target can actually render, recommend one, then stop and let them choose. Use this whenever the user wants design options, mockups, a visual direction, a theme, a restyle, a "make it look better", a color scheme, or says the current thing feels bland/dated/generic. Works for any deliverable — a web or desktop app, a slide deck, a spreadsheet, a document, a printed report. Reach for it before writing any styling code on a project whose look has not been decided. Applying the chosen direction to real screens comes later, from link-design-pitch-detail.
 ---
 
-# Design Pitch
+# Design Pitch — choosing a direction
 
 A studio does not open with a single comp and hope. It interviews the client, puts ten directions on
 the wall, argues the trade-offs out loud, recommends one — **and then stops and lets the client
-choose.** Only after that does it draw the thing in detail.
+choose.**
 
 That sequence exists because the expensive mistake in design work is not picking the wrong style. It
 is discovering, three days into implementation, that the style could never have worked here. Ten
@@ -16,19 +16,26 @@ cheap directions surface that on day one.
 **Surface** below means whatever the thing is: a screen, a page, a slide layout, a sheet, a printed
 section. The procedure does not assume software.
 
-## The two mandatory pauses
+## Where this sits
 
-Everything else here is guidance. These two are the shape of the exercise.
-
-| After | You stop and ask |
+| Step | Who |
 |---|---|
-| **Phase 3** — the recommendation | Which direction do you want? |
-| **Phase 5** — before speccing behavior | Which of these interaction choices? |
+| **1. Five questions → 2. ten directions → recommend → stop for the choice** | **this skill** |
+| 3. Build the actual features and content | the owner, by hand or with another agent |
+| 4. Apply the direction to every real surface → 5. offer interaction options | `link-design-pitch-detail` |
 
-Running past a pause is the main way this goes wrong, and it goes wrong twice over: it takes the
-decision away from the person whose decision it is, and it burns effort on detail for a direction
-they may not pick. If you find yourself writing Phase 4 without an answer in hand, you have already
-made their choice for them.
+The split exists because **building sits between choosing a direction and applying it.** One long run
+spanning the build would either stall waiting or guess at content that does not exist yet. Finish
+this skill's job, write `DECISION.md`, and stop. The detail skill picks up from that file.
+
+## The mandatory pause
+
+Phase 3 ends by asking which direction they want, and **this skill ends there.** Do not write
+per-surface specs, detail mockups, or interaction behavior — that is the other skill, and it runs
+after the thing exists.
+
+Running past the pause takes the decision away from the person whose decision it is, and burns
+effort on a direction they may not pick.
 
 ## Phase 0 — Read the ground first
 
@@ -38,7 +45,7 @@ PySide6 app wastes everyone's time, and the failure is silent — the property p
 happens, and you find out from a screenshot. Read `references/feasibility.md`. Where you can, verify
 rather than trust: render one throwaway element with the risky property and look at it.
 
-**What already exists.** This runs at three different moments and the constraints differ:
+**What already exists.** Three entry points, different constraints:
 
 | Entry point | What changes |
 |---|---|
@@ -53,8 +60,6 @@ Never name the folder after this skill. A folder called `design-pitch/` at the r
 else's repository says who made it rather than what is inside it. This is not hypothetical — it
 happened, and the folder had to be moved.
 
-State the entry point and the target in one line. It changes what you should recommend.
-
 ## Phase 1 — The five questions
 
 Ask all five in one pass. Dripping them one at a time makes the owner context-switch five times for
@@ -68,8 +73,13 @@ attention.
 years* and *someone who has thirty seconds and has never heard of you* is the single largest
 determinant of the right answer. Offer two or three concrete archetypes.
 
-**2. What kind of artifact is it?** Dashboard, landing page, app screen, form, report, deck,
-spreadsheet, storefront, editor. This governs density, and whether Phase 5 applies at all.
+**2. What are you actually producing?** Not "what kind of page" — the **deliverable format**. A web
+app, a desktop app, a mobile app, a slide deck, a spreadsheet, a document, a printed report, an
+email. Ask it plainly and offer the plausible ones.
+
+This one answer decides three things at once: what can be rendered at all, how dense a surface can
+be, and whether the detail skill's interaction step applies later at all. A spreadsheet and a web
+app deserve different tens, and asking after you have already picked the ten is too late.
 
 **3. What is the core color?** Never open-ended — "what color do you like" produces a hex with no
 reasoning attached and it will fight the content later. Offer four concrete palettes **derived from
@@ -96,9 +106,8 @@ problem, and papering over it produces something that is neither.
 ## Phase 2 — Ten directions
 
 Pick ten from `references/directions.md`, which catalogs twenty-four with their signatures and a
-ready-made CSS variable line for each. **Assemble from the catalog rather than inventing values** —
-the palettes are already worked out, and re-deriving them each run is the largest avoidable cost in
-this whole exercise.
+ready-made token line for each. **Assemble from the catalog rather than inventing values** — the
+palettes are already worked out, and re-deriving them each run is the largest avoidable cost here.
 
 Choose so the set spans the space:
 
@@ -115,11 +124,10 @@ Phase 3. Spending a slot on "dark + bento" means ten panels cover nine ideas, an
 is the stretch option that would have taught them something.
 
 **Render each with the project's real content.** Real labels, real numbers, real navigation. Lorem
-ipsum hides the only thing that matters — whether the style survives contact with actual data. A
-five-cell layout looks great until the real thing has nineteen fields.
+ipsum hides the only thing that matters — whether the style survives contact with actual data.
 
-Write to `<output>/01-directions.html`. Read `references/board.md` for structure and for how to
-verify it in one pass rather than six.
+Write to `<output>/01-directions.html`. Read `references/board.md` for structure, for how to verify
+it in one pass rather than six, and for how to capture the PNG.
 
 ## Phase 3 — Compare, recommend, then stop
 
@@ -142,89 +150,31 @@ Name the strongest objection to your own recommendation and answer it. If you ca
 have not looked.
 
 **Then stop and ask which direction they want.** Offer the recommendation, the runners-up, and the
-option to combine differently. Do not write a single line of Phase 4 until they answer.
-
-## Phase 4 — Spec the chosen direction
-
-**Every distinct surface, not one.** A direction that works on the landing view and falls apart on
-the settings form is not a direction. For a four-tab app, four screens. For a deck, the layouts that
-actually differ. For a spreadsheet, the sheet types.
-
-For each surface, name the element carrying the Phase 1 action and make it visibly dominant, with
-one line on why it earns that position.
-
-**Measure the hierarchy rather than trusting your eye.** Dominance is a claim about area and it
-inverts silently — an element spanning two rows quietly outgrows the hero you placed, and the
-surface ends up answering a different question than intended. Compute rendered areas, confirm the
-hero is largest, aim for roughly 1.3× the runner-up. Check overflow in the same pass.
-
-**Measure contrast while you are there**, against 4.5:1. Muted labels are usually the smallest text
-and therefore need *more* contrast, which is exactly where shipped designs fail. When comparing
-across directions, compare the same element in each — measuring a highlighted item in one and a
-plain item in another produces a number that means nothing. That has already produced a wrong
-finding once.
-
-Include the full token set as actual values, not adjectives. Anyone implementing this should never
-have to invent a color.
-
-Then the part everyone forgets: **what has to change in the code.** Grep for hardcoded color
-literals and count them. A theme that looks like a stylesheet swap usually is not — chart libraries,
-canvas backgrounds, conditional formatting, and inline styles live outside the stylesheet and stay
-stubbornly light while everything around them goes dark. List places with file and line. If the
-count is large, say a token layer should land first as a no-visual-change step, because that is the
-only way to make the swap reversible.
-
-Write to `<output>/02-detail-<direction>.html`.
-
-## Phase 5 — Behavior: ask, then spec
-
-**Skip entirely when the artifact does not move**: a printed report, a deck, a spreadsheet handed
-over as a file. Say you are skipping it and why.
-
-For anything a person operates, a mockup showing only the resting state is half a design. What sinks
-builds is rarely the color — it is the states nobody drew. The empty view on day one. The list at
-four hundred rows. The label that turned out to be a long compound noun. The save that failed after
-the thing already moved.
-
-**These are decisions, not deductions. Ask.** `references/behavior.md` lists the forks worth putting
-to the owner — optimistic or confirmed, undo or confirm, inline or panel or modal, autosave or
-explicit. Each has real consequences, and defaulting silently is how a product ends up inconsistent
-with itself. Present the two or three that actually matter here, with a recommendation each, and let
-them answer before you write the spec.
-
-Two things anchor the spec once they have:
-
-**The Phase 1 action gets the interaction budget.** Whatever the one thing is, that path gets the
-responsiveness, the feedback, and whatever motion you spend. Everything else can be plain. Polish
-spread evenly reads as no priority at all.
-
-**Motion is constrained by Phase 0, not by taste.** If the platform has no transitions, specify the
-instant version that still reads. A spec describing eased motion on a toolkit that cannot ease is a
-spec that silently does not happen.
+option to combine differently. Record the answer in `DECISION.md` and end the run.
 
 ## Output
 
-Four things in `<output>`:
-
 | File | Audience |
 |---|---|
-| `01-directions.html` | People — the board, self-contained, opens from disk |
-| `01-directions.png` | **Agents with vision** — they see the styles, not just the markup |
-| `02-detail-<direction>.html` | People — the chosen direction across every surface |
-| `DECISION.md` | **Everyone else** — answers, verdicts, measurements, tokens, checklist |
+| `<output>/01-directions.html` | People — the board, self-contained, opens from disk |
+| `<output>/01-directions.png` | **Agents with vision** — they see the styles, not just the markup |
+| `<output>/DECISION.md` | **Everyone else**, and the handoff to the detail skill |
 
-The PNG costs nothing extra: you already render the board to verify it, so capture it in the same
-pass. HTML shows a style natively, which no other format does as cheaply — but an agent reading HTML
-source sees markup, not a design. The picture closes that gap, and `DECISION.md` carries every value
-in plain text for agents without vision. PDF was considered and rejected: it is generated *from*
-HTML, so it is strictly more work for the same reach.
+The PNG costs nothing extra: you already render the board to verify it. HTML shows a style natively,
+which no other format does as cheaply — but an agent reading HTML source sees markup, not a design.
+The picture closes that gap, and `DECISION.md` carries every value in plain text for agents without
+vision. PDF was considered and rejected: it is generated *from* HTML, so it is strictly more work
+for the same reach.
+
+**`DECISION.md` is the contract with `link-design-pitch-detail`, which refuses to run without it.**
+Write it even if the session ends before a choice is made — with `Status: Awaiting choice`.
 
 ```markdown
 # 시각 방향 결정 기록 — <project>
-Date · Entry point · Target
+Date · Entry point · Deliverable format
 
 ## Answers
-1. Audience · 2. Artifact · 3. Core color · 4. Layout · 5. The one action
+1. Audience · 2. Deliverable format · 3. Core color · 4. Layout · 5. The one action
 
 ## Directions considered
 | # | Direction | Good at | Cost | Feasible | Verdict |
@@ -238,25 +188,13 @@ What was recommended, what they chose, and why if it differed.
 ## Tokens
 Every value, literal.
 
-## Behavior
-The interaction choices they made, and what was deliberately left out.
-
-## Implementation
-Ordered, with paths and lines. Note what must not change.
+## Status
+`Direction chosen: <name>` — or `Awaiting choice`.
 ```
 
-### Keeping the record true
-
-A stale record is worse than none, because the next agent will believe it.
-
-**Record divergence.** If they picked something other than your recommendation, write what and why.
-That gap is the highest-information thing in the document — it says what you misread. Agreement
-teaches nobody anything.
-
-**Mark implementation when it lands.** A checklist written as future work stays that way forever
-unless someone changes it. Before treating a record as a plan, check whether the code already
-reflects it. This has already cost one round of duplicated work: a checklist said *pending* while
-every item had shipped.
+**Record divergence.** If they picked something other than your recommendation — or gave an answer
+outside the options you offered — write what and why. That gap is the highest-information thing in
+the document; it usually says your options were too narrow. Agreement teaches nobody anything.
 
 ## On memory and personalization
 
