@@ -3,6 +3,34 @@
 다른 컴퓨터에 있는 나와, 이걸 포크하는 사람을 위해 씁니다. 여기 적힌 것은 전부 뭔가 깨져서 알게 된
 것이고, 취향으로 정한 규칙은 없습니다.
 
+## 용어
+
+| 용어 | 뜻 |
+|---|---|
+| 마켓플레이스 | 이 저장소 (`link-skills`). `add` 하는 대상 |
+| 플러그인 | **설치 단위.** 스킬 여러 개를 담음 |
+| 스킬 | **호출 단위.** `SKILL.md` 하나 |
+
+Claude Code 공식 용어를 그대로 씁니다. 명령어에 `plugin` 이 그대로 나오므로 다른 말을 쓰면
+읽을 때마다 번역해야 합니다.
+
+## 추가 절차 (요약)
+
+새 스킬 하나를 늘리는 데 필요한 것은 넷입니다.
+
+1. `plugins/<플러그인>/` 을 만들고 `.claude-plugin/plugin.json` 과 `skills/<스킬>/SKILL.md` 를 둔다
+2. `.claude-plugin/marketplace.json` 의 `plugins` 배열에 등록한다
+3. `plugins/link/.claude-plugin/plugin.json` 의 `dependencies` 에 플러그인 이름을 한 줄 넣는다
+4. `claude plugin validate` 두 종류를 통과시킨다
+
+3번을 빠뜨리면 새 스킬이 전체 설치에 안 딸려옵니다. 이미 `link` 를 설치한 사람은
+`claude plugin update link@link-skills` 만 하면 새 스킬을 받습니다.
+
+기존 플러그인에 스킬을 **더하는** 경우라면 `skills/` 아래 폴더 하나만 늘리면 됩니다.
+2·3번은 이미 돼 있습니다.
+
+아래는 각 단계에서 실제로 걸렸던 것들입니다.
+
 ## 파일이 놓이는 곳
 
 ```
@@ -20,7 +48,7 @@ plugins/<플러그인>/
 만드는 유일한 방법입니다. 누군가 하나만 원할 법하면 플러그인을 나누세요.
 
 만든 플러그인은 `.claude-plugin/marketplace.json` 에 등록하고, `plugins/link/` 의 `dependencies`
-배열에 이름을 넣어야 묶음 설치에 딸려옵니다.
+배열에 이름을 넣어야 전체 설치에 딸려옵니다.
 
 ## 이름
 
