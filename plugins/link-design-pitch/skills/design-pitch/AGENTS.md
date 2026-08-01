@@ -1,4 +1,4 @@
-# link-design-pitch — for Codex and other agents
+# design-pitch — for Codex and other agents
 
 This directory is a skill: a written procedure any coding agent can follow. Nothing here is Claude-specific — it is Markdown instructions plus reference files.
 
@@ -11,7 +11,7 @@ Load the reference files when the phase calls for them:
 | File | When |
 |---|---|
 | `references/feasibility.md` | Phase 0 — before pitching anything, to learn what the target platform can actually render |
-| `references/directions.md` | Phase 2 — the catalog of eighteen directions to choose ten from |
+| `references/directions.md` | Phase 2 — the catalog of twenty-four directions to choose ten from |
 | `references/board.md` | Phases 2 and 4 — how to build the HTML boards |
 
 ## When to use it
@@ -24,11 +24,12 @@ Add a line to the project's own `AGENTS.md` so it is discoverable from where the
 pointing at wherever you cloned or installed this directory:
 
 ```markdown
-Design direction undecided or under review? Follow <path-to>/link-design-pitch/SKILL.md
+Design direction undecided or under review?
+Follow <path-to>/link-skills/plugins/link-design-pitch/skills/design-pitch/SKILL.md
 ```
 
-If you installed it as a Claude Code skill it will be under `~/.claude/skills/link-design-pitch/`;
-otherwise it can live anywhere on disk, since the skill is just Markdown.
+Installed through Claude Code it is invoked as `link-design-pitch:design-pitch`. Cloned, it can
+live anywhere on disk — the skill is just Markdown and needs no installation.
 
 ## Output contract
 

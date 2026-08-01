@@ -1,61 +1,141 @@
-# link-design-pitch
+# link-skills
 
-Pitch visual design directions the way a studio does, instead of guessing at a single comp.
+**Decide it before you build it.**
 
-Ten directions on the wall, rendered with your real content. Trade-offs argued out loud. Technical feasibility checked *before* anyone falls in love with something the platform cannot render. One recommendation, one strongest objection to it, then the owner picks — and only then the detailed screen-by-screen spec.
+Agent skills for the part of the work that happens before the code: surveying the options, arguing
+the trade-offs out loud, checking what your platform can actually do, and writing the decision down
+somewhere the next session can read it.
 
-## Why
+Every skill here leaves a plain-Markdown record of what was decided and why. Boards and mockups are
+for people; the record is for the next agent — including you, three weeks later with none of the
+context.
 
-The expensive mistake in design work is not picking the wrong style. It is discovering three days into implementation that the style could never have worked here — that Qt silently ignores `backdrop-filter`, that the email client drops flexbox, that the chart library keeps its own white background no matter what the theme says.
-
-Ten cheap directions surface that on day one.
-
-## The five questions
-
-1. Who is this for? — a daily operator and a first-time visitor want opposite things
-2. What kind of page is it? — governs density
-3. What is the core color? — answered with four reasoned palettes, not an open prompt
-4. What layout? — offered as choices, with the cost of changing an existing one stated
-5. **What is the one action this must drive?** — sets the visual hierarchy for everything downstream
-
-## Output
-
-Three files under `design-pitch/` in your project:
-
-| File | Audience |
-|---|---|
-| `01-directions.html` | People — the ten-direction board |
-| `02-detail-<direction>.html` | People — every screen in the chosen direction |
-| `DECISION.md` | Agents — answers, verdicts, token values, implementation checklist |
-
-`DECISION.md` is plain Markdown on purpose. Hosted preview links often cannot be fetched by other tools, and a decision needs to outlive the session that made it.
+---
 
 ## Install
 
-**Claude Code** — copy the folder into `~/.claude/skills/` (Windows: `%USERPROFILE%\.claude\skills\`), then invoke with `/link-design-pitch`.
+### Claude Code — everything
 
-**Codex or any other agent** — the skill is plain Markdown. Point at it from your project's `AGENTS.md`:
+```bash
+claude plugin marketplace add Link-1214/link-skills
+```
+
+```bash
+claude plugin install link@link-skills
+```
+
+`link` ships nothing itself. It lists the other plugins as dependencies, so one install gets all of
+them and new skills arrive on update without another install step.
+
+From inside a session, the same two steps are:
+
+```bash
+/plugin marketplace add Link-1214/link-skills
+```
+
+```bash
+/plugin install link@link-skills
+```
+
+Then reload so the skills register:
+
+```bash
+/reload-plugins
+```
+
+### Claude Code — one skill only
+
+Add the marketplace once with the command above, then install just what you want:
+
+```bash
+claude plugin install link-design-pitch@link-skills
+```
+
+### Codex and other agents
+
+Skills here are plain Markdown with no Claude-specific tooling, so any coding agent can follow them.
+Clone the repo:
+
+```bash
+git clone https://github.com/Link-1214/link-skills.git
+```
+
+Then point at the skill from your project's `AGENTS.md`:
 
 ```markdown
-Design direction undecided or under review? Follow <path>/link-design-pitch/SKILL.md
+Design direction undecided or under review?
+Follow <path-to>/link-skills/plugins/link-design-pitch/skills/design-pitch/SKILL.md
 ```
 
-See [`AGENTS.md`](AGENTS.md) for the agent-facing summary.
+Each skill folder carries its own `AGENTS.md` describing when to reach for it and which reference
+files to load at which point.
 
-## Layout
+### Staying current
 
-```
-link-design-pitch/
-├── SKILL.md                    the procedure
-├── AGENTS.md                   agent-facing entry point
-└── references/
-    ├── directions.md           18 directions with concrete signatures
-    ├── feasibility.md          what each platform can actually render
-    └── board.md                how to build the boards
+```bash
+claude plugin update link@link-skills
 ```
 
-`references/feasibility.md` covers Qt/QSS, web, SwiftUI, Compose, React Native, terminal, email, print, and slides — including which directions have a single point of failure and die without it.
+Auto-update is off by default for non-Anthropic marketplaces. Turn it on for this one in `/plugin`,
+or run the command above.
 
-## When to run it
+---
 
-Before the code exists, midway through, or on software that already ships. Phase 0 of `SKILL.md` explains how the constraints differ at each entry point — a redesign of shipping software has to count the existing color literals first, because that number is the real cost of a theme swap and the owner deserves it before choosing.
+## Skills
+
+### link-design-pitch
+
+```bash
+claude plugin install link-design-pitch@link-skills
+```
+
+Pitches visual design directions the way a studio does, instead of guessing at a single comp. Ten
+directions on the wall rendered with **your** real content and data, trade-offs argued in a table,
+technical feasibility checked *before* anyone falls for something the platform cannot render, one
+recommendation with the strongest objection to it answered — then you pick, and only then the
+detailed screen-by-screen spec.
+
+It opens with five questions: who this is for, what kind of screen it is, the core color, the
+layout, and the single action the screen has to drive. That last answer sets the visual hierarchy
+for everything downstream.
+
+Runs before the code exists, midway through, or on software that already ships.
+
+**[Usage and worked example →](plugins/link-design-pitch/README.md)**
+
+---
+
+## How this repo is run
+
+Written down so you know what to expect before you depend on it.
+
+**These are my tools, published.** They are built for work I actually do and shaped by what breaks
+in it. That is why they are opinionated enough to be useful, and also why they may not fit your
+situation. Read a skill before you run it — it is a few hundred lines of Markdown and it tells you
+exactly what it will do.
+
+**Changes come from use, not from planning.** Every revision so far came from a skill failing on a
+real task. I do not add capability speculatively, because guessing at needs I have not hit produces
+instructions that read well and do nothing.
+
+**Versions are explicit and bumped by hand.** Each plugin pins a `version`, so you only move when I
+publish. Patch for corrections, minor for new behavior, major if an invocation name or an output
+contract changes. What ships is what passed a real run, not a draft.
+
+**Skills stay tool-agnostic.** No skill depends on a feature only one agent has. Where a harness
+offers something better, the skill uses it when present and works without it when absent. That is
+what keeps the clone path above viable for Codex and others.
+
+**Issues and PRs are welcome; a reply is not promised.** Bug reports naming what you ran and what
+happened are genuinely useful and I will read them. Feature requests I will read too, but will
+probably not build unless I hit the need myself — see the second point. Fork freely; that is what
+the MIT license is for.
+
+**Nothing here phones home.** Skills are instructions. They call no external service, collect
+nothing, and send nothing anywhere.
+
+---
+
+## License
+
+MIT — see [LICENSE](LICENSE).

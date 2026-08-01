@@ -1,5 +1,5 @@
 ---
-name: link-design-pitch
+name: design-pitch
 description: Pitch visual design directions the way a design studio does — interview the owner with five questions, present ten distinct directions rendered with their real content, compare trade-offs and technical feasibility, recommend one, and after they pick, produce the detailed screen-by-screen spec. Use this whenever the user wants design options, mockups, a visual direction, a theme, a restyle, a "make it look better", a color scheme, or says the current UI feels bland/dated/generic — and equally when they are starting a new interface from scratch, midway through building one, or redesigning something that already ships. Reach for it before writing any styling code on a project whose look has not been decided.
 ---
 
