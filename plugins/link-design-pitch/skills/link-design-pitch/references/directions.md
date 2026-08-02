@@ -49,7 +49,7 @@ cost, and the nineteen you did not pick never appear in the output.
 | 24 | Broken grid / overlap | Editorial and portfolios; non-templated while staying restrained | Wrong for tables, forms, anything dense. Responsive collapse costs real work |
 | 25 | Bauhaus | Education, culture, product — geometry makes the structure legible at a glance | Three primaries at full strength collide with status colors. On data screens the shapes compete with the marks |
 | 26 | Art Deco | Luxury, spirits, hotels, invitations — formality and occasion | Gold reads as yellow-grey on a screen. Hard to hit contrast targets, and wrong for dense UI |
-| 27 | Constructivism | Campaigns, manifestos, anything that needs urgency — diagonals pull the eye through |Diagonal composition breaks under responsive reflow, and it is hostile to long reading |
+| 27 | Constructivism | Campaigns, manifestos, anything that needs urgency — diagonals pull the eye through | Diagonal composition breaks under responsive reflow, and it is hostile to long reading |
 | 28 | Anti-AI / handmade | When the thing must not look machine-made. Texture, collage, deliberate imperfection | The texture and irregularity blur information. Assets are expensive and do not scale to a hundred screens |
 | 29 | Japandi / warm minimal | Screens people sit in for hours — quiet without minimalism's coldness | Low-saturation naturals leave status colors and accents nowhere loud to stand |
 
