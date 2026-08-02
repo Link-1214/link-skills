@@ -8,9 +8,13 @@ The per-surface detail spec is a different file built by a different skill — s
 
 ## Assemble, do not author
 
-The single largest cost in a run is hand-writing ten palettes. Do not. `directions.md` ends with a
-ready-made token line for each of the twenty-four, plus the few extra rules the shadow- and
-blur-based ones need.
+**Every panel is HTML and CSS you write. Nothing is downloaded, searched for, or pasted in.** The
+catalog carries the palette and the shape language; a reference image found online cannot contain
+this project's content, and the whole point of the board is to see that content in each style.
+
+The single largest cost in a run is hand-writing ten palettes. Do not. Each catalog entry opens with
+a ready-made token line, and the file ends with the few extra rules the shadow- and blur-based
+directions need.
 
 The structure that makes this cheap: **write the mockup markup once, and give each direction a
 wrapper class that only redefines variables.**

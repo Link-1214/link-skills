@@ -1,6 +1,6 @@
 # Direction catalog
 
-Twenty-four directions. **Pick ten per pitch.**
+Twenty-nine directions. **Pick ten per pitch.**
 
 The catalog is deliberately larger than the board. If it held exactly ten, every project would
 receive the same ten and the board would be a template — a bank's operations console would get Y2K
@@ -16,8 +16,8 @@ which ones die without a property the target may not have. The entries below car
 needs: the token line, the type and shape signature, and the notes worth knowing once a direction is
 actually on the board.
 
-Reading all twenty-four entries to choose ten costs roughly three times what this file needs to
-cost, and the fourteen you did not pick never appear in the output.
+Reading all twenty-nine entries to choose ten costs roughly three times what this file needs to
+cost, and the nineteen you did not pick never appear in the output.
 
 ## Index
 
@@ -47,6 +47,11 @@ cost, and the fourteen you did not pick never appear in the output.
 | 22 | Kinetic typography | Hero sections, single-message pages, launches | Motion interferes with scanning and re-reading. Needs variable fonts plus animation |
 | 23 | Memphis / postmodern | Youth-facing products, events; signalling not-corporate | Decorative shapes weigh the same as chart marks, so ornament and information blur |
 | 24 | Broken grid / overlap | Editorial and portfolios; non-templated while staying restrained | Wrong for tables, forms, anything dense. Responsive collapse costs real work |
+| 25 | Bauhaus | Education, culture, product — geometry makes the structure legible at a glance | Three primaries at full strength collide with status colors. On data screens the shapes compete with the marks |
+| 26 | Art Deco | Luxury, spirits, hotels, invitations — formality and occasion | Gold reads as yellow-grey on a screen. Hard to hit contrast targets, and wrong for dense UI |
+| 27 | Constructivism | Campaigns, manifestos, anything that needs urgency — diagonals pull the eye through |Diagonal composition breaks under responsive reflow, and it is hostile to long reading |
+| 28 | Anti-AI / handmade | When the thing must not look machine-made. Texture, collage, deliberate imperfection | The texture and irregularity blur information. Assets are expensive and do not scale to a hundred screens |
+| 29 | Japandi / warm minimal | Screens people sit in for hours — quiet without minimalism's coldness | Low-saturation naturals leave status colors and accents nowhere loud to stand |
 
 **Bold** marks a hard dependency or a failure that disqualifies the direction outright for some
 targets. Check those against `feasibility.md` before putting them on the board.
@@ -55,11 +60,11 @@ targets. Check those against `feasibility.md` before putting them on the board.
 
 Cover the range rather than the comfortable middle. A workable spread:
 
-- two or three restrained (1–4, 7)
-- one or two structural (5, 6, 24)
+- two or three restrained (1–4, 7, 29)
+- one or two structural (5, 6, 24, 25)
 - two atmospheric (8–11, 19)
-- one tactile (12–14, 21)
-- two expressive (15–18, 20, 23)
+- one tactile (12–14, 21, 28)
+- two expressive (15–18, 20, 23, 26, 27)
 - type-led (22) when the page is message-first rather than data-first
 
 Then adjust for the answers. A daily-use internal tool has no business seeing Y2K in its top ten —
@@ -268,6 +273,66 @@ clashing pastels held together by black outlines · type set at angles.
 Elements deliberately break their column, overlap one another, and bleed past the margin. Images sit
 under type; blocks are offset rather than aligned. The grid is present but violated on purpose.
 
+## 25. Bauhaus
+
+`--g:#F2EFE9;--s:#fff;--l:#111111;--t:#111111;--t2:#5A5A5A;--ac:#D62828;--r:0`
+
+Primaries at full strength — red `#D62828`, blue `#1D4ED8`, yellow `#FBBF24` — on a warm off-white.
+Type: geometric sans, lowercase headlines, tight leading. Shape: circles, triangles and squares used
+structurally rather than decoratively; a visible grid; no radius.
+
+**Notes** the ancestor of Swiss, flat design and Material, so it reads as familiar rather than
+retro. Distinct from Swiss in that Bauhaus is playful and geometric where Swiss is strict and
+typographic. Keep the primaries for structure and leave status color out of that set, or red means
+two things at once.
+
+## 26. Art Deco
+
+`--g:#0E1A1A;--s:#132423;--l:#C9A227;--t:#F2EDE3;--t2:#A99B7E;--ac:#C9A227;--r:0`
+
+Deep ground with metallic gold rules. Type: high-contrast display serif or geometric caps with wide
+tracking. Shape: strict bilateral symmetry, stepped and fan motifs, sharp angles, thin gold hairlines
+framing everything.
+
+**Notes** gold is a texture, not a color — on screen `#C9A227` is a yellow-grey and none of the sheen
+survives. Use it for rules and accents, never for text that has to be read. The symmetry is the
+signature; break it and the style disappears.
+
+## 27. Constructivism
+
+`--g:#F2EDE4;--s:#FFFFFF;--l:#111111;--t:#111111;--t2:#4A4A4A;--ac:#D2231F;--r:0`
+
+Red, black and paper. Type: heavy condensed sans, often rotated. Shape: diagonal axes, hard-edged
+photographic montage, oversized numerals, elements running off the edge to imply motion.
+
+**Notes** designed to look urgent, which is exactly why it wears badly on anything read daily. Nearest
+neighbour is brutalism, but constructivism is dynamic where brutalism is static. The diagonals are
+where responsive layout breaks first — decide early how they collapse.
+
+## 28. Anti-AI / handmade
+
+`--g:#EDE7DA;--s:#F7F3EA;--l:#C9BCA4;--t:#2A241C;--t2:#6E6354;--ac:#B4552E;--r:4px`
+
+Paper and ink rather than pixels. Visible texture, torn and cut edges, slight rotation on elements,
+hand-drawn rules, photographed materials. Type: a face with irregularity in it, or actual handwriting
+for accents.
+
+**Notes** the 2026 counter-movement to AI's uniform polish — the point is that a person made it, so
+the imperfection has to look intentional rather than sloppy. Punk-revival collage sits at the loud end
+of the same idea. Expensive: every texture is an asset, and it does not scale to a hundred screens.
+Strongest where the audience is already suspicious that the work was generated.
+
+## 29. Japandi / warm minimal
+
+`--g:#F3F0EA;--s:#FBFAF7;--l:#DED8CC;--t:#2C2A26;--t2:#7A756B;--ac:#8A9A7B;--r:8px`
+
+Minimalism with warmth added back. Warm neutrals, muted sage or clay accent, generous space, natural
+material texture at low opacity. Type: humanist sans, comfortable leading, nothing tight.
+
+**Notes** solves minimalism's actual failure — that restraint on a cold grey ground reads as
+unfinished. Distinct from plain minimalism in temperature, not in density. The muted accent is the
+risk: check that status colors still separate from it before committing.
+
 ---
 
 ### The ones that need more than a token line
@@ -284,6 +349,9 @@ the same few rules every time:
 | Brutalism | `border:2px solid #000; box-shadow:3px 3px 0 #000` — a solid offset, no blur |
 | Neon / cyber | `box-shadow:0 0 12px currentColor` on accented borders |
 | Terminal | `font-family:ui-monospace,Consolas,monospace` throughout |
+| Anti-AI / handmade | a paper texture as a repeating data-URI background, plus `transform:rotate(-.4deg)` on cards so nothing sits perfectly square |
+| Art Deco | `border-image` or stacked 1px gold rules for the stepped frames; symmetry has to be built into the layout, not added as CSS |
+| Constructivism | `transform:rotate(-8deg)` on headline blocks, and a decision about how they un-rotate on narrow widths |
 
 Adjust values toward the project's brand when it has one. What you should not do is start from a
 blank palette — that is where the run time goes.

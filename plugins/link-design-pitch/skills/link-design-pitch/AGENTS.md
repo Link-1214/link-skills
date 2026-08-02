@@ -19,7 +19,7 @@ Read `SKILL.md` and follow it. Load reference files when the phase calls for the
 | File | When |
 |---|---|
 | `references/feasibility.md` | Phase 0 — what the target can actually render, before pitching anything |
-| `references/directions.md` | Phase 2 — the catalog of twenty-four, each with a ready-made token line. **Assemble from it; do not derive palettes by hand** — that is the largest avoidable cost in a run |
+| `references/directions.md` | Phase 2 — the catalog of twenty-nine, each with a ready-made token line. **Assemble from it; do not derive palettes by hand** — that is the largest avoidable cost in a run |
 | `references/board.md` | Phase 2 — building and verifying the board, and capturing the PNG |
 
 ## When to use it

@@ -109,11 +109,15 @@ problem, and papering over it produces something that is neither.
 
 ## Phase 2 — Ten directions
 
-`references/directions.md` opens with an index of twenty-four — what each is good at, where it
+`references/directions.md` opens with an index of twenty-nine — what each is good at, where it
 breaks, and which die without a property this target may lack. **Read the index, pick ten, then read
 only those ten entries.** The entries carry the token line and the type and shape signature, which
-you need to render but not to choose; reading all twenty-four to pick ten costs three times what it
-should, and the fourteen you drop never appear in the output.
+you need to render but not to choose; reading all twenty-nine to pick ten costs three times what it
+should, and the nineteen you drop never appear in the output.
+
+**The mockups are written as HTML and CSS, not sourced.** Do not search for reference images. The
+catalog already carries the palette and the shape language, and a found image cannot contain this
+project's own content — which is the only thing the board is actually testing.
 
 **Assemble from the catalog rather than inventing values** — the palettes are already worked out,
 and re-deriving them drifts between runs, which makes two boards stop being comparable.
