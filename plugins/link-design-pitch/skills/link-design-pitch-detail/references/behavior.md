@@ -97,6 +97,16 @@ rather than asking. Name the keyboard route through the Phase 1 action. Daily us
 memory, and a mouse-only tool caps how fast they can ever get. Where the primary action is drag,
 a keyboard equivalent is not optional: drag is unavailable to keyboard users entirely.
 
+**Does the product act on its own?** Ask only when something generates, suggests, or runs on the
+user's behalf. Most dashboards, forms and documents do not, and raising it there is noise.
+
+Where it does, the states nobody draws are: *working* — how long, and can it be stopped; *suggested
+but not applied* — is this live or a proposal; *changed by the product* — told apart from what a
+person changed, or the user loses track of their own edits; *undo* — one step or the whole run;
+*refused* — why, in words the user can act on. The fork to put to the owner is **how much runs
+without asking**: everything gated, nothing gated, or gated by consequence. *Recommend gating by
+consequence, and be concrete about which actions are on which side.*
+
 **Drag affordance.** If something is draggable, the resting state has to say so — a handle, a cursor
 change, a lift on hover. Ask only whether drag is the primary path or a convenience; the answer
 changes how much of the interaction budget it earns.

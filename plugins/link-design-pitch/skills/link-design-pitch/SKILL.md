@@ -107,6 +107,20 @@ If the answer creates tension with the artifact's conventional form — a kanban
 "find my next task" rather than "move cards" — name that tension. Resolving it *is* the design
 problem, and papering over it produces something that is neither.
 
+### What the answers switch on
+
+Read the five answers for two things beyond their face value.
+
+**If question 5 is about understanding rather than doing** — notice the anomaly, see what changed,
+grasp where it stands — then the surface should say it in a sentence, not lay out figures and leave
+the reading to the viewer. Four numbers at equal size make the reader do the work the surface was
+supposed to do.
+
+**If questions 2 or 5 involve the product acting on the user's behalf** — generating, suggesting,
+approving, running by itself — note it for the detail skill, whose interaction forks then include
+what the product's own work looks like while it runs. If nothing does, that fork does not exist here
+and raising it only adds noise. Most dashboards, forms and documents do not.
+
 ## Phase 2 — Ten directions
 
 `references/directions.md` opens with an index of twenty-nine — what each is good at, where it
@@ -170,14 +184,18 @@ option to combine differently. Record the answer in `DECISION.md` and end the ru
 | File | Audience |
 |---|---|
 | `<output>/01-directions.html` | People — the board, self-contained, opens from disk |
-| `<output>/01-directions.png` | **Agents with vision** — they see the styles, not just the markup |
+| `<output>/01-directions.png` | **Anywhere HTML does not render** — GitHub, chat, an agent with vision |
 | `<output>/DECISION.md` | **Everyone else**, and the handoff to the detail skill |
 
-The PNG costs nothing extra: you already render the board to verify it. HTML shows a style natively,
-which no other format does as cheaply — but an agent reading HTML source sees markup, not a design.
-The picture closes that gap, and `DECISION.md` carries every value in plain text for agents without
-vision. PDF was considered and rejected: it is generated *from* HTML, so it is strictly more work
-for the same reach.
+The three files do different jobs and each is the cheapest at its own. **HTML** is for a person with
+a browser, where the type renders at real size. **The PNG** is for every other place a person or an
+agent might look — a repository page, a chat message, a phone — because none of those render HTML.
+It costs nothing extra, since you already render the board to verify it. **`DECISION.md`** is what
+anything reads to *reproduce* the design; measured on a real project it did that at roughly a third
+the cost of reading the HTML, and the HTML would not have been enough on its own anyway.
+
+PDF was considered and rejected: it is generated *from* HTML, so it is strictly more work for the
+same reach.
 
 **`DECISION.md` is the contract with `link-design-pitch-detail`, which refuses to run without it.**
 Write it even if the session ends before a choice is made — with `Status: Awaiting choice`.

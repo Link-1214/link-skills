@@ -104,9 +104,13 @@ append a probe script that writes its JSON result into a `<div>`, then read it b
 
 After verifying, screenshot the board to `<output>/01-directions.png`.
 
-This is the only way an agent other than you can *see* the styles rather than read markup — and it
-is worth doing for yourself too. Looking at the rendered board catches things no measurement asks
-about. Agents without vision fall back to `DECISION.md`, which carries every value in text.
+This is not only for agents. **Nowhere outside a local browser renders HTML** — not a repository
+page, not a chat message, not a phone. The picture is how most people will actually see this board,
+and it is how an agent with vision sees the styles rather than reading markup. Anything without
+vision falls back to `DECISION.md`, which carries every value in text.
+
+Look at it yourself before shipping it. The rendered board catches things no measurement asks
+about.
 
 If the harness has a working screenshot tool, use it. When it does not — a preview pane that is not
 displayed cannot composite frames, and will time out — **headless Chrome or Edge is on almost every

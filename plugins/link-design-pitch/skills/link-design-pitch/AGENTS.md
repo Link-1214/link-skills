@@ -36,7 +36,7 @@ exists, otherwise `design/`:
 | File | Audience |
 |---|---|
 | `01-directions.html` | People — the ten-direction board |
-| `01-directions.png` | Agents with vision — they see the styles, not the markup |
+| `01-directions.png` | Anywhere HTML does not render — GitHub, chat, an agent with vision |
 | `DECISION.md` | **Everyone else, and the handoff to the detail skill** |
 
 `DECISION.md` is a contract: the detail skill refuses to run without a chosen direction in it. Write

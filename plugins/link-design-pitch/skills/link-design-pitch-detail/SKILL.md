@@ -120,7 +120,7 @@ Appended to what the first skill produced:
 | File | Audience |
 |---|---|
 | `<output>/02-detail-<direction>.html` | People — the direction across every surface |
-| `<output>/02-detail-<direction>.png` | Agents with vision |
+| `<output>/02-detail-<direction>.png` | Anywhere HTML does not render — GitHub, chat, an agent with vision |
 | `<output>/DECISION.md` | Updated in place — measurements, interaction answers, implementation list |
 
 Add to the record:

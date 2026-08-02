@@ -96,7 +96,7 @@ claude plugin install link-design-pitch@link-skills
 
 | 파일 | 내용 |
 |---|---|
-| `01-directions.html` · `.png` | 시안 10개 보드 |
+| `01-directions.html` · `.png` | 시안 10개 보드. HTML은 브라우저용, PNG는 GitHub·메신저처럼 HTML이 안 열리는 곳용 |
 | `02-detail-<방향>.html` · `.png` | 선택한 방향을 적용한 모든 화면 |
 | `DECISION.md` | 답변·판정·측정값·색상 토큰. 다음 세션과 다른 AI가 읽는 기록 |
 
