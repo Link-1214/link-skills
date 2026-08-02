@@ -14,10 +14,13 @@ that matters — field counts, label lengths, how many rows there really are.
 
 ## Refuse to start without a decision
 
-Before anything else, find the design record: `docs/design/DECISION.md`, or `design/DECISION.md`.
-That path is `<output>` below.
+Before anything else, find the design record. Look at `docs/design/DECISION.md` and
+`design/DECISION.md`; if neither exists, search the project for `DECISION.md` — the pitch may have
+run in a subdirectory or been told to write somewhere else — and if the search also comes back
+empty, ask the owner where the record is before concluding there is none. A record that exists but
+sits in an unexpected place is not a missing record. Its directory is `<output>` below.
 
-**If it does not exist, or its `Status` is not a chosen direction, stop and say so.** Point at
+**If there is genuinely no record, or its `Status` is not a chosen direction, stop and say so.** Point at
 `link-design-pitch` and end the run. Do not improvise a direction — the whole value of the first
 skill is that ten options were surveyed and one was chosen with reasons. Inventing one here silently
 throws that away, and the owner will not know it happened.

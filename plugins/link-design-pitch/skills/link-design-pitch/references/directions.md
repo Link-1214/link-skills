@@ -11,13 +11,17 @@ can tell these ten were chosen for them.
 
 **Read the index. Pick ten. Then read only those ten entries.**
 
+The entries are keyed by number — `## 15.` is entry 15. Search for the ten headings you picked and
+read only those line ranges. If your file tool cannot read a range, read this file exactly once;
+the waste this section exists to prevent is reading the unpicked entries, or anything twice.
+
 The index carries everything selection needs — what each direction is good at, where it breaks, and
 which ones die without a property the target may not have. The entries below carry what *rendering*
 needs: the token line, the type and shape signature, and the notes worth knowing once a direction is
 actually on the board.
 
-Reading all twenty-nine entries to choose ten costs roughly three times what this file needs to
-cost, and the nineteen you did not pick never appear in the output.
+Reading every entry to choose ten costs roughly three times what this file needs to cost, and the
+entries you did not pick never appear in the output.
 
 ## Index
 

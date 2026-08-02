@@ -120,6 +120,11 @@ machine** and takes one command:
 chrome --headless=new --disable-gpu --hide-scrollbars   --window-size=1200,7200 --screenshot=out.png --user-data-dir=/tmp/shot   file:///absolute/path/to/01-directions.html
 ```
 
+On Windows neither browser is on PATH: use the full path — typically
+`C:\Program Files\Google\Chrome\Application\chrome.exe` or
+`C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe` — and point `--user-data-dir`
+at a Windows temp path such as `%TEMP%\shot`.
+
 Set the height tall enough for the whole page — ten stacked panels plus tables runs to several
 thousand pixels, and a short window silently crops the bottom half. `--user-data-dir` pointed
 somewhere disposable avoids colliding with a running browser profile.

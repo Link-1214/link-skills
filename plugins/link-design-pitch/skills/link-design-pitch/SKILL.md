@@ -90,6 +90,11 @@ reasoning attached and it will fight the content later. Offer four concrete pale
 answers 1 and 2**, with real values and one line each on what they do. Include the owner's existing
 brand color if there is one. Let them override; just put a reasoned default on the table.
 
+Asked in one pass, answers 1 and 2 do not exist yet when you write these palettes. Derive them from
+your best reading of the context and **say which reading each palette assumes** — a palette whose
+premise is visible gets corrected in the same breath as the answer, instead of silently anchoring
+the wrong one.
+
 **4. What layout?** Offer choices, not an open question. Say in one line what each is good at. If
 the project already has a layout and changing it is expensive, say so here rather than letting them
 pick something that quietly means a rewrite.
@@ -123,15 +128,20 @@ and raising it only adds noise. Most dashboards, forms and documents do not.
 
 ## Phase 2 — Ten directions
 
-`references/directions.md` opens with an index of twenty-nine — what each is good at, where it
-breaks, and which die without a property this target may lack. **Read the index, pick ten, then read
-only those ten entries.** The entries carry the token line and the type and shape signature, which
-you need to render but not to choose; reading all twenty-nine to pick ten costs three times what it
-should, and the nineteen you drop never appear in the output.
+`references/directions.md` opens with an index — what each direction is good at, where it breaks,
+and which die without a property this target may lack. **Read the index, pick ten, then pull only
+those ten entries: search for each `## <number>.` heading and read just that line range.** The
+entries carry the token line and the type and shape signature, which rendering needs but choosing
+does not, and the ones you drop never appear in the output — reading them is pure cost. If your
+file tool can only return whole files, read the file once and never a second time.
 
 **The mockups are written as HTML and CSS, not sourced.** Do not search for reference images. The
 catalog already carries the palette and the shape language, and a found image cannot contain this
 project's own content — which is the only thing the board is actually testing.
+
+**When the target is not a browser, the board is a rendering approximation.** Phase 0 already
+removed what the target cannot draw at all; what remains — font rasterization, native widget chrome
+— differs in detail. Say so on the board rather than letting the owner take it as a screenshot.
 
 **Assemble from the catalog rather than inventing values** — the palettes are already worked out,
 and re-deriving them drifts between runs, which makes two boards stop being comparable.
