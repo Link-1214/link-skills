@@ -22,7 +22,7 @@
     {
       "name": "link-skill-authoring",
       "source": "./plugins/link-skill-authoring",
-      "description": "Criteria a skill must meet to hold up. Two rules, one line of contract per skill, five questions before building."
+      "description": "Criteria a skill must meet to hold up. Two rules, plus a contract line and six questions each skill settles for itself. Stops before deciding what a skill promises."
     }
   ]
 }

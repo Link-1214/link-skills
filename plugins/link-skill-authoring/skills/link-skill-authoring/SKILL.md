@@ -1,6 +1,6 @@
 ---
 name: link-skill-authoring
-description: Criteria a skill must meet to hold up — what it guarantees, what it refuses to guess, and the failures that stay invisible until they are expensive. Use when creating, editing, reviewing, or splitting a skill or SKILL.md, when deciding what a new skill should be responsible for, when writing or fixing a skill description, or when a skill fires at the wrong time or never fires. Also use before publishing a skill to a marketplace. Supplies criteria only, and says when to bring in a skill-building process alongside it.
+description: Criteria a skill must meet to hold up — what it guarantees, what it refuses to guess, and the failures that stay invisible until they are expensive. Use when creating, editing, reviewing, or splitting a skill or SKILL.md, when deciding what a new skill should be responsible for, when writing or fixing a skill description, or when a skill fires at the wrong time or never fires. Also use before publishing a skill to a marketplace. Judges freely, stops before deciding what a skill promises, and names the skill-building process to run alongside it.
 ---
 
 # Skill authoring — what a skill has to guarantee
@@ -14,19 +14,36 @@ So this holds two tiers, and keeping them apart is the whole point.
 | Tier | What it covers | Applies to |
 |---|---|---|
 | **Rules** | Fires when needed. Does not hide a guess. | **Every skill, no exceptions** |
-| Settled per skill | The contract line, the five questions | Only where they fit the kind of skill |
+| Settled per skill | The contract line, the six questions | Only where they fit the kind of skill |
 
 Never promote the second tier into the first. A pure reference skill may have no meaningful
 contract and may answer "not applicable" to most of the questions, and forcing a line there
 produces words instead of a decision. Never demote the first tier either — both rules are
 failures the author cannot see by using the skill, which is what earns them the exception.
 
-**Contract — this skill supplies criteria and never writes the skill for you.** It will say
-which rule a draft breaks and whether a contract can be written for it. Producing the
-wording is separate work, and doing it here would hide whether the author had actually
-decided anything.
+**Contract — this skill supplies criteria and never decides on the author's behalf.** It
+judges freely and stops at exactly one place, described under "Where this stops" below.
 
 Answer in the language the user is writing in.
+
+## Where this stops
+
+Facts and judgements need no permission. Whether a frontmatter field actually exists,
+whether a BOM is present, whether a description smuggled in a procedure — go check, go say
+so, fix it.
+
+**A promise is different. Stop before writing a contract line or a boundary, and ask the
+author.** These two are the answer to *what will this skill guarantee*, and only the person
+building it knows. Drafting them here would violate Rule 2 in this skill's own words —
+proceeding on something it cannot know, while the output looks settled either way. Whoever
+reads that contract later deserves an answer better than "the agent decided".
+
+Ask, then write down what they say. The contract line in `SKILL.md` is the record; no
+separate decision file is needed, because the promise lives where it is enforced.
+
+Reviewing an existing contract is a judgement, not a decision — does this run honour the
+line already written? There is one answer, so do not stop for it. The stop is only for
+settling a promise that does not exist yet.
 
 ## Where this sits
 
@@ -122,19 +139,37 @@ beyond being accurate, and inventing a line for it is the failure this tier exis
 The finding to report is which case you are in: a skill with a boundary and no contract is
 undecided, while a skill with no boundary to promise is simply narrow.
 
+**This is the stop.** Where a contract is missing and the skill does have a boundary, put
+the question to the author rather than drafting the line. Offer what you observed the skill
+doing, then let them say what it promises. A contract someone else wrote is a sentence in a
+file; a contract the author wrote is a decision they can defend six months later, and that
+difference is the whole reason the line exists.
+
 ## Questions to answer before building
 
 No answers are supplied. They differ by kind, and "not applicable" is a real answer. What
 matters is that none of them is unanswerable.
 
 1. How does this skill behave when it does not know?
-2. How would the user tell that a result is wrong?
+2. How would the user tell that a result is wrong, and what has to survive the run for
+   someone to check it later?
 3. What does this skill not do?
-4. Does a small request still run the whole procedure?
-5. Six months on, what breaks first?
+4. What does it do without asking, and what does it put to the user first?
+5. Does a small request still run the whole procedure?
+6. Six months on, what breaks first?
+
+Question 2 has two halves and the second is the one that gets dropped. Being able to spot a
+wrong answer is not the same as being able to retrace how it was produced — the inputs, the
+assumptions, the exact query or code. Reproducibility does not mean the same words come out
+twice; it means a difference can be traced to its cause.
 
 Question 3 goes missing most often, and the wider the skill's reach the more it costs — a
 skill that does eight things is a black box until its boundary is written down.
 
-Question 5 usually points at whatever the body hardcodes. Paths, schemas, versions, and
+Question 4 matters most where an action is expensive or cannot be undone: money, deletion,
+writes to a shared system, anything a person would want to see before it happens. Cheap and
+reversible work should not be interrupted; the cost of asking every time is that the user
+stops reading the questions.
+
+Question 6 usually points at whatever the body hardcodes. Paths, schemas, versions, and
 definitions move; keeping them out of the body is what makes a later fix local.

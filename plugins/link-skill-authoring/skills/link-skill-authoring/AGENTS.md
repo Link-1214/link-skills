@@ -11,11 +11,25 @@ cover it.
 
 ## What it holds
 
-| Part | What it settles |
-|---|---|
-| Two rules | The only things required of every skill. Both are failures the author cannot see by using the skill |
-| One line of contract | What this particular skill promises. Each skill writes its own instead of inheriting more shared rules |
-| Five questions | Asked before building. Answers differ by kind of skill, and "not applicable" is a real answer |
+| Part | What it settles | Applies to |
+|---|---|---|
+| Two rules | Fires when needed. Does not hide a guess. Both are failures the author cannot see by using the skill | Every skill, no exceptions |
+| One line of contract | What this particular skill promises | Only where there is a boundary to promise |
+| Six questions | Asked before building. "Not applicable" is a real answer | Only where they fit the kind of skill |
+
+Keep the two tiers apart. Forcing a contract onto a skill that has nothing to promise
+produces a sentence rather than a decision, which is the failure the second tier exists to
+avoid.
+
+## Where it stops
+
+Facts and judgements need no permission — check them, say so, fix them. **Stop at one
+place: before writing a contract line or a boundary.** Only the person building the skill
+can say what it will guarantee, and drafting it for them would break Rule 2 in this skill's
+own terms. Reviewing a contract that already exists is a judgement, so do not stop there.
+
+The answer is recorded as the contract line in that skill's `SKILL.md`. No separate
+decision file.
 
 ## What it does not do
 

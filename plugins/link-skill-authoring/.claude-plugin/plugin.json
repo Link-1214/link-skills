@@ -1,7 +1,7 @@
 {
   "name": "link-skill-authoring",
-  "version": "1.0.1",
-  "description": "Criteria a skill must meet to hold up. Two rules that apply to every skill, plus a contract line and five questions each skill settles for itself. Supplies criteria only, and names the skill-building process to run alongside it.",
+  "version": "1.0.2",
+  "description": "Criteria a skill must meet to hold up. Two rules that apply to every skill, plus a contract line and six questions each skill settles for itself. Judges freely, stops before deciding what a skill promises, and names the skill-building process to run alongside it.",
   "author": {
     "name": "Link-1214",
     "url": "https://github.com/Link-1214"
