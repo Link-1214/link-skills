@@ -1,6 +1,6 @@
 ---
 name: link-skill-authoring
-description: Criteria a skill must meet to hold up — what it guarantees, what it refuses to guess, and the failures that stay invisible until they are expensive. Use when creating, editing, reviewing, or splitting a skill or SKILL.md, when deciding what a new skill should be responsible for, when writing or fixing a skill description, or when a skill fires at the wrong time or never fires. Also use before publishing a skill to a marketplace. Runs alongside skill-creator, which owns the process.
+description: Criteria a skill must meet to hold up — what it guarantees, what it refuses to guess, and the failures that stay invisible until they are expensive. Use when creating, editing, reviewing, or splitting a skill or SKILL.md, when deciding what a new skill should be responsible for, when writing or fixing a skill description, or when a skill fires at the wrong time or never fires. Also use before publishing a skill to a marketplace. Supplies criteria only, and says when to bring in a skill-building process alongside it.
 ---
 
 # Skill authoring — what a skill has to guarantee
@@ -9,7 +9,17 @@ A skill that audits code and a skill that opens up design options are not good i
 way. Hold every skill to one checklist and the author fills boxes that do not apply, with
 words instead of decisions.
 
-So only two rules apply to every skill. Everything else each skill settles for itself.
+So this holds two tiers, and keeping them apart is the whole point.
+
+| Tier | What it covers | Applies to |
+|---|---|---|
+| **Rules** | Fires when needed. Does not hide a guess. | **Every skill, no exceptions** |
+| Settled per skill | The contract line, the five questions | Only where they fit the kind of skill |
+
+Never promote the second tier into the first. A pure reference skill may have no meaningful
+contract and may answer "not applicable" to most of the questions, and forcing a line there
+produces words instead of a decision. Never demote the first tier either — both rules are
+failures the author cannot see by using the skill, which is what earns them the exception.
 
 **Contract — this skill supplies criteria and never writes the skill for you.** It will say
 which rule a draft breaks and whether a contract can be written for it. Producing the
@@ -20,8 +30,14 @@ Answer in the language the user is writing in.
 
 ## Where this sits
 
-`skill-creator` owns the process — drafting, running test prompts, evaluating, iterating.
-This skill owns the criteria that process aims at. Run both. Neither replaces the other.
+Criteria are not a process. Drafting, running test prompts, evaluating and iterating belong
+to a skill-building process — `skill-creator` on Claude Code, whatever the runtime offers
+elsewhere. This skill only supplies what that process aims at.
+
+**When the user is actually building or revising a skill rather than deciding what it should
+be, say so and invoke that process too.** It does not reliably fire on its own alongside
+this one, so naming it is part of the job here. If no such process exists on the runtime,
+the questions below are the whole procedure.
 
 ## The test for a rule
 
@@ -99,9 +115,12 @@ not retrofitted.
 | `link-design-pitch-detail` | Refuses to run when no chosen direction is on record |
 
 A contract earns its line by being checkable — one read settles whether a run honoured it.
-It also carries the skill's boundary, which is what a broad skill most often lacks. If the
-contract cannot be written, the skill is not yet decided; that is the finding, and it is
-worth saying so rather than proceeding.
+It also carries the skill's boundary, which is what a broad skill most often lacks.
+
+This tier is not a rule. A skill that only holds reference material may promise nothing
+beyond being accurate, and inventing a line for it is the failure this tier exists to avoid.
+The finding to report is which case you are in: a skill with a boundary and no contract is
+undecided, while a skill with no boundary to promise is simply narrow.
 
 ## Questions to answer before building
 
