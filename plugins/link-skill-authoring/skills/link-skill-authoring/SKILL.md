@@ -89,7 +89,11 @@ enough — stopping to ask is for when the choice genuinely changes the conclusi
 Rather than growing the shared rules, every skill states its own promise in `SKILL.md`.
 One line, near the top, in the form *this skill will not X* or *this skill guarantees Y*.
 
-| Skill | Contract |
+Written out, the promises the two design skills already keep read like this. Neither carries
+the line under that label — both state it in prose, more than once, which is why they were
+not retrofitted.
+
+| Skill | The promise it already keeps |
 |---|---|
 | `link-design-pitch` | Writes no styling code before a direction is chosen |
 | `link-design-pitch-detail` | Refuses to run when no chosen direction is on record |
