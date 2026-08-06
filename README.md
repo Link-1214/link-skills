@@ -106,6 +106,43 @@ claude plugin install link-design-pitch@link-skills
 
 ---
 
+### link-skill-authoring
+
+**스킬이 무엇을 보장해야 하는지 정하는 기준입니다.** 스킬 1개.
+
+```bash
+claude plugin install link-skill-authoring@link-skills
+```
+
+| 호출 | 하는 일 |
+|---|---|
+| `link-skill-authoring:link-skill-authoring` | 스킬을 만들거나 고치거나 검토할 때 기준을 댐 |
+
+**어디에 쓰나.** 스킬을 새로 만들 때, 있는 스킬을 고칠 때, 남이 만든 스킬을 검토할 때. 스킬이
+엉뚱할 때 뜨거나 떠야 할 때 안 뜨는 경우에도 씁니다.
+
+**이 스킬이 해결하는 것.** 스킬을 만들 때마다 무엇을 잘 만든 것으로 볼지 다시 정하면 저장소가
+중구난방이 됩니다. 그렇다고 긴 체크리스트를 만들면 안 맞는 항목을 억지로 채우게 됩니다. 감사하는
+스킬과 시안을 펼치는 스킬은 잘 만든 모습이 다르기 때문입니다.
+
+그래서 공통 규칙을 둘로 줄였습니다. 기준은 하나입니다 — **어겼을 때 조용히 실패하는가.** 헷갈리게
+쓰였거나 느린 스킬은 쓰다 보면 저절로 드러나므로 규칙이 필요 없습니다.
+
+| 무엇 | 내용 |
+|---|---|
+| 규칙 둘 | 필요할 때 뜬다. 모를 때 추측을 숨기지 않는다 |
+| 계약 한 줄 | 각 스킬이 자기 약속을 `SKILL.md` 에 적음. 공통 규칙을 늘리는 대신 |
+| 질문 다섯 | 만들기 전에 답해 봄. 「해당 없음」도 답이고, 답을 못 하면 덜 된 것 |
+
+**무엇이 나오나.** 파일을 만들지 않습니다. 만들거나 검토하는 동안 기준으로 쓰입니다.
+
+`skill-creator` 를 대신하지 않습니다. 그쪽이 초안·테스트·평가 절차를 맡고, 이 스킬은 그 절차가
+겨냥할 기준을 댑니다. 둘 다 씁니다.
+
+[**사용법 자세히 →**](plugins/link-skill-authoring/README.md)
+
+---
+
 > 앞으로 만드는 스킬도 이 목록에 같은 형식으로 붙습니다.
 > `link` 을 설치해 두었다면 `claude plugin update link@link-skills` 로 새 스킬을 받습니다.
 
@@ -138,6 +175,10 @@ claude plugin update link@link-skills
 
 ```bash
 claude plugin install link-design-pitch@link-skills
+```
+
+```bash
+claude plugin install link-skill-authoring@link-skills
 ```
 
 ### 설치 확인과 제거
@@ -182,6 +223,9 @@ git clone https://github.com/Link-1214/link-skills.git
 
 방향이 정해졌고 실제로 만들어졌다면
 <받은경로>/link-skills/plugins/link-design-pitch/skills/link-design-pitch-detail/SKILL.md 를 따른다
+
+스킬을 새로 만들거나 검토한다면
+<받은경로>/link-skills/plugins/link-skill-authoring/skills/link-skill-authoring/SKILL.md 를 따른다
 ```
 
 저장소의 [`AGENTS.md`](AGENTS.md) 에 AI가 읽을 안내가 정리돼 있습니다.

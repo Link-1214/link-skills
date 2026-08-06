@@ -18,6 +18,11 @@
       "name": "link-design-pitch",
       "source": "./plugins/link-design-pitch",
       "description": "Survey ten visual directions rendered with your real content and stop for your choice, then apply the chosen one to every surface. Two skills, installed together."
+    },
+    {
+      "name": "link-skill-authoring",
+      "source": "./plugins/link-skill-authoring",
+      "description": "Criteria a skill must meet to hold up. Two rules, one line of contract per skill, five questions before building."
     }
   ]
 }

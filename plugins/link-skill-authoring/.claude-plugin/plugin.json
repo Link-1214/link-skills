@@ -1,0 +1,12 @@
+{
+  "name": "link-skill-authoring",
+  "version": "1.0.0",
+  "description": "Criteria a skill must meet to hold up. Two rules that apply to every skill, one line of contract each skill writes for itself, and five questions to answer before building. Pairs with skill-creator, which owns the process.",
+  "author": {
+    "name": "Link-1214",
+    "url": "https://github.com/Link-1214"
+  },
+  "homepage": "https://github.com/Link-1214/link-skills",
+  "repository": "https://github.com/Link-1214/link-skills",
+  "license": "MIT"
+}
