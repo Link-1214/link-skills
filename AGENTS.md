@@ -22,6 +22,7 @@
 | link-design-pitch | `plugins/link-design-pitch/skills/link-design-pitch/SKILL.md` | 산출물의 시각 방향이 안 정해졌을 때. UI, 리스타일, 테마, 색 체계, 발표 자료, 보고서, 스프레드시트. 또는 지금 것이 밋밋하다는 말이 나왔을 때. 시안 10개 중 어느 것으로 갈지 묻고 끝납니다. |
 | link-design-pitch-detail | `plugins/link-design-pitch/skills/link-design-pitch-detail/SKILL.md` | 방향이 이미 정해졌고 **실제 물건이 만들어졌을 때**. 모든 화면에 적용하고 인터랙션 선택지를 제시합니다. 정해진 방향이 기록에 없으면 실행을 거부합니다. |
 | link-skill-authoring | `plugins/link-skill-authoring/skills/link-skill-authoring/SKILL.md` | 스킬을 만들거나 고치거나 검토할 때. 스킬이 엉뚱할 때 뜨거나 떠야 할 때 안 뜨는 경우에도. 절차가 아니라 **기준**을 댑니다. |
+| link-skill-packer | `plugins/link-skill-packer/skills/link-skill-packer/SKILL.md` | 만든 스킬을 다른 컴퓨터로 넘겨야 하는데 깃을 못 쓸 때. zip 하나로 묶습니다. 받는 쪽에서 조용히 고장 나는 항목을 먼저 검사하고, 담길 내용을 확인받기 전에는 만들지 않습니다. |
 
 앞의 두 디자인 스킬은 하나의 흐름이고, 사이에 사람이 만드는 단계가 있습니다.
 
@@ -51,6 +52,9 @@
 
 스킬을 새로 만들거나 검토한다면
 <받은경로>/link-skills/plugins/link-skill-authoring/skills/link-skill-authoring/SKILL.md 를 따른다
+
+만든 스킬을 깃 없이 남에게 넘겨야 한다면
+<받은경로>/link-skills/plugins/link-skill-packer/skills/link-skill-packer/SKILL.md 를 따른다
 ```
 
 ## 지켜야 하는 두 가지
@@ -85,10 +89,14 @@ link-skills/
     │   └── skills/
     │       ├── link-design-pitch/            SKILL.md · AGENTS.md · references/
     │       └── link-design-pitch-detail/     SKILL.md · AGENTS.md · references/
-    └── link-skill-authoring/           플러그인 하나, 스킬 하나
+    ├── link-skill-authoring/           플러그인 하나, 스킬 하나
+    │   ├── .claude-plugin/plugin.json
+    │   ├── README.md                   사용법
+    │   └── skills/link-skill-authoring/      SKILL.md · AGENTS.md
+    └── link-skill-packer/              플러그인 하나, 스킬 하나
         ├── .claude-plugin/plugin.json
         ├── README.md                   사용법
-        └── skills/link-skill-authoring/      SKILL.md · AGENTS.md
+        └── skills/link-skill-packer/         SKILL.md · AGENTS.md · scripts/ · assets/
 ```
 
 `.claude-plugin/` 디렉터리와 `plugins/` 중첩은 Claude Code 설치기를 위한 구조입니다. 다른

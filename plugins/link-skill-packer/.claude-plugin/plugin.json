@@ -1,0 +1,19 @@
+{
+  "name": "link-skill-packer",
+  "description": "Package a skill folder into a zip that installs cleanly on a coworker's machine, for teams where git and plugin marketplaces are out of reach. Checks the failures that stop a skill from loading with no error, shows what the zip will contain, and stops for confirmation before writing it.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Link-1214",
+    "url": "https://github.com/Link-1214"
+  },
+  "homepage": "https://github.com/Link-1214/link-skills/tree/main/plugins/link-skill-packer",
+  "repository": "https://github.com/Link-1214/link-skills",
+  "license": "MIT",
+  "keywords": [
+    "skill",
+    "packaging",
+    "distribution",
+    "offline",
+    "handoff"
+  ]
+}
