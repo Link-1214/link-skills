@@ -64,23 +64,35 @@ CSS falls back per glyph, so Latin renders in the first and Hangul or Kana in th
 | `var(--serif)` | `Georgia,"Times New Roman",Batang,"Hiragino Mincho ProN",serif` | editorial, reads as authored |
 | `var(--class)` | `"Times New Roman",Georgia,Gungsuh,"Yu Mincho",serif` | formal, printed, older |
 | `var(--mono)` | `Consolas,"Courier New",DotumChe,"MS Gothic",monospace` | technical, fixed rhythm |
-| `var(--heavy)` | `"Arial Black",Impact,Haettenschweiler,Dotum,sans-serif` | loud, poster-weight |
+| `var(--heavy)` | `"Arial Black",Impact,Haettenschweiler,Gulim,sans-serif` | loud, poster-weight |
 
 **Do not add a web font**, and do not name a family the file cannot guarantee. The board must open
 from disk on someone else's machine, and a font that is not there falls back silently — the panel
 then renders in a face the board's own caption says it is not using.
 
 **Six roles, not more, and CJK distinguishes fewer.** Korean's core faces share Hangul outlines
-across their fixed-width variants, so a board in Korean gets roughly five distinguishable faces
-however many stacks you name — and **weight collapses too**: measured on Hangul, these faces render
+across their fixed-width variants — `Dotum` and `DotumChe` paint identical Hangul and differ only in
+their Latin half. So the six roles resolve to **five Hangul faces**, with `mono` and `sans` sharing
+one; on Latin all six stay distinct. **Weight collapses too**: measured on Hangul these faces render
 about two steps, not the five the numbers suggest, so 600 and 900 paint the same bold.
 
 When ten directions must share six roles, the channels that actually carry the difference are
 **`--sc`, `--ls` and `--d`** — size ratio, tracking and density. Those are unlimited and work in
 every script. Do not lean on weight to separate two directions in CJK; it will not.
 
-**Caption the role, not the family.** Write "굵은 그로테스크" or "heavy grotesque" on the panel, never
-"Arial Black". The role is a promise the file can keep; a family name is one it cannot.
+**Korean has no black weight in any stock face, and `heavy` does not fix that.** The role picks a
+different Hangul face, not a heavier one — measured, `Gulim` paints *lighter* Hangul than `Malgun
+Gothic`, so a brutalism panel can render thinner than the minimalism panel sitting above it while
+its Latin digits render in Arial Black. Where a direction's whole point is weight, add
+`-webkit-text-stroke:.6px currentColor` to its headings. That is the only way to get poster weight
+on Hangul, and without it the panel contradicts its own caption.
+
+**Caption the role, not the family — and only where the script delivers it.** Write "굵은
+그로테스크" or "heavy grotesque", never "Arial Black". But check the render before you write it: the
+role names describe the Latin half of each stack, and on CJK content several of them arrive as an
+ordinary gothic. **A caption naming a type character the screen does not show is the worst thing this
+board can do**, because the reader has no way to catch it. If the script does not deliver it, say
+what is actually there or say nothing about the type.
 
 ## Index
 
@@ -175,7 +187,7 @@ Type: Helvetica-lineage, tight tracking, flush-left ragged-right, strict modular
 
 ## 3. Monochrome + one accent
 
-`--g:#FAFAFA;--s:#fff;--l:#E3E3E3;--t:#141414;--t2:#8A8A8A;--ac:#2F6FED;--r:4px;--f:var(--ui);--fw:400;--hw:600;--sc:2.3;--ls:.01em;--d:1.05;--bw:1px;--sh:none`
+`--g:#FAFAFA;--s:#fff;--l:#E3E3E3;--t:#141414;--t2:#8A8A8A;--ac:#2F6FED;--r:4px;--f:var(--ui);--fw:400;--hw:700;--sc:2.8;--ls:0;--d:1.0;--bw:1px;--sh:none`
 
 Ground/text: a full grey ramp with a slight hue bias (`#0F1211` → `#F7F8F8`) · accent exactly one hue, everywhere it appears meaning something
 Type: any well-set sans. Shape: whatever suits — the discipline is chromatic, not formal.
@@ -189,7 +201,7 @@ Type: serif body at generous measure, small-caps labels, footnote sizing. Shape:
 
 ## 5. Bento grid
 
-`--g:#EEF0F2;--s:#fff;--l:#E2E5E8;--t:#1B1F23;--t2:#767D85;--ac:#2F6FED;--r:12px;--f:var(--ui);--fw:400;--hw:700;--sc:2.4;--ls:0;--d:1.1;--bw:1px;--sh:0 1px 2px #0000000f`
+`--g:#EEF0F2;--s:#fff;--l:#E2E5E8;--t:#1B1F23;--t2:#767D85;--ac:#2F6FED;--r:12px;--f:var(--ui);--fw:500;--hw:800;--sc:2.0;--ls:0;--d:1.05;--bw:1px;--sh:0 1px 2px #0000000f`
 
 A layout method, not a palette — composes with any color system.
 Cells of deliberately different sizes in a tight grid, gap 12–16px, consistent radius. **Cell area encodes importance.** One hero cell per screen answers the screen's main question; supporting cells orbit it.
@@ -238,7 +250,7 @@ Type: condensed sans or mono, uppercase labels, wide tracking. Shape: thin brigh
 
 ## 12. Neumorphism
 
-`--g:#E9EDF2;--s:#E9EDF2;--l:#E9EDF2;--t:#3A4450;--t2:#93A0AE;--ac:#5B7CFA;--r:12px;--f:var(--ui);--fw:400;--hw:600;--sc:2.2;--ls:.01em;--d:1.2;--bw:0px;--sh:6px 6px 12px #0000001a,-6px -6px 12px #ffffffb3`
+`--g:#E9EDF2;--s:#E9EDF2;--l:#E9EDF2;--t:#3A4450;--t2:#93A0AE;--ac:#5B7CFA;--r:12px;--f:var(--ui);--fw:500;--hw:500;--sc:2.0;--ls:.02em;--d:1.28;--bw:0px;--sh:6px 6px 12px #0000001a,-6px -6px 12px #ffffffb3`
 
 Ground and surface the *same* color (`#E8ECF1`), form made entirely from paired shadows — light from top-left, dark from bottom-right. Pressed states invert both.
 
@@ -251,7 +263,7 @@ Type: rounded geometric sans, generous weight.
 
 ## 14. 3D / immersive
 
-`--g:#F0EBE3;--s:#FAF7F2;--l:#DED5C8;--t:#2A241E;--t2:#8A7D6E;--ac:#C1683F;--r:14px;--f:var(--ui);--fw:400;--hw:600;--sc:2.6;--ls:.01em;--d:1.15;--bw:0px;--sh:0 2px 8px #0000001a`
+`--g:#F0EBE3;--s:#FAF7F2;--l:#DED5C8;--t:#2A241E;--t2:#8A7D6E;--ac:#C1683F;--r:14px;--f:var(--ui);--fw:300;--hw:800;--sc:3.2;--ls:-.01em;--d:1.1;--bw:0px;--sh:0 2px 8px #0000001a`
 
 Rendered objects as the hero — a product, an abstract composition — with flat UI arranged around them. Neutral ground (`#F0EBE3`), one material accent (`#C1683F`).
 
@@ -271,7 +283,7 @@ Type: a real display serif at 48px+ against a small sans for UI, wide measure, g
 
 ## 17. Retro / Y2K
 
-`--g:#DCE9FB;--s:#EFF6FF;--l:#A9C7E8;--t:#1B2A50;--t2:#6076A8;--ac:#FF5FA2;--r:8px;--f:var(--sans);--fw:400;--hw:700;--sc:2.6;--ls:.02em;--d:1.05;--bw:1px;--sh:inset 0 1px 0 #ffffffb3`
+`--g:#DCE9FB;--s:#EFF6FF;--l:#A9C7E8;--t:#1B2A50;--t2:#6076A8;--ac:#FF5FA2;--r:8px;--f:var(--heavy);--fw:500;--hw:800;--sc:2.4;--ls:.04em;--d:1.15;--bw:2px;--sh:inset 0 1px 0 #ffffffb3`
 
 Ground pale blue-lilac gradient · chrome bevels · gloss highlights · pink/violet/cyan `#FF5FA2` `#8B5CF6` `#38BDF8`
 Type: bubbly grotesque or pixel. Shape: heavy bevels, inner glow, star and sparkle motifs, beveled window chrome.
@@ -324,7 +336,7 @@ movement carries the personality.
 
 ## 23. Memphis / postmodern
 
-`--g:#FBF7EE;--s:#fff;--l:#111;--t:#111;--t2:#5A5A5A;--ac:#FF5F7E;--r:10px;--f:var(--heavy);--fw:500;--hw:800;--sc:3.0;--ls:0;--d:1.15;--bw:2px;--sh:4px 4px 0 var(--l)`
+`--g:#FBF7EE;--s:#fff;--l:#111;--t:#111;--t2:#5A5A5A;--ac:#FF5F7E;--r:10px;--f:var(--heavy);--fw:400;--hw:900;--sc:3.6;--ls:-.01em;--d:1.0;--bw:3px;--sh:4px 4px 0 var(--l)`
 
 Off-white or boldly colored ground · geometric confetti — squiggles, triangles, dots, terrazzo ·
 clashing pastels held together by black outlines · type set at angles.
@@ -363,7 +375,7 @@ signature; break it and the style disappears.
 
 ## 27. Constructivism
 
-`--g:#F2EDE4;--s:#FFFFFF;--l:#111111;--t:#111111;--t2:#4A4A4A;--ac:#D2231F;--r:0;--f:var(--heavy);--fw:500;--hw:900;--sc:3.4;--ls:-.02em;--d:1.0;--bw:2px;--sh:none`
+`--g:#F2EDE4;--s:#FFFFFF;--l:#111111;--t:#111111;--t2:#4A4A4A;--ac:#D2231F;--r:0;--f:var(--heavy);--fw:400;--hw:900;--sc:4.4;--ls:-.04em;--d:0.95;--bw:3px;--sh:none`
 
 Red, black and paper. Type: heavy condensed sans, often rotated. Shape: diagonal axes, hard-edged
 photographic montage, oversized numerals, elements running off the edge to imply motion.
@@ -411,7 +423,11 @@ the same few rules every time:
 | Bento grid | `display:grid` with named areas; the Phase 1 action's cell spans two columns or rows. Cell **area** is the hierarchy, so this cannot come from tokens |
 | Dense operational | rows lose their boxes — `gap:0`, a single bottom rule per row, and a fixed-width numeric column |
 | Editorial | surfaces go transparent; a top rule replaces the card. Rules, not boxes |
-| Retro / Y2K | bevel edges as stacked `inset` highlights and shadows, over a `linear-gradient` ground |
+| Retro / Y2K | bevel edges as stacked `inset` highlights and shadows, over a `linear-gradient` ground, and a beveled window frame around the surface — the frame is the strongest signal of the era |
+| Terminal | one mono family throughout is a **Latin-only promise** — CJK falls back to a proportional gothic. Set the fixed rhythm with `tabular-nums` and a fixed-width numeric column instead |
+| Neumorphism | every element must be extruded from the ground, **including the primary button** — a flat filled CTA breaks the one premise the direction has |
+| Editorial | hanging indents, an asymmetric column, and one element bleeding off an edge. Without these it is a serif card list |
+| Japandi | a natural-material texture at very low opacity as a repeating data-URI background |
 | Anti-AI / handmade | a paper texture as a repeating data-URI background, plus `transform:rotate(-.4deg)` on cards so nothing sits perfectly square |
 | Art Deco | `border-image` or stacked 1px gold rules for the stepped frames; symmetry has to be built into the layout, not added as CSS |
 | Constructivism | `transform:rotate(-8deg)` on headline blocks, and a decision about how they un-rotate on narrow widths |

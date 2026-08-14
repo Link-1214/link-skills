@@ -54,7 +54,7 @@ Bind the six font roles once, near the top, from the table in `directions.md`:
         --serif:Georgia,"Times New Roman",Batang,"Hiragino Mincho ProN",serif;
         --class:"Times New Roman",Georgia,Gungsuh,"Yu Mincho",serif;
         --mono:Consolas,"Courier New",DotumChe,"MS Gothic",monospace;
-        --heavy:"Arial Black",Impact,Haettenschweiler,Dotum,sans-serif; }
+        --heavy:"Arial Black",Impact,Haettenschweiler,Gulim,sans-serif; }
 ```
 
 **Wrap every `--d`-driven gap in `max(0px, …)`.** A density below 1 can drive a subtraction negative,
@@ -136,9 +136,14 @@ Two traps that have already produced wrong findings:
   ratio for text that fails.
 - **`font-family` is what you asked for, not what rendered.** A face the machine lacks falls back
   silently, so ten panels can report ten different families and paint one. Measure the rendered face
-  instead: draw a string to a canvas and compare `measureText` widths. **Probe with a string in the
-  content's own script** — a Latin probe on a Korean board reports ten distinct faces while every
-  Hangul glyph on screen comes from one fallback, which is the exact bug this check exists to catch.
+  instead, and **probe with a string in the content's own script** — a Latin probe on a Korean board
+  reports ten distinct faces while every Hangul glyph on screen comes from one fallback, which is
+  the exact bug this check exists to catch.
+- **On CJK, comparing `measureText` widths does not work at all.** Han and Hangul advance a fixed em,
+  so every face returns the identical width and the check reports total collapse whatever the truth
+  is — measured, ten panels all returned `672.00`. Rasterise instead: draw the probe string to a
+  canvas, **crop to the ink bounding box**, and hash the pixels. Without the crop, two panels whose
+  text merely sits at different offsets read as different faces.
 - **Count what separates the panels, not just what differs.** For each of typeface, weight, size,
   tracking, density and radius, count how many distinct rendered values appear across the ten. Any
   channel sitting at one value is contributing nothing, and if only colour is above one, the board

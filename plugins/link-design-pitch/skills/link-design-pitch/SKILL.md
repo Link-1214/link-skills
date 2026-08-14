@@ -168,6 +168,18 @@ ipsum hides the only thing that matters — whether the style survives contact w
 Write to `<output>/01-directions.html`. Read `references/board.md` for structure, for how to verify
 it in one pass rather than six, and for how to capture the PNG.
 
+**Then read each entry's prose back against its own panel.** The token line makes a panel plausible;
+it does not make it faithful. Every property an entry names — beveled window chrome, hanging indents,
+material texture, form built entirely from shadows — is either on the screen or the panel is not that
+direction, and nothing in the measurements will tell you. Measured on a real board, four of ten
+panels fully delivered their entry and three carried captions asserting a type character the screen
+did not show.
+
+For each of the ten: name what the entry describes, confirm it is visible, and **either add what is
+missing or drop the claim from the caption.** A panel that quietly under-delivers still gets picked,
+and the owner finds out during implementation — which is the failure this whole skill exists to
+prevent.
+
 ## Phase 3 — Compare, recommend, then stop
 
 A wall of pretty pictures pushes the decision back onto the owner. Do the analytical work first.
