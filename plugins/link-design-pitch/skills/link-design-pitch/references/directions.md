@@ -99,11 +99,17 @@ every script. Do not lean on weight to separate two directions in CJK; it will n
 **Korean has no black weight in any stock face, and `heavy` does not fix that.** The role picks a
 different Hangul face, not a heavier one — measured, `Gulim` paints *lighter* Hangul than `Malgun
 Gothic`, so a brutalism panel can render thinner than the minimalism panel sitting above it while
-its Latin digits render in Arial Black. Where a direction's whole point is weight, add
-`-webkit-text-stroke:1.8px currentColor` to its headings. Measured ink per em² on Hangul: no stroke
-0.211, `.6px` 0.241, `1.4px` 0.269, **`1.8px` 0.298** — against the 0.294 that a plain neutral sans
-already paints. Anything under `1.4px` leaves the heavy panel *lighter* than the minimal one, which
-is the failure this paragraph exists to prevent. Verify by measuring ink, not by looking at the CSS.
+its Latin digits render in Arial Black. Where a direction's whole point is weight, add `-webkit-text-stroke` to its headings — and **sweep
+the value until it measurably beats the heaviest ordinary panel on this board, rather than copying a
+number from here.** The target moves: a board whose other panels sit at weight 400 is beaten around
+`1.8px`, one where they use bold needs `2.6px` or more. Both of those were measured, on two boards,
+from the same starting prescription.
+
+Measure ink per em² — rasterise the heading, crop to the ink box, count covered pixels — for the
+heavy panel and for the plainest panel, and keep raising the stroke until the heavy one is larger.
+On three measured boards the heavy panel printed *lighter* than the minimal panel until this was
+done, which is the failure this paragraph exists to prevent. A number you did not verify on your own
+board is not a prescription, it is a guess.
 
 **Caption the role, not the family — and only where the script delivers it.** Write "굵은
 그로테스크" or "heavy grotesque", never "Arial Black". But check the render before you write it: the

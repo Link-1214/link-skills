@@ -17,7 +17,7 @@ risky property and look at it. Platforms change; a measurement beats a table.
 
 | Target | Used for | What it blocks |
 |---|---|---|
-| **Qt / PySide6 / PyQt** | Desktop apps in Python or C++ | `box-shadow` · `backdrop-filter` · `opacity` · `transition` · `transform` · flex/grid — **all parse silently and do nothing**. Charts never take the stylesheet |
+| **Qt / PySide6 / PyQt** | Desktop apps in Python or C++ | `box-shadow` · `backdrop-filter` · `opacity` · `transition` · `transform` · flex/grid · **`font-variant-numeric`** · **`text-transform`** — all parse silently and do nothing. Charts never take the stylesheet |
 | **Web (browser)** | Anything in a browser | Nothing structural. Watch CSP blocking font CDNs, and design both themes |
 | **Native mobile** | SwiftUI · Compose · React Native | Blur is native on iOS, API 31+ on Android, a package on React Native. Shadows differ between iOS and Android |
 | **Terminal / TUI** | Shell tools | No images, shadows, gradients or custom type. Pitch three directions honestly, not ten |
@@ -39,6 +39,13 @@ arrives on each target — verified on Qt, reasoned elsewhere from the platform 
 | `--bw` | yes | yes | thins below 0.25pt | yes | quantised to preset weights |
 | `--d` | **the `calc()` chain is silently ignored** | ignored | — | — | — |
 | `--sh` | **parses, does nothing** | dropped | prints as muddy grey | yes | no |
+
+**`font-variant-numeric:tabular-nums` is not in QSS either, and it is the one people lean on without
+noticing.** Any screen where numbers sit in a column — a monitor, a table, a dashboard — is quietly
+depending on it, and Qt gives you proportional figures instead: digits drift by several pixels per row
+and the column stops reading as a column. Measured on one board it was load-bearing in six of ten
+panels and declared in none. The substitute is to set a monospaced or tabular face on the value labels
+in code, not in the stylesheet.
 
 **`calc()` does not exist in QSS, and neither do custom properties.** Outside a browser the token
 line is a *specification to hand-translate*, not CSS to paste: compute the five density-driven

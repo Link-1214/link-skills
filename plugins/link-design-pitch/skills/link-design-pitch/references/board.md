@@ -144,6 +144,15 @@ Two traps that have already produced wrong findings:
   is — measured, ten panels all returned `672.00`. Rasterise instead: draw the probe string to a
   canvas, **crop to the ink bounding box**, and hash the pixels. Without the crop, two panels whose
   text merely sits at different offsets read as different faces.
+- **On a fixed-frame target, check that nothing is clipped.** Slides, printed pages and app windows
+  have a frame the content cannot grow past, and anything that overflows is silently cut — no error,
+  no scrollbar, and every other measurement still passes. Measured on one board, two panels lost a
+  metric off the bottom of a 16:9 slide and one lost the top of its headline. Compare each panel's
+  `scrollHeight` against its frame height, and look at the corners of the render.
+- **A feasibility badge is wrong in both directions.** A badge claiming *possible* for something the
+  target drops is the obvious failure, but a badge saying *partial* for something the target renders
+  perfectly is also a lie, and it costs the owner a direction they could have had. Every *partial*
+  must name the blocking property; if you cannot name one, the badge is wrong.
 - **Count what separates the panels, not just what differs.** For each of typeface, weight, size,
   tracking, density and radius, count how many distinct rendered values appear across the ten. Any
   channel sitting at one value is contributing nothing, and if only colour is above one, the board
