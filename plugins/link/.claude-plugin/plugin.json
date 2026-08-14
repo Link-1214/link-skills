@@ -1,7 +1,7 @@
 {
   "name": "link",
   "description": "Every skill in link-skills behind one install. Ships nothing itself — it pulls in the individual skill plugins as dependencies, so new skills arrive on update without another install step.",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "author": {
     "name": "Link-1214",
     "url": "https://github.com/Link-1214"
