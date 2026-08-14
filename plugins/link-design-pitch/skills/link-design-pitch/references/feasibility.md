@@ -25,6 +25,26 @@ risky property and look at it. Platforms change; a measurement beats a table.
 | **Print / PDF** | Reports, anything on paper | No motion, no interaction, no dark mode. Hairlines under 0.25pt vanish; saturated RGB shifts in CMYK |
 | **Slides (PowerPoint / Keynote)** | Decks | Fonts must exist on the presenting machine or slides reflow. Projectors crush contrast — push it further than feels right |
 
+## What the token line survives
+
+The colours and `--r` port everywhere. Of the eight structural values, these are what actually
+arrives on each target — verified on Qt, reasoned elsewhere from the platform notes below.
+
+| Value | Qt / QSS | Email | Print | Slides | Spreadsheet |
+|---|---|---|---|---|---|
+| `--f` family | yes | yes (system only) | yes | must exist on the presenting machine | yes |
+| `--fw` `--hw` | yes | yes | yes | yes | yes |
+| `--sc` as computed px | yes | yes | yes | yes | yes |
+| `--ls` | yes, but read as a **percentage** | partial | yes | yes | **no cell-level equivalent** |
+| `--bw` | yes | yes | thins below 0.25pt | yes | quantised to preset weights |
+| `--d` | **the `calc()` chain is silently ignored** | ignored | — | — | — |
+| `--sh` | **parses, does nothing** | dropped | prints as muddy grey | yes | no |
+
+**`calc()` does not exist in QSS, and neither do custom properties.** Outside a browser the token
+line is a *specification to hand-translate*, not CSS to paste: compute the five density-driven
+numbers yourself and write them as literals. A `--*` custom property left in a Qt stylesheet
+invalidates the whole sheet, and the type falls back to the default face with no error.
+
 ## What each direction actually depends on
 
 Most styles survive anywhere. A few have a single point of failure — remove one property and nothing recognizable remains.

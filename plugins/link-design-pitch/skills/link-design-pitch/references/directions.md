@@ -23,6 +23,65 @@ actually on the board.
 Reading every entry to choose ten costs roughly three times what this file needs to cost, and the
 entries you did not pick never appear in the output.
 
+## The token line
+
+Every entry opens with one line that carries the whole direction: six colours, a radius, and eight
+structural values. **Copy it verbatim.** Deriving these by hand is the largest avoidable cost in a
+run, and what you do not copy, you will not invent — a board whose directions differ only in colour
+is the single most common way this skill fails, and it happens exactly when these values get dropped.
+
+| Value | Is | Notes |
+|---|---|---|
+| `--g --s --l --t --t2 --ac` | colours | ground · surface · line · text · muted text · accent |
+| `--r` | length | corner radius |
+| `--f` | **role name** | resolve through the table below. Never a family name |
+| `--fw` `--hw` | number | body weight · heading weight |
+| `--sc` | **unitless ratio** | heading size ÷ body size. `3.4` means a heading 3.4× the body |
+| `--ls` | length in `em` | letter-spacing. Negative tightens |
+| `--d` | **unitless scalar, 0.85–1.35** | density. Drives size, leading, padding and gaps together |
+| `--bw` | length | border width |
+| `--sh` | shadow or `none` | |
+
+**Where an entry's prose names a pixel value and the token line implies another, the token wins.**
+The prose describes the character of a direction — "tight rows", "generous gutters" — and was written
+before the density scalar existed. `--d` is what makes ten panels comparable; a hand-set pixel value
+in one panel breaks the one thing the board is for.
+
+`--sc` and `--d` are unitless on purpose; `--r`, `--ls` and `--bw` carry units. Writing `--d:1.2px`
+or `--sc:24px` does not error — every `calc()` built on it silently drops out and the panel renders
+as a plausible but flat design. If a panel loses its heading hierarchy, check the units first.
+
+### Font roles
+
+`--f` names a role, never a family, because the catalog cannot know which fonts a given machine has.
+These six stacks are stock faces on Windows and macOS, and each pairs a Latin face with a CJK one —
+CSS falls back per glyph, so Latin renders in the first and Hangul or Kana in the second.
+
+| `--f` value | Bind this name to | Reads as |
+|---|---|---|
+| `var(--ui)` | `"Segoe UI",system-ui,"Malgun Gothic","Hiragino Sans",sans-serif` | neutral, current, unremarkable |
+| `var(--sans)` | `Arial,Helvetica,Dotum,"Hiragino Kaku Gothic ProN",sans-serif` | plain grotesque, slightly colder |
+| `var(--serif)` | `Georgia,"Times New Roman",Batang,"Hiragino Mincho ProN",serif` | editorial, reads as authored |
+| `var(--class)` | `"Times New Roman",Georgia,Gungsuh,"Yu Mincho",serif` | formal, printed, older |
+| `var(--mono)` | `Consolas,"Courier New",DotumChe,"MS Gothic",monospace` | technical, fixed rhythm |
+| `var(--heavy)` | `"Arial Black",Impact,Haettenschweiler,Dotum,sans-serif` | loud, poster-weight |
+
+**Do not add a web font**, and do not name a family the file cannot guarantee. The board must open
+from disk on someone else's machine, and a font that is not there falls back silently — the panel
+then renders in a face the board's own caption says it is not using.
+
+**Six roles, not more, and CJK distinguishes fewer.** Korean's core faces share Hangul outlines
+across their fixed-width variants, so a board in Korean gets roughly five distinguishable faces
+however many stacks you name — and **weight collapses too**: measured on Hangul, these faces render
+about two steps, not the five the numbers suggest, so 600 and 900 paint the same bold.
+
+When ten directions must share six roles, the channels that actually carry the difference are
+**`--sc`, `--ls` and `--d`** — size ratio, tracking and density. Those are unlimited and work in
+every script. Do not lean on weight to separate two directions in CJK; it will not.
+
+**Caption the role, not the family.** Write "굵은 그로테스크" or "heavy grotesque" on the panel, never
+"Arial Black". The role is a promise the file can keep; a family name is one it cannot.
+
 ## Index
 
 | # | Direction | Good at | Where it breaks |
@@ -102,131 +161,131 @@ same markup renders as any style.
 
 ## 1. Minimalism
 
-`--g:#FAFAF9;--s:#fff;--l:#E8E8E5;--t:#1A1A1A;--t2:#7C817E;--ac:#4A5B52;--r:6px`
+`--g:#FAFAF9;--s:#fff;--l:#E8E8E5;--t:#1A1A1A;--t2:#7C817E;--ac:#4A5B52;--r:6px;--f:var(--ui);--fw:400;--hw:600;--sc:2.2;--ls:.01em;--d:1.15;--bw:1px;--sh:none`
 
 Ground `#FAFAF8` · surface `#FFFFFF` · text `#1A1A1A`/`#6B6B6B` · accent one muted hue (`#7C8B6F`)
 Type: one grotesque, three sizes, weight does the work. Shape: 6–8px radius, hairline `#E8E8E4` borders, no shadow. Space is the main material.
 
 ## 2. Swiss / International
 
-`--g:#fff;--s:#fff;--l:#111;--t:#111;--t2:#6A6A6A;--ac:#D32F2F;--r:0`
+`--g:#fff;--s:#fff;--l:#111;--t:#111;--t2:#6A6A6A;--ac:#D32F2F;--r:0;--f:var(--sans);--fw:400;--hw:700;--sc:2.6;--ls:-.01em;--d:1.0;--bw:1px;--sh:none`
 
 Ground `#FFFFFF` · ink `#111111` · accent `#D32F2F` used once per view
 Type: Helvetica-lineage, tight tracking, flush-left ragged-right, strict modular scale. Shape: no radius, 1px rules, visible column grid, asymmetric balance.
 
 ## 3. Monochrome + one accent
 
-`--g:#FAFAFA;--s:#fff;--l:#E3E3E3;--t:#141414;--t2:#8A8A8A;--ac:#2F6FED;--r:4px`
+`--g:#FAFAFA;--s:#fff;--l:#E3E3E3;--t:#141414;--t2:#8A8A8A;--ac:#2F6FED;--r:4px;--f:var(--ui);--fw:400;--hw:600;--sc:2.3;--ls:.01em;--d:1.05;--bw:1px;--sh:none`
 
 Ground/text: a full grey ramp with a slight hue bias (`#0F1211` → `#F7F8F8`) · accent exactly one hue, everywhere it appears meaning something
 Type: any well-set sans. Shape: whatever suits — the discipline is chromatic, not formal.
 
 ## 4. Document / newsprint
 
-`--g:#FBFAF7;--s:#FDFCF9;--l:#D6D2C8;--t:#1C1B18;--t2:#7A736A;--ac:#7B2D26;--r:0`
+`--g:#FBFAF7;--s:#FDFCF9;--l:#D6D2C8;--t:#1C1B18;--t2:#7A736A;--ac:#7B2D26;--r:0;--f:var(--class);--fw:400;--hw:700;--sc:2.4;--ls:0;--d:1.0;--bw:1px;--sh:none`
 
 Ground `#FBFAF7` (paper) · ink `#1C1B18` · rules `#D6D2C8` · accent oxblood `#7B2D26`
 Type: serif body at generous measure, small-caps labels, footnote sizing. Shape: rules instead of boxes, dense tabular blocks.
 
 ## 5. Bento grid
 
-`--g:#EEF0F2;--s:#fff;--l:#E2E5E8;--t:#1B1F23;--t2:#767D85;--ac:#2F6FED;--r:12px`
+`--g:#EEF0F2;--s:#fff;--l:#E2E5E8;--t:#1B1F23;--t2:#767D85;--ac:#2F6FED;--r:12px;--f:var(--ui);--fw:400;--hw:700;--sc:2.4;--ls:0;--d:1.1;--bw:1px;--sh:0 1px 2px #0000000f`
 
 A layout method, not a palette — composes with any color system.
 Cells of deliberately different sizes in a tight grid, gap 12–16px, consistent radius. **Cell area encodes importance.** One hero cell per screen answers the screen's main question; supporting cells orbit it.
 
 ## 6. Material / elevation
 
-`--g:#F5F5F5;--s:#fff;--l:#E0E0E0;--t:#212121;--t2:#757575;--ac:#1976D2;--r:4px`
+`--g:#F5F5F5;--s:#fff;--l:#E0E0E0;--t:#212121;--t2:#757575;--ac:#1976D2;--r:4px;--f:var(--ui);--fw:400;--hw:500;--sc:2.2;--ls:.01em;--d:1.05;--bw:0px;--sh:0 4px 12px #00000024`
 
 Ground `#F5F5F5` · surface `#FFFFFF` at four elevation levels · accent a saturated primary
 Type: Roboto-lineage. Shape: 4px radius, shadow depth encodes layer, ink ripples on press.
 
 ## 7. Dense operational
 
-`--g:#fff;--s:#fff;--l:#D0D7DE;--t:#1F2328;--t2:#656D76;--ac:#0969DA;--r:3px`
+`--g:#fff;--s:#fff;--l:#D0D7DE;--t:#1F2328;--t2:#656D76;--ac:#0969DA;--r:3px;--f:var(--sans);--fw:400;--hw:600;--sc:1.6;--ls:0;--d:.85;--bw:1px;--sh:none`
 
 Ground `#FFFFFF` · text `#1F2328` · borders `#D0D7DE` · semantic red/amber/green reserved for state
 Type: 12–13px system sans, tabular numerals mandatory. Shape: 3px radius, 4–6px padding, rules over whitespace, sortable table headers.
 
 ## 8. Dark mode
 
-`--g:#0C1211;--s:#141D1B;--l:#25322F;--t:#E6EFEC;--t2:#8FA29D;--ac:#3FBF9C;--r:8px`
+`--g:#0C1211;--s:#141D1B;--l:#25322F;--t:#E6EFEC;--t2:#8FA29D;--ac:#3FBF9C;--r:8px;--f:var(--ui);--fw:400;--hw:600;--sc:2.3;--ls:.01em;--d:1.05;--bw:1px;--sh:none`
 
 Ground `#0C1211` · surface `#141D1B` · border `#25322F` · text `#E6EFEC`/`#8FA29D` · accent luminous (`#3FBF9C`)
 Shape: as the paired layout dictates. The signature is that the accent appears to emit rather than reflect.
 
 ## 9. Glassmorphism
 
-`--g:transparent;--s:rgba(255,255,255,.20);--l:rgba(255,255,255,.42);--t:#12203A;--t2:#4A5D80;--ac:#3B4FE0;--r:12px`
+`--g:transparent;--s:rgba(255,255,255,.20);--l:rgba(255,255,255,.42);--t:#12203A;--t2:#4A5D80;--ac:#3B4FE0;--r:12px;--f:var(--ui);--fw:300;--hw:600;--sc:2.5;--ls:.02em;--d:1.15;--bw:1px;--sh:0 2px 8px #0000001a`
 
 Translucent panels over a colorful ground, blurred backdrop, 1px light border on the top edge, soft outer shadow.
 Ground: a saturated gradient or photograph. Panels `rgba(255,255,255,0.12)` with `backdrop-filter: blur(20px)`.
 
 ## 10. Gradient mesh
 
-`--g:transparent;--s:#fff;--l:#EAEAF2;--t:#1A1A2E;--t2:#6E6E8A;--ac:#6B5BFF;--r:12px`
+`--g:transparent;--s:#fff;--l:#EAEAF2;--t:#1A1A2E;--t2:#6E6E8A;--ac:#6B5BFF;--r:12px;--f:var(--ui);--fw:400;--hw:700;--sc:2.8;--ls:-.01em;--d:1.1;--bw:0px;--sh:0 2px 8px #0000001a`
 
 Multi-point color field as ground (three to five stops bleeding into each other), UI in clean white cards on top.
 Ground: `#FF5F6D → #6B5BFF → #00C2FF` at low angle. Cards `#FFFFFF`, radius 12px.
 
 ## 11. Neon / cyber
 
-`--g:#05070D;--s:#0D1420;--l:#1B2838;--t:#DCE7F5;--t2:#7A8CA3;--ac:#22D3EE;--r:4px`
+`--g:#05070D;--s:#0D1420;--l:#1B2838;--t:#DCE7F5;--t2:#7A8CA3;--ac:#22D3EE;--r:4px;--f:var(--mono);--fw:400;--hw:700;--sc:2.6;--ls:.06em;--d:1.0;--bw:1px;--sh:0 0 12px var(--ac)`
 
 Ground `#05070D` · surface `#0D1420` · accent electric cyan `#22D3EE` and magenta `#E879F9` · glow via layered outer shadow
 Type: condensed sans or mono, uppercase labels, wide tracking. Shape: thin bright borders, scanline texture.
 
 ## 12. Neumorphism
 
-`--g:#E9EDF2;--s:#E9EDF2;--l:#E9EDF2;--t:#3A4450;--t2:#93A0AE;--ac:#5B7CFA;--r:12px`
+`--g:#E9EDF2;--s:#E9EDF2;--l:#E9EDF2;--t:#3A4450;--t2:#93A0AE;--ac:#5B7CFA;--r:12px;--f:var(--ui);--fw:400;--hw:600;--sc:2.2;--ls:.01em;--d:1.2;--bw:0px;--sh:6px 6px 12px #0000001a,-6px -6px 12px #ffffffb3`
 
 Ground and surface the *same* color (`#E8ECF1`), form made entirely from paired shadows — light from top-left, dark from bottom-right. Pressed states invert both.
 
 ## 13. Claymorphism
 
-`--g:#EEF2FF;--s:#fff;--l:#E3E8FF;--t:#2B2F4A;--t2:#7C82A8;--ac:#7C6CF5;--r:24px`
+`--g:#EEF2FF;--s:#fff;--l:#E3E8FF;--t:#2B2F4A;--t2:#7C82A8;--ac:#7C6CF5;--r:24px;--f:var(--ui);--fw:500;--hw:700;--sc:2.4;--ls:0;--d:1.25;--bw:0px;--sh:0 8px 20px #0000001a`
 
 Ground pastel (`#EEF2FF`) · surfaces heavily rounded (20–28px) in soft saturated pastels · thick soft shadow plus a subtle inner highlight
 Type: rounded geometric sans, generous weight.
 
 ## 14. 3D / immersive
 
-`--g:#F0EBE3;--s:#FAF7F2;--l:#DED5C8;--t:#2A241E;--t2:#8A7D6E;--ac:#C1683F;--r:14px`
+`--g:#F0EBE3;--s:#FAF7F2;--l:#DED5C8;--t:#2A241E;--t2:#8A7D6E;--ac:#C1683F;--r:14px;--f:var(--ui);--fw:400;--hw:600;--sc:2.6;--ls:.01em;--d:1.15;--bw:0px;--sh:0 2px 8px #0000001a`
 
 Rendered objects as the hero — a product, an abstract composition — with flat UI arranged around them. Neutral ground (`#F0EBE3`), one material accent (`#C1683F`).
 
 ## 15. Brutalism
 
-`--g:#FDF6E3;--s:#fff;--l:#000;--t:#000;--t2:#000;--ac:#1B4DFF;--r:0`
+`--g:#FDF6E3;--s:#fff;--l:#000;--t:#000;--t2:#000;--ac:#1B4DFF;--r:0;--f:var(--heavy);--fw:500;--hw:900;--sc:3.4;--ls:-.02em;--d:1.0;--bw:2px;--sh:4px 4px 0 var(--l)`
 
 Ground `#FDF6E3` · ink `#000000` · primaries `#1B4DFF` `#FFD400` `#F5453B` at full saturation
 Type: heavy grotesque, huge scale jumps, uppercase. Shape: 2–3px black borders, hard offset shadows (no blur), zero radius.
 
 ## 16. Editorial
 
-`--g:#F7F5F0;--s:#FDFCF9;--l:#D8D2C6;--t:#16181D;--t2:#7A736A;--ac:#6B1F2A;--r:0`
+`--g:#F7F5F0;--s:#FDFCF9;--l:#D8D2C6;--t:#16181D;--t2:#7A736A;--ac:#6B1F2A;--r:0;--f:var(--serif);--fw:400;--hw:400;--sc:3.0;--ls:.01em;--d:1.15;--bw:1px;--sh:none`
 
 Ground `#F7F5F0` · ink `#16181D` · accent deep `#6B1F2A` · secondary steel `#4A6A8A`
 Type: a real display serif at 48px+ against a small sans for UI, wide measure, generous leading, hanging indents. Shape: rules, not boxes; asymmetric columns; images bleeding off one edge.
 
 ## 17. Retro / Y2K
 
-`--g:#DCE9FB;--s:#EFF6FF;--l:#A9C7E8;--t:#1B2A50;--t2:#6076A8;--ac:#FF5FA2;--r:8px`
+`--g:#DCE9FB;--s:#EFF6FF;--l:#A9C7E8;--t:#1B2A50;--t2:#6076A8;--ac:#FF5FA2;--r:8px;--f:var(--sans);--fw:400;--hw:700;--sc:2.6;--ls:.02em;--d:1.05;--bw:1px;--sh:inset 0 1px 0 #ffffffb3`
 
 Ground pale blue-lilac gradient · chrome bevels · gloss highlights · pink/violet/cyan `#FF5FA2` `#8B5CF6` `#38BDF8`
 Type: bubbly grotesque or pixel. Shape: heavy bevels, inner glow, star and sparkle motifs, beveled window chrome.
 
 ## 18. Terminal / monospace
 
-`--g:#0B0E14;--s:#0B0E14;--l:#1E2430;--t:#C8D3E0;--t2:#6B7A8D;--ac:#4AF626;--r:0`
+`--g:#0B0E14;--s:#0B0E14;--l:#1E2430;--t:#C8D3E0;--t2:#6B7A8D;--ac:#4AF626;--r:0;--f:var(--mono);--fw:400;--hw:700;--sc:1.8;--ls:.04em;--d:.9;--bw:1px;--sh:none`
 
 Ground `#0B0E14` or `#F5F5F0` · one mono family throughout · accent green `#4AF626` or amber `#FFB000`
 Shape: no radius, ASCII or 1px rules, everything on a character grid, block cursors.
 
 ## 19. Liquid Glass
 
-`--g:transparent;--s:rgba(255,255,255,.34);--l:rgba(255,255,255,.55);--t:#16233D;--t2:#5A6A85;--ac:#3B62E0;--r:14px`
+`--g:transparent;--s:rgba(255,255,255,.34);--l:rgba(255,255,255,.55);--t:#16233D;--t2:#5A6A85;--ac:#3B62E0;--r:14px;--f:var(--ui);--fw:300;--hw:600;--sc:2.5;--ls:.02em;--d:1.2;--bw:1px;--sh:0 2px 8px #0000001a`
 
 Ground: whatever is behind it — the material is the point, not a palette.
 Panels translucent with **refraction at the edges**, a specular highlight that tracks motion, and
@@ -239,14 +298,14 @@ at WWDC 2025 and it is now the house look across their platforms.
 
 ## 20. Maximalism
 
-`--g:#1B0F2E;--s:#2A1348;--l:#4A2B72;--t:#FFF3E6;--t2:#C9A6E8;--ac:#FF3D8B;--r:8px`
+`--g:#1B0F2E;--s:#2A1348;--l:#4A2B72;--t:#FFF3E6;--t2:#C9A6E8;--ac:#FF3D8B;--r:8px;--f:var(--heavy);--fw:500;--hw:800;--sc:3.2;--ls:0;--d:1.1;--bw:2px;--sh:4px 4px 0 var(--l)`
 
 Ground saturated or patterned · three or more type families on purpose · layered, overlapping
 composition · dense to the edges · several hues at full strength at once.
 
 ## 21. Skeuomorphism
 
-`--g:#D7CDBE;--s:#F2EBE0;--l:#B9AC98;--t:#2E271D;--t2:#7C7060;--ac:#9C5B2E;--r:8px`
+`--g:#D7CDBE;--s:#F2EBE0;--l:#B9AC98;--t:#2E271D;--t2:#7C7060;--ac:#9C5B2E;--r:8px;--f:var(--class);--fw:400;--hw:700;--sc:2.3;--ls:0;--d:1.1;--bw:1px;--sh:0 4px 12px #00000024`
 
 Interface elements imitate specific real objects: stitched leather, ruled paper, brushed metal, a
 switch shaped like a switch. Textures and highlights are photographic rather than abstract.
@@ -257,7 +316,7 @@ Glass's material realism.
 
 ## 22. Kinetic typography
 
-`--g:#0E0E10;--s:#0E0E10;--l:#26262B;--t:#F4F4F6;--t2:#8A8A94;--ac:#E8FF3D;--r:0`
+`--g:#0E0E10;--s:#0E0E10;--l:#26262B;--t:#F4F4F6;--t2:#8A8A94;--ac:#E8FF3D;--r:0;--f:var(--heavy);--fw:400;--hw:900;--sc:4.0;--ls:-.03em;--d:1.1;--bw:0px;--sh:none`
 
 Type is the motion: words reveal on scroll, weight and width respond to cursor or velocity through
 variable-font axes, headlines transform between states. The layout can be otherwise plain — the
@@ -265,21 +324,21 @@ movement carries the personality.
 
 ## 23. Memphis / postmodern
 
-`--g:#FBF7EE;--s:#fff;--l:#111;--t:#111;--t2:#5A5A5A;--ac:#FF5F7E;--r:10px`
+`--g:#FBF7EE;--s:#fff;--l:#111;--t:#111;--t2:#5A5A5A;--ac:#FF5F7E;--r:10px;--f:var(--heavy);--fw:500;--hw:800;--sc:3.0;--ls:0;--d:1.15;--bw:2px;--sh:4px 4px 0 var(--l)`
 
 Off-white or boldly colored ground · geometric confetti — squiggles, triangles, dots, terrazzo ·
 clashing pastels held together by black outlines · type set at angles.
 
 ## 24. Broken grid / overlap
 
-`--g:#F4F2ED;--s:#fff;--l:#DCD8CF;--t:#191714;--t2:#7A756B;--ac:#B5462F;--r:0`
+`--g:#F4F2ED;--s:#fff;--l:#DCD8CF;--t:#191714;--t2:#7A756B;--ac:#B5462F;--r:0;--f:var(--serif);--fw:400;--hw:500;--sc:3.2;--ls:0;--d:1.15;--bw:1px;--sh:none`
 
 Elements deliberately break their column, overlap one another, and bleed past the margin. Images sit
 under type; blocks are offset rather than aligned. The grid is present but violated on purpose.
 
 ## 25. Bauhaus
 
-`--g:#F2EFE9;--s:#fff;--l:#111111;--t:#111111;--t2:#5A5A5A;--ac:#D62828;--r:0`
+`--g:#F2EFE9;--s:#fff;--l:#111111;--t:#111111;--t2:#5A5A5A;--ac:#D62828;--r:0;--f:var(--sans);--fw:400;--hw:700;--sc:3.0;--ls:-.01em;--d:1.05;--bw:2px;--sh:none`
 
 Primaries at full strength — red `#D62828`, blue `#1D4ED8`, yellow `#FBBF24` — on a warm off-white.
 Type: geometric sans, lowercase headlines, tight leading. Shape: circles, triangles and squares used
@@ -292,7 +351,7 @@ two things at once.
 
 ## 26. Art Deco
 
-`--g:#0E1A1A;--s:#132423;--l:#C9A227;--t:#F2EDE3;--t2:#A99B7E;--ac:#C9A227;--r:0`
+`--g:#0E1A1A;--s:#132423;--l:#C9A227;--t:#F2EDE3;--t2:#A99B7E;--ac:#C9A227;--r:0;--f:var(--class);--fw:400;--hw:400;--sc:3.2;--ls:.12em;--d:1.2;--bw:1px;--sh:none`
 
 Deep ground with metallic gold rules. Type: high-contrast display serif or geometric caps with wide
 tracking. Shape: strict bilateral symmetry, stepped and fan motifs, sharp angles, thin gold hairlines
@@ -304,7 +363,7 @@ signature; break it and the style disappears.
 
 ## 27. Constructivism
 
-`--g:#F2EDE4;--s:#FFFFFF;--l:#111111;--t:#111111;--t2:#4A4A4A;--ac:#D2231F;--r:0`
+`--g:#F2EDE4;--s:#FFFFFF;--l:#111111;--t:#111111;--t2:#4A4A4A;--ac:#D2231F;--r:0;--f:var(--heavy);--fw:500;--hw:900;--sc:3.4;--ls:-.02em;--d:1.0;--bw:2px;--sh:none`
 
 Red, black and paper. Type: heavy condensed sans, often rotated. Shape: diagonal axes, hard-edged
 photographic montage, oversized numerals, elements running off the edge to imply motion.
@@ -315,7 +374,7 @@ where responsive layout breaks first — decide early how they collapse.
 
 ## 28. Anti-AI / handmade
 
-`--g:#EDE7DA;--s:#F7F3EA;--l:#C9BCA4;--t:#2A241C;--t2:#6E6354;--ac:#B4552E;--r:4px`
+`--g:#EDE7DA;--s:#F7F3EA;--l:#C9BCA4;--t:#2A241C;--t2:#6E6354;--ac:#B4552E;--r:4px;--f:var(--class);--fw:400;--hw:600;--sc:2.6;--ls:.01em;--d:1.2;--bw:1px;--sh:0 2px 8px #0000001a`
 
 Paper and ink rather than pixels. Visible texture, torn and cut edges, slight rotation on elements,
 hand-drawn rules, photographed materials. Type: a face with irregularity in it, or actual handwriting
@@ -328,7 +387,7 @@ Strongest where the audience is already suspicious that the work was generated.
 
 ## 29. Japandi / warm minimal
 
-`--g:#F3F0EA;--s:#FBFAF7;--l:#DED8CC;--t:#2C2A26;--t2:#7A756B;--ac:#8A9A7B;--r:8px`
+`--g:#F3F0EA;--s:#FBFAF7;--l:#DED8CC;--t:#2C2A26;--t2:#7A756B;--ac:#8A9A7B;--r:8px;--f:var(--ui);--fw:300;--hw:500;--sc:2.2;--ls:.03em;--d:1.3;--bw:1px;--sh:none`
 
 Minimalism with warmth added back. Warm neutrals, muted sage or clay accent, generous space, natural
 material texture at low opacity. Type: humanist sans, comfortable leading, nothing tight.
@@ -348,11 +407,11 @@ the same few rules every time:
 |---|---|
 | Glassmorphism · Liquid Glass | gradient or photo on `--g`'s element, `backdrop-filter:blur(16px)` on surfaces, `inset 0 1px 0 rgba(255,255,255,.6)` for the edge |
 | Gradient mesh · Maximalism | `background:` with two or three `radial-gradient` stops over a base `linear-gradient` |
-| Neumorphism | `box-shadow:4px 4px 9px #C9D0D9,-4px -4px 9px #fff` on surfaces; inset the same for pressed |
-| Claymorphism | `box-shadow:0 8px 20px rgba(60,50,140,.18), inset 0 -3px 0 rgba(0,0,0,.06)` |
-| Brutalism | `border:2px solid #000; box-shadow:3px 3px 0 #000` — a solid offset, no blur |
-| Neon / cyber | `box-shadow:0 0 12px currentColor` on accented borders |
-| Terminal | `font-family:ui-monospace,Consolas,monospace` throughout |
+| Neumorphism | the pressed state needs the same shadow inset; `--sh` only carries the resting one |
+| Bento grid | `display:grid` with named areas; the Phase 1 action's cell spans two columns or rows. Cell **area** is the hierarchy, so this cannot come from tokens |
+| Dense operational | rows lose their boxes — `gap:0`, a single bottom rule per row, and a fixed-width numeric column |
+| Editorial | surfaces go transparent; a top rule replaces the card. Rules, not boxes |
+| Retro / Y2K | bevel edges as stacked `inset` highlights and shadows, over a `linear-gradient` ground |
 | Anti-AI / handmade | a paper texture as a repeating data-URI background, plus `transform:rotate(-.4deg)` on cards so nothing sits perfectly square |
 | Art Deco | `border-image` or stacked 1px gold rules for the stepped frames; symmetry has to be built into the layout, not added as CSS |
 | Constructivism | `transform:rotate(-8deg)` on headline blocks, and a decision about how they un-rotate on narrow widths |

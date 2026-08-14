@@ -129,8 +129,10 @@ and raising it only adds noise. Most dashboards, forms and documents do not.
 ## Phase 2 — Ten directions
 
 `references/directions.md` opens with an index — what each direction is good at, where it breaks,
-and which die without a property this target may lack. **Read the index, pick ten, then pull only
-those ten entries: search for each `## <number>.` heading and read just that line range.** The
+and which die without a property this target may lack. **Read the file's opening through the index — the token-line
+specification and the font-role table live there and every panel needs both — then pick ten and pull
+only those ten entries, searching for each `## <number>.` heading and reading just that line range.
+Read the short table at the end too; it names the directions that need CSS beyond their token.** The
 entries carry the token line and the type and shape signature, which rendering needs but choosing
 does not, and the ones you drop never appear in the output — reading them is pure cost. If your
 file tool can only return whole files, read the file once and never a second time.

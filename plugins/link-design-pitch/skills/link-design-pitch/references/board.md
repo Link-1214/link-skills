@@ -17,7 +17,12 @@ a ready-made token line, and the file ends with the few extra rules the shadow- 
 directions need.
 
 The structure that makes this cheap: **write the mockup markup once, and give each direction a
-wrapper class that only redefines variables.**
+wrapper class that redefines the whole token line** — all fifteen values, not just the colours.
+
+**Copy every value the catalog gives you.** A wrapper that redefines only the six colours produces
+ten panels in one typeface at one size with one rhythm, differing in hue alone. Measured on real
+boards built that way, the rendered typeface was identical in every panel and a viewer counted six
+distinct designs out of ten. The colours are the least of what separates these directions.
 
 ```html
 <div class="mock d-swiss">…markup…</div>
@@ -25,13 +30,36 @@ wrapper class that only redefines variables.**
 ```
 
 ```css
-.mock { --g:#fff; --s:#fff; --l:#E3E6E8; --t:#1B1F23; --t2:#6B7480; --ac:#2F6FED; --r:6px;
-        background:var(--g); color:var(--t); }
-.mock .card { background:var(--s); border:1px solid var(--l); border-radius:var(--r); }
+.mock { --g:#fff;--s:#fff;--l:#E3E6E8;--t:#1B1F23;--t2:#6B7480;--ac:#2F6FED;--r:6px;
+        --f:var(--ui);--fw:400;--hw:600;--sc:2.2;--ls:0;--d:1;--bw:1px;--sh:none;
+        background:var(--g); color:var(--t);
+        font-family:var(--f); font-weight:var(--fw); letter-spacing:var(--ls);
+        font-size:calc(14px * var(--d)); line-height:calc(1.45 * var(--d)); }
+.mock h2   { font-weight:var(--hw); font-size:calc(14px * var(--d) * var(--sc)); }
+.mock .card{ background:var(--s); border:var(--bw) solid var(--l); border-radius:var(--r);
+             box-shadow:var(--sh); padding:calc(10px * var(--d)); }
+.mock .rows{ display:flex; flex-direction:column; gap:max(0px, calc(7px * var(--d))); }
 
-.d-swiss { --g:#fff;--s:#fff;--l:#111;--t:#111;--t2:#6A6A6A;--ac:#D32F2F;--r:0 }
-.d-dark  { --g:#0C1211;--s:#141D1B;--l:#25322F;--t:#E6EFEC;--t2:#8FA29D;--ac:#3FBF9C;--r:8px }
+.d-swiss { --g:#fff;--s:#fff;--l:#111;--t:#111;--t2:#6A6A6A;--ac:#D32F2F;--r:0;
+           --f:var(--sans);--fw:400;--hw:700;--sc:2.6;--ls:-.01em;--d:1.0;--bw:1px;--sh:none }
+.d-dark  { --g:#0C1211;--s:#141D1B;--l:#25322F;--t:#E6EFEC;--t2:#8FA29D;--ac:#3FBF9C;--r:8px;
+           --f:var(--ui);--fw:400;--hw:600;--sc:2.3;--ls:.01em;--d:1.05;--bw:1px;--sh:none }
 ```
+
+Bind the six font roles once, near the top, from the table in `directions.md`:
+
+```css
+:root { --ui:"Segoe UI",system-ui,"Malgun Gothic","Hiragino Sans",sans-serif;
+        --sans:Arial,Helvetica,Dotum,"Hiragino Kaku Gothic ProN",sans-serif;
+        --serif:Georgia,"Times New Roman",Batang,"Hiragino Mincho ProN",serif;
+        --class:"Times New Roman",Georgia,Gungsuh,"Yu Mincho",serif;
+        --mono:Consolas,"Courier New",DotumChe,"MS Gothic",monospace;
+        --heavy:"Arial Black",Impact,Haettenschweiler,Dotum,sans-serif; }
+```
+
+**Wrap every `--d`-driven gap in `max(0px, …)`.** A density below 1 can drive a subtraction negative,
+and rows then overlap into each other's borders — it renders, it looks merely tight, and nothing
+reports an error.
 
 Emit the markup once and clone it — a small loop over a template string beats ten pasted copies,
 because it makes "same content in every panel" structurally true instead of something you keep
@@ -46,6 +74,17 @@ If panel 3 shows a settings view and panel 7 shows a landing hero, the owner is 
 scenes, not styles, and will pick based on which content they happen to like. Pick one
 representative surface — usually the one carrying the Phase 1 action — and render that same surface
 ten times.
+
+**Same size means the same frame width, never a fixed height.** Setting `height` on the mockup makes
+density structurally unable to express: a dense operational direction and an airy minimal one get
+squeezed into an identical box, and the channel that separates them most visibly is gone. On boards
+where the height was pinned, every panel rendered at exactly the same height and the directions
+became indistinguishable below the colour.
+
+**`min-height` is the same trap wearing a different name.** Set it high enough to tidy the short
+panels and the tight directions rise to meet it, which is the flattening again — measured on a real
+board, two panels landed on exactly the stated `min-height`. Let the panels be uneven. Uneven height
+*is* the density channel showing you it works.
 
 Same applies to effort. Ten at equal fidelity beats three polished and seven sketched; uneven detail
 reads as a thumb on the scale.
@@ -95,6 +134,15 @@ Two traps that have already produced wrong findings:
 - **Composite opacity before measuring contrast.** An element at `opacity:.5` does not have its
   nominal color on screen. Blend it against what is behind it first, or you will report a passing
   ratio for text that fails.
+- **`font-family` is what you asked for, not what rendered.** A face the machine lacks falls back
+  silently, so ten panels can report ten different families and paint one. Measure the rendered face
+  instead: draw a string to a canvas and compare `measureText` widths. **Probe with a string in the
+  content's own script** — a Latin probe on a Korean board reports ten distinct faces while every
+  Hangul glyph on screen comes from one fallback, which is the exact bug this check exists to catch.
+- **Count what separates the panels, not just what differs.** For each of typeface, weight, size,
+  tracking, density and radius, count how many distinct rendered values appear across the ten. Any
+  channel sitting at one value is contributing nothing, and if only colour is above one, the board
+  has collapsed no matter how good each panel looks alone.
 
 When the harness cannot run scripts in the page at all, the same measurements work headlessly:
 append a probe script that writes its JSON result into a `<div>`, then read it back out of
