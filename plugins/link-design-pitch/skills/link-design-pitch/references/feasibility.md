@@ -8,10 +8,15 @@ error appears, and the effect simply is not there.
 
 **Read the two tables below, then read only the section for your target.** The tables are
 cross-platform and always apply; the per-platform sections are detail you need for one target and
-not the other six.
+not for the rest.
 
 Where you are unsure, verify rather than trust this file — render one throwaway element with the
 risky property and look at it. Platforms change; a measurement beats a table.
+
+**If your target has no section here, say so before the board goes up** — mark the feasibility badges
+provisional and name what you could not check. **Do not fall back to Web (browser):** it is the
+nearest-looking section and it says nothing is blocked, which turns an unchecked board into a
+confident one.
 
 ## Platform index
 
@@ -24,6 +29,8 @@ risky property and look at it. Platforms change; a measurement beats a table.
 | **Email (HTML)** | Newsletters, transactional mail | No flexbox, grid, web fonts or JavaScript. Dark mode is inverted by clients unpredictably |
 | **Print / PDF** | Reports, anything on paper | No motion, no interaction, no dark mode. Hairlines under 0.25pt vanish; saturated RGB shifts in CMYK |
 | **Slides (PowerPoint / Keynote)** | Decks | Fonts must exist on the presenting machine or slides reflow. Projectors crush contrast — push it further than feels right |
+| **Spreadsheet (Excel / Sheets)** | Workbooks handed over as files | No shadow, no radius — cells are rectangles. Border weights are a preset list. No letter-spacing at cell level |
+| **Markdown (GitHub, editor preview)** | READMEs, docs, reports written as `.md` | **Everything — CSS is stripped, so no token value reaches the reader.** Do not pitch here |
 
 ## What the token line survives
 
@@ -144,3 +151,21 @@ Document, editorial, and Swiss are the natural fits. Dark, neon, glass, and neum
 ## Slides (PowerPoint / Keynote)
 
 Gradients, shadows, and images all fine. Fonts must exist on the presenting machine or be embedded — otherwise substitution silently reflows every slide. Assume the room's projector crushes contrast: mid-greys on white disappear, and thin light type on dark disappears faster. Push contrast further than feels right on a laptop.
+
+## Spreadsheet (Excel / Sheets)
+
+A workbook's ten directions are ten header-and-conditional-format schemes, not ten page layouts.
+
+- **Cells are rectangles** — no radius, no shadow. Depth comes from fill steps and rule weight, which makes the restrained directions the honest pitches here and rules out neumorphism, claymorphism, glass and 3D.
+- **`--bw` quantises** to a preset list of border weights; a 1px and a 1.5px direction land on the same line. **`--ls` has no cell-level equivalent.**
+- **`--d` is row height and column width**, in points and characters. Resolve it to explicit numbers before pitching or two directions render identically.
+- **Conditional formatting is a separate system from cell styles**, and state colour belongs there. Direct cell formatting survives until someone re-sorts.
+- Fonts must exist on the opener's machine, as with slides — substitution changes column fit, not just looks.
+
+## Markdown (GitHub, editor preview)
+
+**Do not pitch directions here.** Renderers strip `<style>`, `style=` and `class=`, so no token value reaches the reader — colour, face, size, weight, tracking, density, border and shadow all belong to whatever displays the file. Ten wrapper classes produce ten identical documents.
+
+Say that plainly rather than pitching a reduced set. What the author controls is editorial: heading depth, table column order and alignment, code span versus prose, emphasis, blockquote, list type. Worth deciding, worth writing down, not a visual direction.
+
+If the same content also ships as HTML, a PDF or a deck, **that** is the target — pitch against it and treat the Markdown as source.

@@ -181,17 +181,25 @@ plugins/<플러그인>/
 
 ## 커밋 전에
 
+저장소 루트에서:
+
+```bash
+python scripts/validate_repo.py
+```
+
+**이것이 게이트입니다.** `.github/workflows/validate.yml` 이 push 와 PR 마다 같은 스크립트를
+돌리므로 여기서 통과한 것과 CI 가 보는 것이 같습니다. 파이썬만 있으면 됩니다.
+
+`claude plugin validate` 를 여기 적어 두었다가 한 번 헛돌았습니다. **그 CLI 는 데스크톱 앱만
+설치한 컴퓨터에 없습니다** — 어느 폴더에서 쳐도 `CommandNotFoundException` 이 납니다. 설치된
+환경이면 아래를 추가로 돌려도 되지만, 없다고 해서 커밋을 막을 일은 아닙니다. 앞의 것은 플러그인
+매니페스트와 스킬 frontmatter 를, 뒤의 것은 마켓플레이스 카탈로그와 각 `source` 경로를
+확인합니다.
+
 ```bash
 claude plugin validate ./plugins/<플러그인> --strict
-```
-
-```bash
 claude plugin validate .
 ```
-
-앞의 것은 플러그인 매니페스트와 모든 스킬의 frontmatter를 검사하고, 뒤의 것은 마켓플레이스
-카탈로그와 각 `source` 경로가 실제로 있는지 확인합니다. 둘 다 통과해야 합니다. `--strict` 는
-경고도 오류로 취급합니다.
 
 그다음 직접 확인할 것:
 

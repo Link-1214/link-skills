@@ -41,6 +41,26 @@ document.getElementById('a2').innerHTML = board(true);
 When two panels are supposed to show a before and after, generating both from one function is the
 only way to be sure they did.
 
+## Measuring a target that is not a browser
+
+Everything below assumes a browser, and most targets are not one. `getComputedStyle`, `scrollHeight`
+and `chrome --headless` do not exist for a Qt app, a deck or a workbook. **The measurements are still
+required; the method is yours to build.**
+
+For Qt, measured on a real project: set `QT_QPA_PLATFORM=offscreen`, construct the window against a
+sample fixture, walk the tree and read `widget.geometry()`. Contrast comes from the palette module —
+Qt has no compositing to undo, so a failing muted token is fixed in the palette rather than by
+raising an opacity that does nothing there.
+
+- **Exclude Qt's internal widgets and collapse duplicate areas.** A `PlotWidget` and the `QWidget`
+  inside it report the same rectangle, so the runner-up becomes the hero's own container.
+- **State the window size, and use more than one.** Stretch factors move the ratio: one screen went
+  from 1.19× at 1280 wide to 2.06× at 1600.
+
+**If you cannot measure a target at all, say so in the output.** An unmeasured surface reported
+without comment is indistinguishable from one that passed. And budget for this — standing up a
+headless app to read four rectangles is a task, not a step.
+
 ## Verify in one pass
 
 Render once and run a single script that returns everything. Six separate round-trips cost real time
@@ -50,7 +70,7 @@ One call should return, per surface: rendered areas of the candidate elements (s
 number, not a claim), effective contrast of body and de-emphasized text, and whether the page
 scrolls horizontally.
 
-Four traps that have already produced wrong findings:
+Traps that have already produced wrong findings:
 
 - **Measure the channel the design actually uses.** If hierarchy is carried by contrast, area will
   read 1.00× and that is correct, not a defect.

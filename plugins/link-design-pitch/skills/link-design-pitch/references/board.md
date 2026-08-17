@@ -119,7 +119,7 @@ One call should return, per panel: frame height, element counts (so you can prov
 identical), text-vs-ground contrast, the feasibility badge — plus panel count and whether the page
 scrolls horizontally.
 
-Two traps that have already produced wrong findings:
+Traps that have already produced wrong findings:
 
 - **Compare the same element across directions.** Measuring a highlighted card in one direction and
   a plain card in another gives a number that means nothing. Select explicitly —

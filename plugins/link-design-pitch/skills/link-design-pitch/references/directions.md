@@ -68,11 +68,16 @@ CSS falls back per glyph, so Latin renders in the first and Hangul or Kana in th
 
 ### Colour that has to be read
 
-**Check `--t2` and `--ac` against the surface before using either as text.** Muted labels are the
-smallest text on the panel and therefore need *more* contrast, not less. Every `--t2` in this catalog
-clears 4.5:1 on its own surface; **several accents do not, because they are fill colours.** An accent
-below 4.5:1 may fill a button or mark a border, but must not carry a number the owner has to read —
-and the one action's figures are exactly the numbers they have to read.
+**Check `--t2` and `--ac` against whatever is actually behind them.** Muted labels are the smallest
+text on the panel and therefore need *more* contrast, not less. Every `--t2` here clears 4.5:1 on its
+own **surface** — but **twelve fail on the ground**, lowest 3.51:1 (entry 21), and `board.md` paints
+`--g` on the mock and `--s` only on cards, so every label outside a card sits on the ground. Entry 16
+puts all of its text there by design. Measure where the label lands. Entries 9, 10 and 19 declare
+`rgba()` or `transparent`, so nothing can be promised until the backdrop is chosen.
+
+**Several accents fail 4.5:1 because they are fill colours.** An accent below it may fill a button or
+mark a border, but must not carry a number the owner has to read — and the one action's figures are
+exactly the numbers they have to read.
 
 **Pick the button label by measuring, not by habit.** White on a pale or mid accent fails; so does
 dark text on a deep one. Compute both against `--ac` and take the winner. Three panels on a measured
@@ -127,20 +132,20 @@ what is actually there or say nothing about the type.
 | 3 | Monochrome + one accent | Color carries state, not decoration — the accent is unmissable | Cannot spend the one accent on data that needs several categorical colors |
 | 4 | Document / newsprint | Reports, audit trails, long reading, anything going to print | Rules and paper suggest read-only; buttons look pasted on |
 | 5 | Bento grid | Dashboards where unrelated things coexist; gives the eye an entry point | Equal-sized cells make it a plain card grid. Pointless for one long list |
-| 6 | Material / elevation | Android and cross-platform; a documented system over a distinctive look | A house style millions of apps already wear. **Needs real shadows** |
+| 6 | Material / elevation | Android and cross-platform; a documented system over a distinctive look | A house style millions of apps already wear. Needs real shadows — without them it flattens to flat design |
 | 7 | Dense operational | Operators who want more rows per screen, not more air | Intimidating to occasional users. Small hit targets hurt drag-first tools |
-| 8 | Dark mode | Long sessions in dim rooms; anomalies pop; saturated accents stay readable | No good in print. Long body text is harder to read. **Charts keep their own light background** |
+| 8 | Dark mode | Long sessions in dim rooms; anomalies pop; saturated accents stay readable | No good in print. Long body text is harder to read. Charts keep their own light background — that is the global chart note, not a dependency of this direction |
 | 9 | Glassmorphism | Hero surfaces, media-rich apps where depth is the point | **Dies without `backdrop-filter`.** Text contrast shifts with whatever is behind it |
 | 10 | Gradient mesh | Landing pages and product marketing; current without structural work | The ground competes with every chart color. Dates quickly |
 | 11 | Neon / cyber | Security, gaming, monitoring, developer tools | Everything already glows, so warning red loses its meaning. Needs shadow-based glow |
 | 12 | Neumorphism | Control panels, sliders, toggles — physical-feeling inputs | **Contrast to ground is near zero by construction.** Controls are hard to find for low vision. **Dies without `box-shadow`** |
 | 13 | Claymorphism | Consumer apps, onboarding, non-expert audiences | Reads toy-like on financial or operational tools. Needs shadows |
-| 14 | 3D / immersive | Product configurators, spatial data — where the object *is* the content | **Perspective distorts perceived magnitude, so 3D charts misinform.** Expensive assets; rare in desktop toolkits |
+| 14 | 3D / immersive | Product configurators, spatial data — where the object *is* the content | **Dies without WebGL, a 3D runtime, or pre-rendered assets.** Perspective distorts perceived magnitude, so 3D charts misinform. Expensive assets; rare in desktop toolkits |
 | 15 | Brutalism | Portfolios, launches, anything that must not look templated | Genuinely tiring all day, and no quiet register is left for secondary information |
 | 16 | Editorial | Content-led products, reports meant to be read, authority | Display serifs lack tabular figures, so number columns wobble |
 | 17 | Retro / Y2K | Entertainment, youth-facing products, deliberate nostalgia | Bevels and glow eat legibility; semantic color drowns in an already-loud field |
 | 18 | Terminal / monospace | Developer tools, logs, CI — audiences who live in a shell | Wrong for non-technical users; monospace prose is measurably slower to read |
-| 19 | Liquid Glass | Apple-native apps; hierarchy as depth; current without inventing anything | Contrast shifts with background *and* motion. Off Apple platforms it costs more and lands as plain glassmorphism |
+| 19 | Liquid Glass | Apple-native apps; hierarchy as depth; current without inventing anything | Contrast shifts with background *and* motion. **Dies without `backdrop-filter` plus refraction** — off Apple platforms it costs more and lands as plain glassmorphism |
 | 20 | Maximalism | Culture, fashion, events, personal sites; being remembered | No quiet register, so secondary information and status colors drown. Fails in execution more than in concept |
 | 21 | Skeuomorphism | Makes unfamiliar controls instantly legible by borrowing a known object | Every control needs its own artwork, so the tenth does not match. Dates fastest of all |
 | 22 | Kinetic typography | Hero sections, single-message pages, launches | Motion interferes with scanning and re-reading. Needs variable fonts plus animation |
@@ -152,8 +157,9 @@ what is actually there or say nothing about the type.
 | 28 | Anti-AI / handmade | When the thing must not look machine-made. Texture, collage, deliberate imperfection | The texture and irregularity blur information. Assets are expensive and do not scale to a hundred screens |
 | 29 | Japandi / warm minimal | Screens people sit in for hours — quiet without minimalism's coldness | Low-saturation naturals leave status colors and accents nowhere loud to stand |
 
-**Bold** marks a hard dependency or a failure that disqualifies the direction outright for some
-targets. Check those against `feasibility.md` before putting them on the board.
+**Bold marks one thing: `feasibility.md` answers "Survives without it?" with *No*.** That is entries
+9, 12, 14 and 19, and each must be checked against the target before it goes on the board. Directions
+that degrade rather than die say so in plain text.
 
 ## Choosing ten
 
@@ -436,21 +442,19 @@ risk: check that status colors still separate from it before committing.
 
 ### The ones that need more than a token line
 
-Most directions are the token line and nothing else. These seven also need structural CSS, and it is
-the same few rules every time:
+Most directions are the token line and nothing else. The ones below also need structural CSS, and it
+is the same few rules every time. Read the whole table:
 
 | Direction | Add |
 |---|---|
 | Glassmorphism · Liquid Glass | gradient or photo on `--g`'s element, `backdrop-filter:blur(16px)` on surfaces, `inset 0 1px 0 rgba(255,255,255,.6)` for the edge |
 | Gradient mesh · Maximalism | `background:` with two or three `radial-gradient` stops over a base `linear-gradient` |
-| Neumorphism | the pressed state needs the same shadow inset; `--sh` only carries the resting one |
+| Neumorphism | the pressed state needs the same shadow inset — `--sh` only carries the resting one. And **every** element is extruded from the ground, **including the primary button**: a flat filled CTA breaks the direction's one premise |
 | Bento grid | `display:grid` with named areas; the Phase 1 action's cell spans two columns or rows. Cell **area** is the hierarchy, so this cannot come from tokens |
 | Dense operational | rows lose their boxes — `gap:0`, a single bottom rule per row, and a fixed-width numeric column |
-| Editorial | surfaces go transparent; a top rule replaces the card. Rules, not boxes |
+| Editorial | surfaces go transparent and a top rule replaces the card — rules, not boxes. Then hanging indents, an asymmetric column, and one element bleeding off an edge; without those it is a serif card list |
 | Retro / Y2K | bevel edges as stacked `inset` highlights and shadows, over a `linear-gradient` ground, and a beveled window frame around the surface — the frame is the strongest signal of the era |
 | Terminal | one mono family throughout is a **Latin-only promise** — CJK falls back to a proportional gothic. Set the fixed rhythm with `tabular-nums` and a fixed-width numeric column instead |
-| Neumorphism | every element must be extruded from the ground, **including the primary button** — a flat filled CTA breaks the one premise the direction has |
-| Editorial | hanging indents, an asymmetric column, and one element bleeding off an edge. Without these it is a serif card list |
 | Japandi | a natural-material texture at very low opacity as a repeating data-URI background |
 | Anti-AI / handmade | a paper texture as a repeating data-URI background, plus `transform:rotate(-.4deg)` on cards so nothing sits perfectly square |
 | Art Deco | `border-image` or stacked 1px gold rules for the stepped frames; symmetry has to be built into the layout, not added as CSS |

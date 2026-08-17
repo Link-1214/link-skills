@@ -25,6 +25,13 @@ sits in an unexpected place is not a missing record. Its directory is `<output>`
 skill is that ten options were surveyed and one was chosen with reasons. Inventing one here silently
 throws that away, and the owner will not know it happened.
 
+**A missing `Status` is not the same as an unchosen one, and it is the common case.** Records written
+before the field existed do not carry it, and inheriting those is most of what this skill does. Read
+whether a direction was actually chosen — a section specifying one, a recommendation the owner took,
+tokens resolved to a single palette — and if it was, proceed and write the line in as you go. If the
+record surveys options and never lands, that is where you stop. Refusing a record that plainly chose
+a direction, over a field invented after it was written, fails the owner for bookkeeping.
+
 Read the record fully before starting. It carries the five answers, the tokens, the measurements,
 and — most usefully — what was rejected and why. Applying a direction while contradicting the reason
 it was chosen is the most common way this goes wrong.
