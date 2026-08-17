@@ -36,7 +36,7 @@ is the single most common way this skill fails, and it happens exactly when thes
 | `--r` | length | corner radius |
 | `--f` | **role name** | resolve through the table below. Never a family name |
 | `--fw` `--hw` | number | body weight · heading weight |
-| `--sc` | **unitless ratio** | heading size ÷ body size. `3.4` means a heading 3.4× the body |
+| `--sc` | **unitless ratio** | heading size ÷ body size. `3.4` means a heading 3.4× the body. It applies to the surface's **top-level heading**; sub-headings scale between that and the body, and a panel whose heading renders smaller than its body has applied it to the wrong element |
 | `--ls` | length in `em` | letter-spacing. Negative tightens |
 | `--d` | **unitless scalar, 0.85–1.35** | density. Drives size, leading, padding and gaps together |
 | `--bw` | length | border width |
@@ -68,12 +68,17 @@ CSS falls back per glyph, so Latin renders in the first and Hangul or Kana in th
 
 ### Colour that has to be read
 
-**Check `--t2` and `--ac` against whatever is actually behind them.** Muted labels are the smallest
-text on the panel and therefore need *more* contrast, not less. Every `--t2` here clears 4.5:1 on its
-own **surface** — but **twelve fail on the ground**, lowest 3.51:1 (entry 21), and `board.md` paints
-`--g` on the mock and `--s` only on cards, so every label outside a card sits on the ground. Entry 16
-puts all of its text there by design. Measure where the label lands. Entries 9, 10 and 19 declare
-`rgba()` or `transparent`, so nothing can be promised until the backdrop is chosen.
+**Every `--t2` here clears 4.5:1 on both its own surface and its ground.** Twelve of them did not,
+once — `board.md` paints `--g` on the mock and `--s` only on cards, so every label outside a card sits
+on the ground, and entry 16 puts all of its text there by design. The catalog values were corrected
+rather than left for each run to re-measure and re-fix: a value you have to change every time is not a
+value you can copy verbatim, which is what the rest of this file asks you to do.
+
+Entries 9, 10 and 19 declare `rgba()` or `transparent`, so **nothing can be promised for those** until
+the backdrop is chosen. Measure them against whatever you put behind the panel.
+
+**Muted labels are the smallest text and therefore need *more* contrast, not less** — if you change a
+`--t2`, check it rather than assuming the correction still holds.
 
 **Several accents fail 4.5:1 because they are fill colours.** An accent below it may fill a button or
 mark a border, but must not carry a number the owner has to read — and the one action's figures are
@@ -176,6 +181,15 @@ Then adjust for the answers. A daily-use internal tool has no business seeing Y2
 unless you include it precisely to make the point that loud styles cost legibility, which is a
 legitimate reason to spend one slot.
 
+**Entries 3 and 8 define a colour discipline and leave the shape open, so they need a shape borrowed
+from elsewhere to be visible at all.** Take at most one of them, borrow from a direction not otherwise
+on the board, and put the borrowing in the caption. Two of them plus a restrained direction is how a
+board ends up with three panels that are one idea — measured, dark and minimalism rendered identical
+heading glyphs because dark had nothing to borrow from.
+
+Borrowing a shape to show a colour discipline is **not** the composition Phase 3 handles: the
+direction being pitched is still one of the ten, and the caption says which half is on offer.
+
 Say why each of the ten is present. "Included to show where the ceiling is" is a good reason.
 Silence is not.
 
@@ -203,7 +217,7 @@ same markup renders as any style.
 
 ## 1. Minimalism
 
-`--g:#FAFAF9;--s:#fff;--l:#E8E8E5;--t:#1A1A1A;--t2:#717673;--ac:#4A5B52;--r:6px;--f:var(--ui);--fw:400;--hw:600;--sc:2.2;--ls:.01em;--d:1.15;--bw:1px;--sh:none`
+`--g:#FAFAF9;--s:#fff;--l:#E8E8E5;--t:#1A1A1A;--t2:#6F7471;--ac:#4A5B52;--r:6px;--f:var(--ui);--fw:400;--hw:600;--sc:2.2;--ls:.01em;--d:1.15;--bw:1px;--sh:none`
 
 Ground `#FAFAF9` · surface `#FFFFFF` · text `#1A1A1A`/`#717673` · accent one muted hue (`#4A5B52`)
 Type: one grotesque, a small size set, and on CJK the size ratio does the work — Hangul renders about two weight steps whatever you ask for. Shape: 6–8px radius, hairline `#E8E8E5` borders, no shadow. Space is the main material.
@@ -217,28 +231,33 @@ Type: Helvetica-lineage, tight tracking, flush-left ragged-right, strict modular
 
 ## 3. Monochrome + one accent
 
-`--g:#FAFAFA;--s:#fff;--l:#E3E3E3;--t:#141414;--t2:#757575;--ac:#2F6FED;--r:4px;--f:var(--ui);--fw:400;--hw:700;--sc:2.8;--ls:0;--d:1.0;--bw:1px;--sh:none`
+`--g:#FAFAFA;--s:#fff;--l:#E3E3E3;--t:#141414;--t2:#737373;--ac:#2F6FED;--r:4px;--f:var(--ui);--fw:400;--hw:700;--sc:2.8;--ls:0;--d:1.0;--bw:1px;--sh:none`
 
 Ground/text: a full grey ramp with a slight hue bias (`#0F1211` → `#F7F8F8`) · accent exactly one hue, everywhere it appears meaning something
 Type: any well-set sans. Shape: whatever suits — the discipline is chromatic, not formal.
 
+**Borrows its shape, so give it one.** With nothing borrowed it renders as the base markup, which is
+already near-monochrome, and the panel becomes indistinguishable from minimalism. Take the shape from
+a direction *not* otherwise on this board and say so in the caption — the owner is choosing the colour
+discipline, not the shape it is standing on.
+
 ## 4. Document / newsprint
 
-`--g:#FBFAF7;--s:#FDFCF9;--l:#D6D2C8;--t:#1C1B18;--t2:#7A736A;--ac:#7B2D26;--r:0;--f:var(--class);--fw:400;--hw:700;--sc:2.4;--ls:0;--d:1.0;--bw:1px;--sh:none`
+`--g:#FBFAF7;--s:#FDFCF9;--l:#D6D2C8;--t:#1C1B18;--t2:#797269;--ac:#7B2D26;--r:0;--f:var(--class);--fw:400;--hw:700;--sc:2.4;--ls:0;--d:1.0;--bw:1px;--sh:none`
 
 Ground `#FBFAF7` (paper) · ink `#1C1B18` · rules `#D6D2C8` · accent oxblood `#7B2D26`
 Type: serif body at generous measure, small-caps labels, footnote sizing. Shape: rules instead of boxes, dense tabular blocks.
 
 ## 5. Bento grid
 
-`--g:#EEF0F2;--s:#fff;--l:#E2E5E8;--t:#1B1F23;--t2:#6F757D;--ac:#2F6FED;--r:12px;--f:var(--ui);--fw:500;--hw:800;--sc:2.0;--ls:0;--d:1.05;--bw:1px;--sh:0 1px 2px #0000000f`
+`--g:#EEF0F2;--s:#fff;--l:#E2E5E8;--t:#1B1F23;--t2:#686E76;--ac:#2F6FED;--r:12px;--f:var(--ui);--fw:500;--hw:800;--sc:2.0;--ls:0;--d:1.05;--bw:1px;--sh:0 1px 2px #0000000f`
 
 A layout method, not a palette — composes with any color system.
 Cells of deliberately different sizes in a tight grid, gap 12–16px, consistent radius. **Cell area encodes importance.** One hero cell per screen answers the screen's main question; supporting cells orbit it.
 
 ## 6. Material / elevation
 
-`--g:#F5F5F5;--s:#fff;--l:#E0E0E0;--t:#212121;--t2:#757575;--ac:#1976D2;--r:4px;--f:var(--ui);--fw:400;--hw:500;--sc:2.2;--ls:.01em;--d:1.05;--bw:0px;--sh:0 4px 12px #00000024`
+`--g:#F5F5F5;--s:#fff;--l:#E0E0E0;--t:#212121;--t2:#707070;--ac:#1976D2;--r:4px;--f:var(--ui);--fw:400;--hw:500;--sc:2.2;--ls:.01em;--d:1.05;--bw:0px;--sh:0 4px 12px #00000024`
 
 Ground `#F5F5F5` · surface `#FFFFFF` at four elevation levels · accent a saturated primary
 Type: Roboto-lineage. Shape: 4px radius, shadow depth encodes layer, ink ripples on press.
@@ -256,6 +275,11 @@ Type: system sans at the size `--d` sets, tabular numerals mandatory. Shape: 3px
 
 Ground `#0C1211` · surface `#141D1B` · border `#25322F` · text `#E6EFEC`/`#8FA29D` · accent luminous (`#3FBF9C`)
 Shape: as the paired layout dictates. The signature is that the accent appears to emit rather than reflect.
+
+**That pairing is not optional on a board.** Rendered with nothing paired, dark takes the base shape and
+reads as the light panels inverted — measured, its heading glyphs hashed identical to the minimalism
+panel sitting above it. Pair it with a shape from a direction *not* otherwise on this board, and put in
+the caption which shape it is borrowing and that the choice on offer is the polarity.
 
 ## 9. Glassmorphism
 
@@ -286,14 +310,14 @@ Ground and surface the *same* color (`#E9EDF2`), form made entirely from paired 
 
 ## 13. Claymorphism
 
-`--g:#EEF2FF;--s:#fff;--l:#E3E8FF;--t:#2B2F4A;--t2:#6D7397;--ac:#7C6CF5;--r:24px;--f:var(--ui);--fw:500;--hw:700;--sc:2.4;--ls:0;--d:1.25;--bw:0px;--sh:0 8px 20px #0000001a`
+`--g:#EEF2FF;--s:#fff;--l:#E3E8FF;--t:#2B2F4A;--t2:#676D91;--ac:#7C6CF5;--r:24px;--f:var(--ui);--fw:500;--hw:700;--sc:2.4;--ls:0;--d:1.25;--bw:0px;--sh:0 8px 20px #0000001a`
 
 Ground pastel (`#EEF2FF`) · surfaces heavily rounded (20–28px) in soft saturated pastels · thick soft shadow plus a subtle inner highlight
 Type: rounded geometric sans, generous weight.
 
 ## 14. 3D / immersive
 
-`--g:#F0EBE3;--s:#FAF7F2;--l:#DED5C8;--t:#2A241E;--t2:#7A6E60;--ac:#C1683F;--r:14px;--f:var(--ui);--fw:300;--hw:800;--sc:3.2;--ls:-.01em;--d:1.1;--bw:0px;--sh:0 2px 8px #0000001a`
+`--g:#F0EBE3;--s:#FAF7F2;--l:#DED5C8;--t:#2A241E;--t2:#75695B;--ac:#C1683F;--r:14px;--f:var(--ui);--fw:300;--hw:800;--sc:3.2;--ls:-.01em;--d:1.1;--bw:0px;--sh:0 2px 8px #0000001a`
 
 Rendered objects as the hero — a product, an abstract composition — with flat UI arranged around them. Neutral ground (`#F0EBE3`), one material accent (`#C1683F`).
 
@@ -306,14 +330,14 @@ Type: heavy grotesque, huge scale jumps, uppercase. Shape: 2–3px black borders
 
 ## 16. Editorial
 
-`--g:#F7F5F0;--s:#FDFCF9;--l:#D8D2C6;--t:#16181D;--t2:#7A736A;--ac:#6B1F2A;--r:0;--f:var(--serif);--fw:400;--hw:400;--sc:3.0;--ls:.01em;--d:1.15;--bw:1px;--sh:none`
+`--g:#F7F5F0;--s:#FDFCF9;--l:#D8D2C6;--t:#16181D;--t2:#766F66;--ac:#6B1F2A;--r:0;--f:var(--serif);--fw:400;--hw:400;--sc:3.0;--ls:.01em;--d:1.15;--bw:1px;--sh:none`
 
 Ground `#F7F5F0` · ink `#16181D` · accent deep `#6B1F2A` · secondary steel `#4A6A8A`
 Type: a real display serif at 48px+ against a small sans for UI, wide measure, generous leading, hanging indents. Shape: rules, not boxes; asymmetric columns; images bleeding off one edge.
 
 ## 17. Retro / Y2K
 
-`--g:#DCE9FB;--s:#EFF6FF;--l:#A9C7E8;--t:#1B2A50;--t2:#596E9F;--ac:#FF5FA2;--r:8px;--f:var(--heavy);--fw:500;--hw:800;--sc:2.4;--ls:.04em;--d:1.15;--bw:2px;--sh:inset 0 1px 0 #ffffffb3`
+`--g:#DCE9FB;--s:#EFF6FF;--l:#A9C7E8;--t:#1B2A50;--t2:#526798;--ac:#FF5FA2;--r:8px;--f:var(--heavy);--fw:500;--hw:800;--sc:2.4;--ls:.04em;--d:1.15;--bw:2px;--sh:inset 0 1px 0 #ffffffb3`
 
 Ground pale blue-lilac gradient · chrome bevels · gloss highlights · pink/violet/cyan `#FF5FA2` `#8B5CF6` `#38BDF8`
 Type: bubbly grotesque or pixel. Shape: heavy bevels, inner glow, star and sparkle motifs, beveled window chrome.
@@ -347,7 +371,7 @@ composition · dense to the edges · several hues at full strength at once.
 
 ## 21. Skeuomorphism
 
-`--g:#D7CDBE;--s:#F2EBE0;--l:#B9AC98;--t:#2E271D;--t2:#736758;--ac:#9C5B2E;--r:8px;--f:var(--class);--fw:400;--hw:700;--sc:2.3;--ls:0;--d:1.1;--bw:1px;--sh:0 4px 12px #00000024`
+`--g:#D7CDBE;--s:#F2EBE0;--l:#B9AC98;--t:#2E271D;--t2:#625647;--ac:#9C5B2E;--r:8px;--f:var(--class);--fw:400;--hw:700;--sc:2.3;--ls:0;--d:1.1;--bw:1px;--sh:0 4px 12px #00000024`
 
 Interface elements imitate specific real objects: stitched leather, ruled paper, brushed metal, a
 switch shaped like a switch. Textures and highlights are photographic rather than abstract.
@@ -373,7 +397,7 @@ clashing pastels held together by black outlines · type set at angles.
 
 ## 24. Broken grid / overlap
 
-`--g:#F4F2ED;--s:#fff;--l:#DCD8CF;--t:#191714;--t2:#7A756B;--ac:#B5462F;--r:0;--f:var(--serif);--fw:400;--hw:500;--sc:3.2;--ls:0;--d:1.15;--bw:1px;--sh:none`
+`--g:#F4F2ED;--s:#fff;--l:#DCD8CF;--t:#191714;--t2:#736E64;--ac:#B5462F;--r:0;--f:var(--serif);--fw:400;--hw:500;--sc:3.2;--ls:0;--d:1.15;--bw:1px;--sh:none`
 
 Elements deliberately break their column, overlap one another, and bleed past the margin. Images sit
 under type; blocks are offset rather than aligned. The grid is present but violated on purpose.
@@ -429,7 +453,7 @@ Strongest where the audience is already suspicious that the work was generated.
 
 ## 29. Japandi / warm minimal
 
-`--g:#F3F0EA;--s:#FBFAF7;--l:#DED8CC;--t:#2C2A26;--t2:#767168;--ac:#8A9A7B;--r:8px;--f:var(--ui);--fw:300;--hw:500;--sc:2.2;--ls:.03em;--d:1.3;--bw:1px;--sh:none`
+`--g:#F3F0EA;--s:#FBFAF7;--l:#DED8CC;--t:#2C2A26;--t2:#726D64;--ac:#8A9A7B;--r:8px;--f:var(--ui);--fw:300;--hw:500;--sc:2.2;--ls:.03em;--d:1.3;--bw:1px;--sh:none`
 
 Minimalism with warmth added back. Warm neutrals, muted sage or clay accent, generous space, natural
 material texture at low opacity. Type: humanist sans, comfortable leading, nothing tight.

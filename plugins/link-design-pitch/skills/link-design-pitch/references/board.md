@@ -116,8 +116,9 @@ Render the board once and run a single script that returns everything. Six separ
 real time and tokens for the same answer.
 
 One call should return, per panel: frame height, element counts (so you can prove content is
-identical), text-vs-ground contrast, the feasibility badge — plus panel count and whether the page
-scrolls horizontally.
+identical), text-vs-ground contrast, the feasibility badge — plus panel count, whether the page
+scrolls horizontally, and **`document.documentElement.scrollHeight`**, which is the number the
+screenshot command needs and the one nothing else in this list gives you.
 
 Traps that have already produced wrong findings:
 
@@ -187,8 +188,11 @@ On Windows neither browser is on PATH: use the full path — typically
 `C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe` — and point `--user-data-dir`
 at a Windows temp path such as `%TEMP%\shot`.
 
-Set the height tall enough for the whole page — ten stacked panels plus tables runs to several
-thousand pixels, and a short window silently crops the bottom half. `--user-data-dir` pointed
+**`--window-size` must be at least the document height you measured, and `7200` above is an example,
+not a default.** Ten stacked panels plus tables runs well past it — a measured board came to 14,792px,
+and shooting it at the example height lost half the board with no error and no scrollbar. Read
+`scrollHeight` first and pass that. `clientHeight` is the *window* height and will hand you back
+whatever you asked for, which looks like a plausible answer. `--user-data-dir` pointed
 somewhere disposable avoids colliding with a running browser profile.
 
 ## Content
