@@ -565,7 +565,7 @@ Windows인데 예시가 POSIX 전용이었습니다). 타깃이 브라우저가 
 
 ### 1.4.0
 
-`link-skill-authoring` 을 의존성에 추가했습니다. 이미 `link` 을 설치한 사람은
+`link-skill-authoring` 을 의존성에 추가했습니다. 이미 `link` 를 설치한 사람은
 `claude plugin update link@link-skills` 로 받습니다.
 
 ### 1.0.0

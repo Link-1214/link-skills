@@ -249,7 +249,7 @@ These do not, and placing them is the part no scan can do:
 ---
 
 > 앞으로 만드는 스킬도 이 목록에 같은 형식으로 붙습니다.
-> `link` 을 설치해 두었다면 `claude plugin update link@link-skills` 로 새 스킬을 받습니다.
+> `link` 를 설치해 두었다면 `claude plugin update link@link-skills` 로 새 스킬을 받습니다.
 
 ---
 
@@ -257,7 +257,7 @@ These do not, and placing them is the part no scan can do:
 
 ### 이 저장소의 스킬을 전부 설치
 
-마켓플레이스를 등록하고 `link` 을 설치합니다.
+마켓플레이스를 등록하고 `link` 를 설치합니다.
 
 ```bash
 claude plugin marketplace add Link-1214/link-skills
@@ -267,7 +267,7 @@ claude plugin marketplace add Link-1214/link-skills
 claude plugin install link@link-skills
 ```
 
-`link` 은 스킬이 없는 플러그인입니다. 나머지 플러그인을 의존성으로 가리키기만 합니다. 그래서 한 번
+`link` 는 스킬이 없는 플러그인입니다. 나머지 플러그인을 의존성으로 가리키기만 합니다. 그래서 한 번
 설치하면 전부 들어오고, 이 저장소에 새 스킬이 추가되면 아래 명령으로 받을 수 있습니다.
 
 ```bash
@@ -364,7 +364,7 @@ AI가 멈추거나 엉뚱하게 처리합니다. 왜 그래야 하는지를 알�
 
 **결정할 것이 나오면 멈추고 물어봅니다.** 예를 들어 시안 10개를 보여준 다음, 어느 것으로 갈지
 묻지 않고 곧장 상세 화면까지 만들어 버린다고 해 봅시다. 당신이 다른 걸 골랐다면 그 작업은 통째로
-버려집니다. 그리고 더 중요하게는, 고르는 일을 AI가 대신해 버린 셈이 됩니다.
+버려집니다. 더 중요한 손실은 따로 있습니다. 고르는 일을 AI가 대신해 버린 셈이 됩니다.
 
 **특정 AI 전용 기능에 기대지 않습니다.** 그 AI에 더 나은 수단이 있으면 쓰고, 없으면 없는 대로
 동작합니다. Codex 같은 다른 AI가 설치 없이 그냥 받아서 쓸 수 있는 이유입니다.
