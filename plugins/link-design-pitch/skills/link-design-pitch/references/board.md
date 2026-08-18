@@ -135,6 +135,12 @@ Traps that have already produced wrong findings:
 - **Composite opacity before measuring contrast.** An element at `opacity:.5` does not have its
   nominal color on screen. Blend it against what is behind it first, or you will report a passing
   ratio for text that fails.
+- **A transparent *background* breaks the same helper in the other direction.** `getComputedStyle`
+  returns `rgba(0,0,0,0)` for an unpainted surface, a helper reads that as black, and text on a pale
+  ground comes back at around 1.2:1 — a failure so severe it looks like a real finding. Walk up to the
+  first ancestor that actually paints, and measure against that. This is not an edge case: the catalog
+  tells editorial and document to make their surfaces transparent, and a borrowed-shape direction
+  inherits it.
 - **`font-family` is what you asked for, not what rendered.** A face the machine lacks falls back
   silently, so ten panels can report ten different families and paint one. Measure the rendered face
   instead, and **probe with a string in the content's own script** — a Latin probe on a Korean board
@@ -183,7 +189,11 @@ machine** and takes one command:
 chrome --headless=new --disable-gpu --hide-scrollbars   --window-size=1200,7200 --screenshot=out.png --user-data-dir=/tmp/shot   file:///absolute/path/to/01-directions.html
 ```
 
-On Windows neither browser is on PATH: use the full path — typically
+**On Windows, run the screenshot from PowerShell.** Measured: the same command in Git Bash exited
+21 with an empty stdout and an empty stderr — no error text, no file, nothing to diagnose from. The
+identical arguments worked from PowerShell.
+
+Neither browser is on PATH there: use the full path — typically
 `C:\Program Files\Google\Chrome\Application\chrome.exe` or
 `C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe` — and point `--user-data-dir`
 at a Windows temp path such as `%TEMP%\shot`.
@@ -191,7 +201,8 @@ at a Windows temp path such as `%TEMP%\shot`.
 **`--window-size` must be at least the document height you measured, and `7200` above is an example,
 not a default.** Ten stacked panels plus tables runs well past it — a measured board came to 14,792px,
 and shooting it at the example height lost half the board with no error and no scrollbar. Read
-`scrollHeight` first and pass that. `clientHeight` is the *window* height and will hand you back
+`scrollHeight` first and pass that — **and read it again after every edit.** Reusing the height you
+measured before a change is the same crop with an extra step in front of it. `clientHeight` is the *window* height and will hand you back
 whatever you asked for, which looks like a plausible answer. `--user-data-dir` pointed
 somewhere disposable avoids colliding with a running browser profile.
 

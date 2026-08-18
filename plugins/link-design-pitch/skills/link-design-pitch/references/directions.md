@@ -96,11 +96,14 @@ failure unchanged is worse than shipping a modified token.
 from disk on someone else's machine, and a font that is not there falls back silently — the panel
 then renders in a face the board's own caption says it is not using.
 
-**Six roles, not more, and CJK distinguishes fewer.** Korean's core faces share Hangul outlines
-across their fixed-width variants — `Dotum` and `DotumChe` paint identical Hangul and differ only in
-their Latin half. So the six roles resolve to **five Hangul faces**, with `mono` and `sans` sharing
-one; on Latin all six stay distinct. **Weight collapses too**: measured on Hangul these faces render
-about two steps, not the five the numbers suggest, so 600 and 900 paint the same bold.
+**Six roles, and how many survive on CJK depends on the machine.** Korean's core faces share Hangul
+outlines across their fixed-width variants — on one machine `Dotum` and `DotumChe` painted identical
+Hangul and the six roles resolved to five faces; on another all six rasterised differently. **Measure
+the rendered face rather than trusting either number** — `board.md` already requires it, and that
+check is the only thing that tells you which machine you are on.
+
+**Weight collapse is the consistent one.** Measured on Hangul across boards, these faces render about
+two steps rather than the five the numbers suggest, so 600 and 900 paint the same bold.
 
 When ten directions must share six roles, the channels that actually carry the difference are
 **`--sc`, `--ls` and `--d`** — size ratio, tracking and density. Those are unlimited and work in
@@ -149,7 +152,7 @@ what is actually there or say nothing about the type.
 | 15 | Brutalism | Portfolios, launches, anything that must not look templated | Genuinely tiring all day, and no quiet register is left for secondary information |
 | 16 | Editorial | Content-led products, reports meant to be read, authority | Display serifs lack tabular figures, so number columns wobble |
 | 17 | Retro / Y2K | Entertainment, youth-facing products, deliberate nostalgia | Bevels and glow eat legibility; semantic color drowns in an already-loud field |
-| 18 | Terminal / monospace | Developer tools, logs, CI — audiences who live in a shell | Wrong for non-technical users; monospace prose is measurably slower to read |
+| 18 | Terminal / monospace | Developer tools, logs, CI — audiences who live in a shell | Wrong for non-technical users; monospace prose is measurably slower to read. **On CJK content the mono face does not render at all**, so it collapses toward any other dark direction on the board — separate it by density and size or leave it off |
 | 19 | Liquid Glass | Apple-native apps; hierarchy as depth; current without inventing anything | Contrast shifts with background *and* motion. **Dies without `backdrop-filter` plus refraction** — off Apple platforms it costs more and lands as plain glassmorphism |
 | 20 | Maximalism | Culture, fashion, events, personal sites; being remembered | No quiet register, so secondary information and status colors drown. Fails in execution more than in concept |
 | 21 | Skeuomorphism | Makes unfamiliar controls instantly legible by borrowing a known object | Every control needs its own artwork, so the tenth does not match. Dates fastest of all |
@@ -404,7 +407,7 @@ under type; blocks are offset rather than aligned. The grid is present but viola
 
 ## 25. Bauhaus
 
-`--g:#F2EFE9;--s:#fff;--l:#111111;--t:#111111;--t2:#5A5A5A;--ac:#D62828;--r:0;--f:var(--sans);--fw:400;--hw:700;--sc:3.0;--ls:-.01em;--d:1.05;--bw:2px;--sh:none`
+`--g:#F2EFE9;--s:#fff;--l:#111111;--t:#111111;--t2:#5A5A5A;--ac:#1D4ED8;--r:0;--f:var(--sans);--fw:400;--hw:700;--sc:3.0;--ls:0;--d:1.05;--bw:2px;--sh:none`
 
 Primaries at full strength — red `#D62828`, blue `#1D4ED8`, yellow `#FBBF24` — on a warm off-white.
 Type: geometric sans, lowercase headlines, tight leading. Shape: circles, triangles and squares used
@@ -414,6 +417,12 @@ structurally rather than decoratively; a visible grid; no radius.
 retro. Distinct from Swiss in that Bauhaus is playful and geometric where Swiss is strict and
 typographic. Keep the primaries for structure and leave status color out of that set, or red means
 two things at once.
+
+**The accent is blue, not the red, and that is deliberate.** Bauhaus and Swiss share the same type
+role, the same weights and the same ink, so colour is one of the few channels left to separate them —
+and Bauhaus's red sits 17 RGB points from Swiss's. Measured on a board that used it, a viewer read
+Bauhaus as "Swiss with shapes stuck on". Blue is one of this direction's own three primaries, and it
+also measures better: 5.84:1 on the ground against 4.36:1.
 
 ## 26. Art Deco
 
@@ -482,6 +491,7 @@ is the same few rules every time. Read the whole table:
 | Japandi | a natural-material texture at very low opacity as a repeating data-URI background |
 | Anti-AI / handmade | a paper texture as a repeating data-URI background, plus `transform:rotate(-.4deg)` on cards so nothing sits perfectly square |
 | Art Deco | `border-image` or stacked 1px gold rules for the stepped frames; symmetry has to be built into the layout, not added as CSS |
+| Bauhaus | circles, triangles and squares placed **structurally** — as the section marker, the chart key, the button shape — not scattered as ornament. Without them this renders as Swiss, which shares its type role and weights |
 | Constructivism | `transform:rotate(-8deg)` on headline blocks, and a decision about how they un-rotate on narrow widths |
 
 Adjust values toward the project's brand when it has one. What you should not do is start from a
