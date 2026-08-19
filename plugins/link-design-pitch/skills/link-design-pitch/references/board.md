@@ -93,8 +93,9 @@ reads as a thumb on the scale.
 
 Per panel:
 
-1. **Number and name** — `01 / 10`, the direction in the owner's language with the English term
-   beneath. The count tells them where they are; the pairing keeps the term searchable.
+1. **Number and name** — `01 / 10`, **the panel's position on this board, not its catalog number** —
+   a panel headed `25 / 10` has printed the catalog index and reads as nonsense. Then the direction in
+   the owner's language with the English term beneath. The count tells them where they are; the pairing keeps the term searchable.
 2. **The mockup** — the project's real surface at a fixed frame size, styled in this direction.
 3. **One line of signature** — ground, accent, type stance.
 4. **A feasibility badge** — possible / partial / impossible, naming the blocking property when it
@@ -112,8 +113,10 @@ type is most of what separates these.
 
 ## Verify in one pass
 
-Render the board once and run a single script that returns everything. Six separate round-trips cost
-real time and tokens for the same answer.
+**One script, not one pass.** Have a single script return everything, so you are not paying six
+round-trips for one answer — but expect to run it again after each fix, and once more after the
+screenshot, because the ink measurement needs the PNG and the PNG height needs a `scrollHeight` the
+first pass produces. A measured run went eight rounds. What is wasteful is six scripts, not six runs.
 
 One call should return, per panel: frame height, element counts (so you can prove content is
 identical), text-vs-ground contrast, the feasibility badge — plus panel count, whether the page
@@ -137,10 +140,11 @@ Traps that have already produced wrong findings:
   ratio for text that fails.
 - **A transparent *background* breaks the same helper in the other direction.** `getComputedStyle`
   returns `rgba(0,0,0,0)` for an unpainted surface, a helper reads that as black, and text on a pale
-  ground comes back at around 1.2:1 — a failure so severe it looks like a real finding. Walk up to the
-  first ancestor that actually paints, and measure against that. This is not an edge case: the catalog
-  tells editorial and document to make their surfaces transparent, and a borrowed-shape direction
-  inherits it.
+  ground comes back at around 1.2:1 — a failure so severe it looks like a real finding. **A
+  `background-image` does the same thing**: `backgroundColor` is still transparent when a gradient is
+  painting the element, which catches entries 9, 10 and 19 and any panel you gave a column grid to.
+  Walk up to the first ancestor that actually paints a colour, and measure against that — twice on one
+  board this produced 1.14 and 1.35 and cost a full measure-fix-remeasure cycle each time.
 - **`font-family` is what you asked for, not what rendered.** A face the machine lacks falls back
   silently, so ten panels can report ten different families and paint one. Measure the rendered face
   instead, and **probe with a string in the content's own script** — a Latin probe on a Korean board
@@ -205,6 +209,11 @@ and shooting it at the example height lost half the board with no error and no s
 measured before a change is the same crop with an extra step in front of it. `clientHeight` is the *window* height and will hand you back
 whatever you asked for, which looks like a plausible answer. `--user-data-dir` pointed
 somewhere disposable avoids colliding with a running browser profile.
+
+**And it leaks the window size between runs.** A reused profile restores the size it last saw, so a
+second invocation silently rendered at 764px wide after the first ran at 1200 — every measurement
+after that described a layout nobody asked for. Pass `--window-size` explicitly on **both** the
+measuring run and the screenshot run, and use a fresh directory when the numbers stop making sense.
 
 ## Content
 

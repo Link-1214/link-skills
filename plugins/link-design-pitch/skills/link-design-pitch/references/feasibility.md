@@ -81,7 +81,9 @@ Brutalism, terminal, editorial, Swiss, minimalism, dark, bento, monochrome, docu
 
 ## A note on charts, on every platform
 
-Chart libraries own their own rendering and almost never inherit the app's theme. Whatever the platform, treat chart background, axes, gridlines, tick labels, legends, and series colors as a separate work item with its own line in the implementation checklist.
+Chart libraries own their own rendering and usually do not inherit the app's theme. Whatever the platform, treat chart background, axes, gridlines, tick labels, legends, and series colors as a separate work item with its own line in the implementation checklist.
+
+**Check before assuming it, because some frameworks now bridge it.** Streamlit, for one, applies `theme.chartCategoricalColors` and its siblings to Plotly, Altair and Vega-Lite, which turns "rewrite the chart theme in code" into "add three lines to a config file" — and it also means the app's accent and the data series are separate settings rather than one palette fighting itself. That difference belongs in the cost column, so look it up rather than pricing it from this paragraph.
 
 And regardless of direction: avoid 3D bars, 3D pie, and drop shadows on data marks. Perspective and shadow distort perceived magnitude, which turns a styling choice into a reporting error.
 

@@ -11,8 +11,9 @@ can tell these ten were chosen for them.
 
 **Read the index. Pick ten. Then read only those ten entries.**
 
-The entries are keyed by number — `## 15.` is entry 15. Search for the ten headings you picked and
-read only those line ranges. If your file tool cannot read a range, read this file exactly once;
+The entries are keyed by number — `## 15.` is entry 15, and it runs from its own heading to the line
+before the next `## ` heading. Search for the ten headings you picked and read only those ranges;
+searching gives you each start, and the next heading gives you the end. If your file tool cannot read a range, read this file exactly once;
 the waste this section exists to prevent is reading the unpicked entries, or anything twice.
 
 The index carries everything selection needs — what each direction is good at, where it breaks, and
@@ -120,6 +121,15 @@ from the same starting prescription.
 
 Measure ink per em² — rasterise the heading, crop to the ink box, count covered pixels — for the
 heavy panel and for the plainest panel, and keep raising the stroke until the heavy one is larger.
+
+**Measure it from the screenshot, not from a canvas re-render.** `-webkit-text-stroke` is a paint-time
+property: redrawing the string with `fillText` on a `<canvas>`, which is what `board.md` suggests for
+comparing typefaces, does not carry it. Follow both instructions literally and the number never moves
+however far you sweep, and the panel fails forever. Crop the heading out of the rendered PNG instead.
+
+**Skip this whole procedure when no weight-led direction is on the board.** It costs a rasteriser and
+several render cycles for one panel's heading, and that panel is often one you added expecting it to
+lose.
 On three measured boards the heavy panel printed *lighter* than the minimal panel until this was
 done, which is the failure this paragraph exists to prevent. A number you did not verify on your own
 board is not a prescription, it is a guess.
@@ -195,6 +205,13 @@ direction being pitched is still one of the ten, and the caption says which half
 
 Say why each of the ten is present. "Included to show where the ceiling is" is a good reason.
 Silence is not.
+
+**Some entries are near neighbours, and a board holding both spends two slots on one idea.** The
+pairs that have actually collapsed on measured boards: **2 and 25** (same type role, same weights),
+**4 and 16** (paper, muted and accent all within 34 RGB points before the accents were separated), and
+**8 or 18 with any other dark direction** — on CJK content the mono face does not render, so terminal
+loses the channel that was supposed to carry it. Take one of each pair, or take both and separate them
+on a channel you can point at. A viewer judges thumbnails first, and colour is what they judge on.
 
 **Interaction patterns are not visual directions.** Trend lists mix the two freely — adaptive
 layouts, agentic flows, multimodal input, and data storytelling all show up alongside styles. They
@@ -333,9 +350,13 @@ Type: heavy grotesque, huge scale jumps, uppercase. Shape: 2–3px black borders
 
 ## 16. Editorial
 
-`--g:#F7F5F0;--s:#FDFCF9;--l:#D8D2C6;--t:#16181D;--t2:#766F66;--ac:#6B1F2A;--r:0;--f:var(--serif);--fw:400;--hw:400;--sc:3.0;--ls:.01em;--d:1.15;--bw:1px;--sh:none`
+`--g:#F7F5F0;--s:#FDFCF9;--l:#D8D2C6;--t:#16181D;--t2:#766F66;--ac:#4A6A8A;--r:0;--f:var(--serif);--fw:400;--hw:400;--sc:3.0;--ls:.01em;--d:1.15;--bw:1px;--sh:none`
 
-Ground `#F7F5F0` · ink `#16181D` · accent deep `#6B1F2A` · secondary steel `#4A6A8A`
+Ground `#F7F5F0` · ink `#16181D` · accent steel `#4A6A8A` · deep red `#6B1F2A` as the second
+
+**The steel is the accent, not the red, for the same reason Bauhaus takes blue.** Measured, this
+entry's paper, its muted text and its red sit 16, 9 and 34 RGB points from entry 4's — at thumbnail
+size a viewer reads the two as one idea shown twice. The red stays available as the second colour.
 Type: a real display serif at 48px+ against a small sans for UI, wide measure, generous leading, hanging indents. Shape: rules, not boxes; asymmetric columns; images bleeding off one edge.
 
 ## 17. Retro / Y2K
